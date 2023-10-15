@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //Code Assistance from https://www.youtube.com/watch?v=CieCJ2mNTXE
+
     [Header("Movement")]
-    public float moveSpeed;
+    public float acceleration;
+    public float maxSpeed; // Maximum speed the player can reach
 
     public float groundDrag;
 
@@ -34,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
 
+        // Clamp the player's velocity to the maximum speed
+        Vector3 velocityLimiter = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        rb.velocity = velocityLimiter;
+
         //curent speed of player
         float currentSpeed = rb.velocity.magnitude;
         Debug.Log("Current Speed: " + currentSpeed);
@@ -51,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         //Add force to make the thing move
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * acceleration * 10f, ForceMode.Force);
     }
 
 }
