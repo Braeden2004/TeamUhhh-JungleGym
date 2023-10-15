@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
-    public Transform cameraPosition;
+    public float mouseSensitivity = 2.0f;
 
-    private void Update()
+    void Start()
     {
-        transform.position = cameraPosition.position;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Update()
+    {
+        // Rotate the camera on the X axis
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        transform.parent.Rotate(Vector3.up * mouseX);
     }
 }

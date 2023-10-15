@@ -4,61 +4,49 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Code Assistance from https://www.youtube.com/watch?v=CieCJ2mNTXE
+    public float moveSpeed = 5.0f;
+    public float jumpForce = 5.0f;
 
-    [Header("Movement")]
-    public float acceleration;
-    public float maxSpeed; // Maximum speed the player can reach
+    private Rigidbody rb;
 
-    public float groundDrag;
+    public float groundDistance = 0.5f;
+    public LayerMask groundMask;
 
-    public Transform orientation;
+    private bool isGrounded;
 
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDirection;
-
-    Rigidbody rb;
-
-    private void Start()
+    void Start()
     {
-        //assign rigidbody and freeze its rotation
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
     }
 
-    private void Update()
+    void Update()
     {
-        MyInput();
+        // Perform the ground check
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundDistance, groundMask);
+        Jump();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        MovePlayer();
+        // Input for player movement
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Clamp the player's velocity to the maximum speed
-        Vector3 velocityLimiter = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
-        rb.velocity = velocityLimiter;
+        // Calculate movement direction
+        Vector3 moveDirection = (transform.forward * verticalInput + transform.right * horizontalInput).normalized;
 
-        //curent speed of player
-        float currentSpeed = rb.velocity.magnitude;
-        Debug.Log("Current Speed: " + currentSpeed);
+        // Apply movement
+        Vector3 moveVelocity = moveDirection * moveSpeed;
+        rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
     }
 
-    private void MyInput()
+    void Jump()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-    }
-
-    private void MovePlayer()
-    {
-        //calculate movement direction based on direction player is facing
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        //Add force to make the thing move
-        rb.AddForce(moveDirection.normalized * acceleration * 10f, ForceMode.Force);
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
+        }
     }
 
 }
