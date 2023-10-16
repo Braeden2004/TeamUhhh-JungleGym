@@ -5,23 +5,23 @@ using UnityEngine;
 public class SpawnTape : MonoBehaviour
 {
     public GameObject prefab;
-    public Transform playerObj;
+    //public Transform playerObj;
     public Transform spawnPoint;
 
-    bool playerInRange;
-    public float detectionRange;
+    //bool playerInRange;
+    //public float detectionRange;
 
     void Update()
     {
-        DetectPlayer();
+        //DetectPlayer();
 
-        if (Input.GetKeyDown(KeyCode.E) && playerInRange)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Instantiate(prefab, transform.position, transform.rotation);
+            Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
         }
     }
 
-    void DetectPlayer()
+    /*void DetectPlayer()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, playerObj.position);
         if (distanceToPlayer <= detectionRange)
@@ -32,5 +32,5 @@ public class SpawnTape : MonoBehaviour
         {
             playerInRange = false;
         }
-    }
+    }*/
 }
