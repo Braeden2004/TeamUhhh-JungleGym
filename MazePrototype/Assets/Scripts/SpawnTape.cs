@@ -19,7 +19,11 @@ public class SpawnTape : MonoBehaviour
         {
             Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
         }
+
+        //Destroy
+
     }
+
 
     /*void DetectPlayer()
     {
