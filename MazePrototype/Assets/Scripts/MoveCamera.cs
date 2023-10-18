@@ -12,7 +12,7 @@ public class MoveCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Rotate the camera on the X axis
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
