@@ -22,6 +22,9 @@ public class destroyObject : MonoBehaviour
             audioSource.Play();
         }
 
+        //Teleport object to make it appear as if it despawned instantly
+        transform.position = new Vector3(0,-1000f,0);
+
         // Destroy the object after the sound has finished playing
         Destroy(gameObject, audioSource.clip.length);
     }
