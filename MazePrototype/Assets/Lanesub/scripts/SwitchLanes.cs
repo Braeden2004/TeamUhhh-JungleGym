@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class SwitchLanes : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class SwitchLanes : MonoBehaviour
     public float wiggleSpeed = 30f;
     private bool hasMoved;
     private float hasMovedtimer;
+    public GameObject player2;
+    private Vector3 pastposition;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class SwitchLanes : MonoBehaviour
             newhorizontalpos = Mathf.Clamp(horizontalpos - 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("d") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), 2.4f))
         {
@@ -45,6 +49,7 @@ public class SwitchLanes : MonoBehaviour
             newhorizontalpos = Mathf.Clamp(horizontalpos + 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("s") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.forward), 2.4f))
         {
@@ -52,6 +57,7 @@ public class SwitchLanes : MonoBehaviour
             newverticalpos = Mathf.Clamp(verticalpos - 2f, -6f, -4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("w") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), 2.4f))
         {
@@ -59,8 +65,15 @@ public class SwitchLanes : MonoBehaviour
             newverticalpos = Mathf.Clamp(verticalpos + 2f, -6f, -4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         Move();
+        if (transform.position == player2.transform.position)
+        {
+            Debug.Log("ouch e");
+            newhorizontalpos = pastposition.x;
+            newverticalpos = pastposition.z;
+        }
         hasMovedtimer += Time.deltaTime;
         if(hasMovedtimer >= 0.1f)
         {

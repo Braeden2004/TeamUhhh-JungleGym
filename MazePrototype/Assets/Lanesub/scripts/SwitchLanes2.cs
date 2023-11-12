@@ -15,6 +15,9 @@ public class SwitchLanes2 : MonoBehaviour
     public float wiggleSpeed = 30f;
     private bool hasMoved;
     private float hasMovedtimer;
+    private Vector3 pastposition;
+    public GameObject player1;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,7 @@ public class SwitchLanes2 : MonoBehaviour
             newhorizontalpos = Mathf.Clamp(horizontalpos - 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("right") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), 2.4f))
         {
@@ -39,6 +43,7 @@ public class SwitchLanes2 : MonoBehaviour
             newhorizontalpos = Mathf.Clamp(horizontalpos + 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("down") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.forward), 2.4f))
         {
@@ -46,6 +51,7 @@ public class SwitchLanes2 : MonoBehaviour
             newverticalpos = Mathf.Clamp(verticalpos - 2f, -6f, -4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         if (Input.GetKeyDown("up") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), 2.4f))
         {
@@ -53,8 +59,15 @@ public class SwitchLanes2 : MonoBehaviour
             newverticalpos = Mathf.Clamp(verticalpos + 2f, -6f, -4f);
             hasMoved = true;
             hasMovedtimer = 0;
+            pastposition = transform.position;
         }
         Move();
+        if(transform.position == player1.transform.position)
+        {
+            Debug.Log("ouch");
+            newhorizontalpos = pastposition.x;
+            newverticalpos = pastposition.z;
+        }
         hasMovedtimer += Time.deltaTime;
         if (hasMovedtimer >= 0.1f)
         {
@@ -67,7 +80,7 @@ public class SwitchLanes2 : MonoBehaviour
     }
     void Move()
     {
-
+        
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(newhorizontalpos, 0.5f, newverticalpos), speed * Time.deltaTime);
         horizontalpos = newhorizontalpos;
         verticalpos = newverticalpos;
