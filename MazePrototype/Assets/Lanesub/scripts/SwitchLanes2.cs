@@ -4,7 +4,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class SwitchLanes : MonoBehaviour
+public class SwitchLanes2 : MonoBehaviour
 {
     public float horizontalpos;
     public float newhorizontalpos;
@@ -26,34 +26,28 @@ public class SwitchLanes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-
-
-
-
-        if (Input.GetKeyDown("a") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), 2.4f))
+        if (Input.GetKeyDown("left") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), 2.4f))
         {
-            
             StartCoroutine(WiggleCoroutine());
             newhorizontalpos = Mathf.Clamp(horizontalpos - 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
         }
-        if (Input.GetKeyDown("d") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), 2.4f))
+        if (Input.GetKeyDown("right") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), 2.4f))
         {
             StartCoroutine(WiggleCoroutine());
             newhorizontalpos = Mathf.Clamp(horizontalpos + 2.4f, -2.4f, 2.4f);
             hasMoved = true;
             hasMovedtimer = 0;
         }
-        if (Input.GetKeyDown("s") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.forward), 2.4f))
+        if (Input.GetKeyDown("down") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.forward), 2.4f))
         {
             StartCoroutine(WiggleCoroutine());
             newverticalpos = Mathf.Clamp(verticalpos - 2f, -6f, -4f);
             hasMoved = true;
             hasMovedtimer = 0;
         }
-        if (Input.GetKeyDown("w") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), 2.4f))
+        if (Input.GetKeyDown("up") && hasMoved == false && !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), 2.4f))
         {
             StartCoroutine(WiggleCoroutine());
             newverticalpos = Mathf.Clamp(verticalpos + 2f, -6f, -4f);
@@ -62,18 +56,18 @@ public class SwitchLanes : MonoBehaviour
         }
         Move();
         hasMovedtimer += Time.deltaTime;
-        if(hasMovedtimer >= 0.1f)
+        if (hasMovedtimer >= 0.1f)
         {
             hasMoved = false;
         }
-        
-        
-        
+
+
+
 
     }
     void Move()
     {
-        
+
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(newhorizontalpos, 0.5f, newverticalpos), speed * Time.deltaTime);
         horizontalpos = newhorizontalpos;
         verticalpos = newverticalpos;
@@ -86,8 +80,8 @@ public class SwitchLanes : MonoBehaviour
         {
             // Calculate the new scale based on a sine wave for a wiggling effect
             float yOffset = Mathf.Sin(Time.time * wiggleSpeed) * ((wiggleDuration - elapsedTime) / wiggleDuration) * 0.2f; // Adjust the amplitude as needed
-                                                                                                                           
-            transform.localScale = new Vector3(yOffset*5 + 1, yOffset + 1, yOffset + 1);
+
+            transform.localScale = new Vector3(yOffset * 5 + 1, yOffset + 1, yOffset + 1);
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -95,9 +89,6 @@ public class SwitchLanes : MonoBehaviour
 
         // Reset the scale after the wiggle duration
         transform.localScale = new Vector3(1, 1, 1);
-        
+
     }
 }
-
-
-
