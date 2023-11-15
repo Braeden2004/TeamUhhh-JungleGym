@@ -10582,7 +10582,8 @@ MonoBehaviour:
   - {fileID: 2066726516}
   - {fileID: 383273735}
   - {fileID: 1932575361}
-  obstaclesToBeSpawned: 3
+  obstaclesToBeSpawned: 2
+  delay: 2
 --- !u!4 &948038133
 Transform:
   m_ObjectHideFlags: 0

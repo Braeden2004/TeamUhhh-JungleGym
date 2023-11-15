@@ -8,6 +8,8 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] Transform[] spawnPoints;
     GameObject[] currentObstacles;
     [SerializeField] int obstaclesToBeSpawned;
+    [SerializeField] int delay;
+    bool hasBeenCalled;
 
     private void Start()
     {
@@ -16,25 +18,28 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < currentObstacles.Length; i++)
-        {
-            if (currentObstacles[i] == null)
-            {
-                SpawnObstacle(i);
-            }
-            else if(currentObstacles[i] != null)
-            {
-                currentObstacles[i].GetComponent<Obstacle>().Move();
-            }
-        }
-        
+         if (!hasBeenCalled)
+         {
+             StartCoroutine(SpawnObstacle());
+         }            
     }
 
-    void SpawnObstacle(int i)
+    /*void SpawnObstacle(int i)
     {
         int spawnIndex = Random.Range(1, spawnPoints.Length);
         Transform spawnPoint = transform.GetChild(spawnIndex).transform;
 
         currentObstacles[i] = Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity);
+    }*/
+
+    IEnumerator SpawnObstacle()
+    {
+        int spawnIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = transform.GetChild(spawnIndex).transform;
+
+        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity);
+        hasBeenCalled = true;
+        yield return new WaitForSeconds(delay);
+        hasBeenCalled = false;
     }
 }

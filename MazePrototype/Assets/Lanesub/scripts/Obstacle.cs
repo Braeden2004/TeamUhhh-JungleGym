@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Obstacle : MonoBehaviour
 {
@@ -8,11 +9,14 @@ public class Obstacle : MonoBehaviour
 
     void Update()
     {
-        
+        transform.Translate(Vector3.back * speed * Time.deltaTime);
     }
 
-    public void Move()
+    private void OnTriggerEnter(Collider collider)
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime);
+        if(collider.tag == "Player")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
