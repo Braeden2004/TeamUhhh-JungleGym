@@ -16,7 +16,7 @@ public class Obstacle : MonoBehaviour
     {
         if(collider.tag == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("LaneStart");
         }
     }
 
