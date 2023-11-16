@@ -16,7 +16,11 @@ public class Obstacle : MonoBehaviour
     {
         if(collider.tag == "Player")
         {
-            SceneManager.LoadScene("LaneStart");
+            SceneManager.LoadScene("Player2Win");
+        }
+        if (collider.tag == "Player2")
+        {
+            SceneManager.LoadScene("Player1Win");
         }
     }
 

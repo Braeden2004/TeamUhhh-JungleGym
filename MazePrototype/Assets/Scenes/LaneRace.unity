@@ -5096,7 +5096,7 @@ GameObject:
   - component: {fileID: 295352096}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Player
+  m_TagString: Player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5277,7 +5277,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.6396315, b: 0, a: 1}
-  m_Intensity: 8.37
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 67.16414
   m_InnerSpotAngle: 38.744507
@@ -10671,7 +10671,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0, g: 0.5632496, b: 1, a: 1}
-  m_Intensity: 8.37
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 67.16414
   m_InnerSpotAngle: 38.744507
