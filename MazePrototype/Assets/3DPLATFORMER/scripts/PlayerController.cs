@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Animator animator;
     Rigidbody rb;
     float xInput;
     float zInput;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
         Move();
         Jump();
+        AnimChecks();
     }
 
     bool isGrounded()
@@ -58,5 +60,17 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
         }
+    }
+    void AnimChecks()
+    {
+        if (rb.velocity == new Vector3(0, 0, 0))
+        {
+            animator.SetBool("IsIdle", true);
+        }
+        else
+        {
+            animator.SetBool("IsIdle", false);
+        }
+
     }
 }
