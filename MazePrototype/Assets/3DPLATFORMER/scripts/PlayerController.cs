@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public Animator animator;
     Rigidbody rb;
-    float xInput;
-    float zInput;
+    public float xInput;
+    public float zInput;
     Vector3 moveDir;
 
     [SerializeField] float moveSpeed;

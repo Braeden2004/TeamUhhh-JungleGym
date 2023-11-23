@@ -11,10 +11,12 @@ public class rolling : MonoBehaviour
     private float dashTimer = 0f;
 
     Rigidbody rb;
+    PlayerController playerController;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -46,8 +48,34 @@ public class rolling : MonoBehaviour
 
     void DashMovement()
     {
-        
-        float distanceToMove = dashDistance * Time.deltaTime/dashDuration;
-        transform.Translate(transform.forward * distanceToMove);
+        float distanceToMove = dashDistance * Time.deltaTime / dashDuration;
+        if (playerController.xInput > 0 && playerController.zInput == 0)
+        {
+            transform.Translate(transform.right * distanceToMove);
+        }
+        else if (playerController.xInput > 0 && playerController.zInput < 0)
+        {
+            transform.Translate((transform.right - transform.forward).normalized * distanceToMove);
+        }
+        else if (playerController.xInput > 0 && playerController.zInput > 0)
+        {
+            transform.Translate((transform.right + transform.forward).normalized * distanceToMove);
+        }
+        else if (playerController.xInput < 0 && playerController.zInput < 0)
+        {
+            transform.Translate((-transform.right - transform.forward).normalized * distanceToMove);
+        }
+        else if (playerController.xInput < 0 && playerController.zInput > 0)
+        {
+            transform.Translate((-transform.right + transform.forward).normalized * distanceToMove);
+        }
+       else if (playerController.zInput < 0)
+        {
+            transform.Translate(-transform.forward * distanceToMove);
+        }
+        else
+        {
+            transform.Translate(transform.forward * distanceToMove);
+        }
     }
 }
