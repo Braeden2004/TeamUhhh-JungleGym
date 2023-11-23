@@ -10,6 +10,13 @@ public class rolling : MonoBehaviour
     public bool isDashing = false;
     private float dashTimer = 0f;
 
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown("q") && !isDashing)
@@ -41,6 +48,6 @@ public class rolling : MonoBehaviour
     {
         
         float distanceToMove = dashDistance * Time.deltaTime/dashDuration;
-        transform.Translate(Vector3.forward * distanceToMove);
+        transform.Translate(transform.forward * distanceToMove);
     }
 }
