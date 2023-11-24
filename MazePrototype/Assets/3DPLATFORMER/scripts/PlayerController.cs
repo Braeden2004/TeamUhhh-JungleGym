@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     public float zInput;
     Vector3 moveDir;
 
-    [SerializeField] float moveSpeed;
+    [SerializeField] float accelSpeed;
+    [SerializeField] float maxSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] LayerMask groundLayer;
 
@@ -44,14 +45,19 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         zInput = Input.GetAxisRaw("Vertical");
 
-        //moveDir = new Vector3(xInput, 0, zInput);
+        moveDir = new Vector3(xInput, 0, zInput);
     }
 
     void Move()
     {
-        //rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Acceleration);
+        rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
 
-        rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); 
+        if(rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
+        //rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); 
     }
 
     void Jump()
@@ -63,7 +69,7 @@ public class PlayerController : MonoBehaviour
     }
     void AnimChecks()
     {
-        if (rb.velocity == new Vector3(0, 0, 0))
+        if (rb.velocity == Vector3.zero)
         {
             animator.SetBool("IsIdle", true);
         }
