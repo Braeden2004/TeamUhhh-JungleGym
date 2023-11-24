@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float accelSpeed;
     [SerializeField] float maxSpeed;
+    [SerializeField] float groundDrag;
     [SerializeField] float airControl;
     [SerializeField] float jumpPower;
     [SerializeField] LayerMask groundLayer;
@@ -26,12 +27,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
+        HandleFriction();
 
         Move();
         Jump();
         AnimChecks();
 
-        Debug.DrawRay(transform.position, Vector3.down* 1.2f);
+        Debug.DrawRay(transform.position, Vector3.down * 1.2f);
     }
 
     bool isGrounded()
@@ -49,6 +51,18 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxisRaw("Vertical");
 
         moveDir = new Vector3(xInput, 0, zInput);
+    }
+
+    void HandleFriction()
+    {
+        if(isGrounded())
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0f;
+        }    
     }
 
     void Move()
