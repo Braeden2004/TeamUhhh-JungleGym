@@ -10,14 +10,15 @@ public class PlayerController : MonoBehaviour
     public float zInput;
     Vector3 moveDir;
 
-    [SerializeField] float moveSpeed;
+    [SerializeField] float accelSpeed;
+    [SerializeField] float maxSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] LayerMask groundLayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     bool isGrounded()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, 2f, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 2f, groundLayer))
         {
             return true;
         }
@@ -44,26 +45,32 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         zInput = Input.GetAxisRaw("Vertical");
 
-        //moveDir = new Vector3(xInput, 0, zInput);
+        moveDir = new Vector3(xInput, 0, zInput);
     }
 
     void Move()
     {
-        //rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Acceleration);
+        rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
 
-        rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); 
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
+        //rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); 
     }
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded()) 
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
         }
     }
     void AnimChecks()
     {
-        if (rb.velocity == new Vector3(0, 0, 0))
+        if (rb.velocity == Vector3.zero)
         {
             animator.SetBool("IsIdle", true);
         }

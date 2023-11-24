@@ -838,6 +838,7 @@ GameObject:
   - component: {fileID: 555995881}
   - component: {fileID: 555995880}
   - component: {fileID: 555995882}
+  - component: {fileID: 555995883}
   m_Layer: 0
   m_Name: PlayerPlaceHolder
   m_TagString: Untagged
@@ -854,7 +855,7 @@ Transform:
   m_GameObject: {fileID: 555995874}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -969,8 +970,9 @@ MonoBehaviour:
   animator: {fileID: 356541737}
   xInput: 0
   zInput: 0
-  moveSpeed: 8
-  jumpPower: 8
+  accelSpeed: 10
+  maxSpeed: 5
+  jumpPower: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -997,6 +999,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &555995883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555995874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747ed9e0571772049a51fdc4e491995c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallCheckDistance: 0.7
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  groundCheckDistance: 1.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  wallStickForce: 1
 --- !u!1 &557073091
 GameObject:
   m_ObjectHideFlags: 0
