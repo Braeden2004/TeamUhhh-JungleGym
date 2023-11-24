@@ -970,9 +970,10 @@ MonoBehaviour:
   animator: {fileID: 356541737}
   xInput: 0
   zInput: 0
-  accelSpeed: 10
+  accelSpeed: 15
   maxSpeed: 5
-  jumpPower: 10
+  airControl: 0.5
+  jumpPower: 7
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
