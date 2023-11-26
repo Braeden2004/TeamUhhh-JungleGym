@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("References")]
     public Animator animator;
+    public ParticleSystem puffLand;
     Rigidbody rb;
+    [Header("Values")]
     public float xInput;
     public float zInput;
     Vector3 moveDir;
-
+    private bool puffed;
+    [Header("Parameters")]
     [SerializeField] float accelSpeed;
     [SerializeField] public float maxSpeed;
     [SerializeField] float groundDrag;
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -104,6 +109,17 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("IsIdle", false);
+        }
+        
+        if(isGrounded() == true && puffed == false)
+        {
+            puffLand.Play();
+            puffed = true;
+        }
+        if(isGrounded() == false)
+        {
+            puffed = false;
+
         }
 
     }
