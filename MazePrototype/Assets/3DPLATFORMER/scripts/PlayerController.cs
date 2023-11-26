@@ -11,10 +11,10 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDir;
 
     [SerializeField] float accelSpeed;
-    [SerializeField] float maxSpeed;
+    [SerializeField] public float maxSpeed;
     [SerializeField] float groundDrag;
-    [SerializeField] float airControl;
-    [SerializeField] float jumpPower;
+    [SerializeField] public float airControl;
+    [SerializeField] public float jumpPower;
     [SerializeField] LayerMask groundLayer;
 
     // Start is called before the first frame update

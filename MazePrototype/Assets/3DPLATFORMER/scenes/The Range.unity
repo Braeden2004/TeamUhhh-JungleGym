@@ -873,8 +873,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98706784d96fd9949bef2640d1825459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 356541737}
   dashDistance: 5
   dashDuration: 0.3
+  rollforce: 20
+  rollMax: 15
+  rollJump: 9
+  rollAirCtrl: 0
   isDashing: 0
 --- !u!54 &555995880
 Rigidbody:
