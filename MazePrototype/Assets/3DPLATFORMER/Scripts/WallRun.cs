@@ -17,6 +17,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] float groundCheckDistance = 1.5f;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float wallStickForce;
+    [SerializeField] float wallJumpForce;
 
     void Start()
     {
@@ -51,12 +52,17 @@ public class WallRun : MonoBehaviour
     void RunOnWall()
     {
         rb.useGravity = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        //rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         Vector3 wallNormal = wallRight ? rightWall.normal : leftWall.normal;
 
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
         rb.AddForce(-wallNormal * wallStickForce, ForceMode.Force);
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce((wallNormal + transform.up) * wallJumpForce, ForceMode.Impulse);
+        }
     }
 }
