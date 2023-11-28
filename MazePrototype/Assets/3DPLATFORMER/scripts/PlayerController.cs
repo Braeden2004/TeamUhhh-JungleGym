@@ -83,12 +83,14 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(moveDir.normalized * accelSpeed / 10f * airControl, ForceMode.VelocityChange);
         }
 
-        Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+
+        /*Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         if (groundVel.magnitude > maxSpeed)
         {
             Vector3 clampedVel = groundVel.normalized * maxSpeed;
             rb.velocity = new Vector3(clampedVel.x, rb.velocity.y, clampedVel.z);
-        }
+        }*/
 
         //rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); //Use GetAxis for acceleration, but breaks rb.addforce
     }
