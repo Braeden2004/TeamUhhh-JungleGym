@@ -74,11 +74,13 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded())
         {
-            rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
+            //rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
+            rb.AddForce(moveDir.normalized * accelSpeed / 10f, ForceMode.VelocityChange);
         }
         else
         {
-            rb.AddForce(moveDir.normalized * accelSpeed * airControl, ForceMode.Acceleration);
+            //rb.AddForce(moveDir.normalized * accelSpeed * airControl, ForceMode.Acceleration);
+            rb.AddForce(moveDir.normalized * accelSpeed / 10f * airControl, ForceMode.VelocityChange);
         }
 
         Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);

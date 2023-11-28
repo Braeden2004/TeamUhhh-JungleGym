@@ -5785,7 +5785,7 @@ MonoBehaviour:
   puffLand: {fileID: 356541739}
   xInput: 0
   zInput: 0
-  accelSpeed: 50
+  accelSpeed: 15
   maxSpeed: 5
   groundDrag: 3
   airControl: 0.3
