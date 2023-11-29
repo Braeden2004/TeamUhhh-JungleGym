@@ -32,10 +32,6 @@ public class WallRun : MonoBehaviour
         {
             RunOnWall();
         }
-        else
-        {
-            rb.useGravity = true;
-        }
     }
 
     bool aboveGround()
@@ -51,9 +47,6 @@ public class WallRun : MonoBehaviour
 
     void RunOnWall()
     {
-        rb.useGravity = false;
-        //rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-
         Vector3 wallNormal = wallRight ? rightWall.normal : leftWall.normal;
 
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);

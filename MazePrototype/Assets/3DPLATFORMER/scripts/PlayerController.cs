@@ -13,19 +13,23 @@ public class PlayerController : MonoBehaviour
     public float zInput;
     Vector3 moveDir;
     private bool puffed;
+    public bool jumpHold;
+    public bool isFalling;
     [Header("Parameters")]
     [SerializeField] float accelSpeed;
-    [SerializeField] public float maxSpeed;
+    public float maxSpeed;
     [SerializeField] float groundDrag;
-    [SerializeField] public float airControl;
-    [SerializeField] public float jumpPower;
+    public float airControl;
+    public float jumpPower;
     [SerializeField] LayerMask groundLayer;
+    public float gravity;
+    [SerializeField] float maxGravity;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        rb.useGravity = false;
     }
 
     // Update is called once per frame
@@ -33,12 +37,17 @@ public class PlayerController : MonoBehaviour
     {
         GetInput();
         HandleFriction();
+        HandleGravity();
 
-        Move();
-        Jump();
         AnimChecks();
 
         Debug.DrawRay(transform.position, Vector3.down * 1.2f);
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+        Jump();
     }
 
     bool isGrounded()
@@ -56,6 +65,15 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxisRaw("Vertical");
 
         moveDir = new Vector3(xInput, 0, zInput);
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpHold = true;
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            jumpHold = false;
+        }
     }
 
     void HandleFriction()
@@ -68,6 +86,30 @@ public class PlayerController : MonoBehaviour
         {
             rb.drag = 0f;
         }    
+    }
+
+    void HandleGravity()
+    {
+        if (!isGrounded())
+        {
+            if(rb.velocity.y < -maxGravity)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, -maxGravity, rb.velocity.z);
+            }
+            else
+            {
+                rb.velocity -= new Vector3(0, gravity, 0) * Time.deltaTime;
+            }
+        }
+
+        if(rb.velocity.y < 0)
+        {
+            isFalling = true;
+        }
+        else
+        {
+            isFalling = false;
+        }
     }
 
     void Move()
@@ -83,14 +125,12 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(moveDir.normalized * accelSpeed / 10f * airControl, ForceMode.VelocityChange);
         }
 
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
-
-        /*Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         if (groundVel.magnitude > maxSpeed)
         {
             Vector3 clampedVel = groundVel.normalized * maxSpeed;
             rb.velocity = new Vector3(clampedVel.x, rb.velocity.y, clampedVel.z);
-        }*/
+        }
 
         //rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); //Use GetAxis for acceleration, but breaks rb.addforce
     }
