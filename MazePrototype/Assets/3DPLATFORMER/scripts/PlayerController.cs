@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     [SerializeField] float maxGravity;
 
+    //rotationtocamera
+    public Transform cam;
+    public float turnSmoothTime = 0.1f;
+    public float turnSmoothVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +40,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    
+
+        //RotateWithCamera();
         GetInput();
         HandleFriction();
         HandleGravity();
@@ -66,7 +75,19 @@ public class PlayerController : MonoBehaviour
 
         moveDir = new Vector3(xInput, 0, zInput);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        #region Rotation to camera direction
+        //RotateBody
+        Vector3 camDir = Camera.main.transform.forward;
+        camDir = Vector3.ProjectOnPlane(camDir, Vector3.up);
+
+        transform.forward = camDir;
+
+        //move in direction of camera
+        moveDir = Camera.main.transform.TransformDirection(moveDir);
+        moveDir = Vector3.ProjectOnPlane(moveDir, Vector3.up);
+        #endregion
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpHold = true;
         }
@@ -114,8 +135,12 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+ 
+
         if (isGrounded())
         {
+
+
             //rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
             rb.AddForce(moveDir.normalized * accelSpeed / 10f, ForceMode.VelocityChange);
         }
@@ -166,5 +191,21 @@ public class PlayerController : MonoBehaviour
 
         }
 
+    }
+
+
+    void RotateWithCamera()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        }
     }
 }
