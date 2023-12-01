@@ -12,16 +12,20 @@ public class WallRun : MonoBehaviour
     RaycastHit leftWall;
     RaycastHit rightWall;
 
+    PlayerController playerController;
+
     [SerializeField] float wallCheckDistance = 0.7f;
     [SerializeField] LayerMask wallMask;
     [SerializeField] float groundCheckDistance = 1.5f;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float wallStickForce;
     [SerializeField] float wallJumpForce;
+    [SerializeField] float wallRunSpeed;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerController = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -31,6 +35,10 @@ public class WallRun : MonoBehaviour
         if (aboveGround() && (wallRight || wallLeft))
         {
             RunOnWall();
+        }
+        else
+        {
+            playerController.useGravity = true;
         }
     }
 
@@ -47,12 +55,24 @@ public class WallRun : MonoBehaviour
 
     void RunOnWall()
     {
+        playerController.useGravity = false;
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
         Vector3 wallNormal = wallRight ? rightWall.normal : leftWall.normal;
 
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
-        rb.AddForce(-wallNormal * wallStickForce, ForceMode.Force);
+        if (wallRight)
+        {
+            rb.AddForce(-wallForward * wallRunSpeed, ForceMode.Force);
+        }
+        else if(wallLeft)
+        {
+            rb.AddForce(wallForward * wallRunSpeed, ForceMode.Force);
+        }
 
+        rb.AddForce(-wallNormal * wallStickForce, ForceMode.Force);
+        
         if(Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce((wallNormal + transform.up) * wallJumpForce, ForceMode.Impulse);

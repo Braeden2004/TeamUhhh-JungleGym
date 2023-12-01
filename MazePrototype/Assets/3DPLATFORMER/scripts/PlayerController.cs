@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     public float gravity;
     [SerializeField] float maxGravity;
+    public bool useGravity;
 
     //rotationtocamera
     public Transform cam;
@@ -40,15 +41,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    
-
-        //RotateWithCamera();
         GetInput();
         HandleFriction();
         HandleGravity();
+        HandleForward();
 
         AnimChecks();
+
+        Jump();
 
         Debug.DrawRay(transform.position, Vector3.down * 1.2f);
     }
@@ -56,12 +56,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Jump();
     }
 
     bool isGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.5f, groundLayer))
         {
             return true;
         }
@@ -73,19 +72,6 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         zInput = Input.GetAxisRaw("Vertical");
 
-        moveDir = new Vector3(xInput, 0, zInput);
-
-        #region Rotation to camera direction
-        //RotateBody
-        Vector3 camDir = Camera.main.transform.forward;
-        camDir = Vector3.ProjectOnPlane(camDir, Vector3.up);
-
-        transform.forward = camDir;
-
-        //move in direction of camera
-        moveDir = Camera.main.transform.TransformDirection(moveDir);
-        moveDir = Vector3.ProjectOnPlane(moveDir, Vector3.up);
-        #endregion
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -111,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleGravity()
     {
-        if (!isGrounded())
+        if (!isGrounded() && useGravity)
         {
             if(rb.velocity.y < -maxGravity)
             {
@@ -133,20 +119,36 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void HandleForward()
+    {
+        //Get camera forward and right
+        Vector3 camForward = Camera.main.transform.forward;
+        Vector3 camRight = Camera.main.transform.right;
+
+        camRight.y = 0;
+        camForward.y = 0;
+
+        //Multiply camera's directional vectors by inputs
+        Vector3 forwardRelative = camForward * zInput;
+        Vector3 rightRelative = camRight * xInput;
+
+        //Set desired move direction to be based on camera direction
+        moveDir = (forwardRelative + rightRelative).normalized;
+
+        //Rotate player
+        Quaternion lookRot = Camera.main.transform.rotation;
+        float yRot = lookRot.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(0, yRot, 0);
+    }    
+
     void Move()
     {
- 
-
         if (isGrounded())
         {
-
-
-            //rb.AddForce(moveDir.normalized * accelSpeed, ForceMode.Acceleration);
             rb.AddForce(moveDir.normalized * accelSpeed / 10f, ForceMode.VelocityChange);
         }
         else
         {
-            //rb.AddForce(moveDir.normalized * accelSpeed * airControl, ForceMode.Acceleration);
             rb.AddForce(moveDir.normalized * accelSpeed / 10f * airControl, ForceMode.VelocityChange);
         }
 
@@ -171,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
     void AnimChecks()
     {
-        if (rb.velocity == Vector3.zero)
+        if (moveDir.magnitude < 0.1f)
         {
             animator.SetBool("IsIdle", true);
         }
@@ -188,24 +190,7 @@ public class PlayerController : MonoBehaviour
         if(isGrounded() == false)
         {
             puffed = false;
-
         }
 
-    }
-
-
-    void RotateWithCamera()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-        }
     }
 }
