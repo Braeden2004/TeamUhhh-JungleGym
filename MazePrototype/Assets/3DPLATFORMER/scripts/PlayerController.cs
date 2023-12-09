@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float jumpPower;
     [SerializeField] LayerMask groundLayer;
     public float gravity;
-    [SerializeField] float maxGravity;
+    public float maxGravity;
     public bool useGravity;
 
     //rotationtocamera
@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded())
         {
             rb.AddForce(moveDir.normalized * accelSpeed / 10f, ForceMode.VelocityChange);
+            //rb.velocity += (moveDir.normalized * accelSpeed);
         }
         else
         {

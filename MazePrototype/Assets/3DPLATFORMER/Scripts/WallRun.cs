@@ -13,7 +13,9 @@ public class WallRun : MonoBehaviour
     RaycastHit rightWall;
 
     PlayerController playerController;
+    float maxGroundSpeed;
 
+    [SerializeField] float maxWallSpeed;
     [SerializeField] float wallCheckDistance = 0.7f;
     [SerializeField] LayerMask wallMask;
     [SerializeField] float groundCheckDistance = 1.5f;
@@ -26,6 +28,7 @@ public class WallRun : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
+        maxGroundSpeed = playerController.maxSpeed;
     }
 
     void Update()
@@ -39,6 +42,7 @@ public class WallRun : MonoBehaviour
         else
         {
             playerController.useGravity = true;
+            playerController.maxSpeed = maxGroundSpeed;
         }
     }
 
@@ -57,6 +61,7 @@ public class WallRun : MonoBehaviour
     {
         playerController.useGravity = false;
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        playerController.maxSpeed = maxWallSpeed;
 
         Vector3 wallNormal = wallRight ? rightWall.normal : leftWall.normal;
 
