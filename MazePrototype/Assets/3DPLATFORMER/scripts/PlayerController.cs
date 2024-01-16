@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public ParticleSystem puffLand;
     Rigidbody rb;
-    [Header("Values")]
+    [Header("Input")]
     public float xInput;
     public float zInput;
-    Vector3 moveDir;
+    public Vector3 moveDir;
     private bool puffed;
     public bool jumpHold;
     public bool isFalling;
@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public float maxGravity;
     public bool useGravity;
 
+    public bool canMove;
+
     //rotationtocamera
     public Transform cam;
     public float turnSmoothTime = 0.1f;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+        canMove = true;
     }
 
     // Update is called once per frame
@@ -55,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(canMove)
         Move();
     }
 
@@ -145,12 +149,12 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded())
         {
-            rb.AddForce(moveDir.normalized * accelSpeed / 10f, ForceMode.VelocityChange);
+            rb.AddForce(moveDir.normalized * accelSpeed * Time.deltaTime, ForceMode.VelocityChange);
             //rb.velocity += (moveDir.normalized * accelSpeed);
         }
         else
         {
-            rb.AddForce(moveDir.normalized * accelSpeed / 10f * airControl, ForceMode.VelocityChange);
+            rb.AddForce(moveDir.normalized * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
         }
 
         Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);

@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player2
+  - Rope
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Rope
   - Water
   - UI
   - 
