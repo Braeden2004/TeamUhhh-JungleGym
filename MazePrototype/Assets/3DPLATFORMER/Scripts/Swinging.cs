@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Swinging : MonoBehaviour
 {
-    HingeJoint hinge;
+    //HingeJoint hinge;
+    //FixedJoint hinge;
+    CharacterJoint hinge;
 
 
     bool canSwing;
@@ -26,7 +28,7 @@ public class Swinging : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && hinge == null)
             {
-                hinge = transform.AddComponent<HingeJoint>();
+                hinge = transform.AddComponent<CharacterJoint>();
                 hinge.connectedBody = other.transform.parent.GetComponent<Rigidbody>();
             }
             else if(Input.GetKeyDown(KeyCode.E) && hinge != null)
