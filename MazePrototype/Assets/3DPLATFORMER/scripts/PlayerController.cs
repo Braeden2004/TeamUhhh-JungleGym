@@ -8,36 +8,46 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public ParticleSystem puffLand;
     Rigidbody rb;
+
     [Header("Input")]
     public float xInput;
     public float zInput;
     public Vector3 moveDir;
-    private bool puffed;
+    bool puffed;
     public bool jumpHold;
     public bool isFalling;
+    public bool canMove;
+
     [Header("Parameters")]
     [SerializeField] float accelSpeed;
     public float maxSpeed;
-    [SerializeField] float groundDrag;
-    public float airControl;
-    public float jumpPower;
+    [Range(0, 1)] public float airControl;
+    [Range(0, 4)] public float friction;
     [SerializeField] LayerMask groundLayer;
+
+    [Header("Gravity + Jumping")]
     public float gravity;
     public float maxGravity;
-    public bool useGravity;
+    public bool useGravity = true; //for wallrunning
+    [SerializeField] float apexHeight = 4f;
+    [SerializeField] float apexTime = 0.5f;
+    float jumpVel;
 
-    public bool canMove;
-
-    //rotationtocamera
-    public Transform cam;
-    public float turnSmoothTime = 0.1f;
-    public float turnSmoothVelocity;
+    [Header("Slope anim smoothing")]
+    //For lerping slope rotation
+    [SerializeField] AnimationCurve animCurve;
+    [SerializeField] float animTime;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+
+        //Initialize gravity & jump velocity
+        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
+        jumpVel = 2 * apexHeight / apexTime;
+        useGravity = true;
         canMove = true;
     }
 
@@ -52,8 +62,6 @@ public class PlayerController : MonoBehaviour
         AnimChecks();
 
         Jump();
-
-        Debug.DrawRay(transform.position, Vector3.down * 1.2f);
     }
 
     private void FixedUpdate()
@@ -62,13 +70,27 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    bool isGrounded()
+    public bool isGrounded()
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.5f, groundLayer))
         {
             return true;
         }
         return false;
+    }
+
+    Vector3 AdjustVelocityToSlope(Vector3 velocity) //Smooth walking down slopes
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit, 1.5f, groundLayer))
+        {
+            Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            Vector3 adjustedVel = slopeRot * velocity;
+            return adjustedVel;
+        }
+        return velocity;
     }
 
     void GetInput()
@@ -89,14 +111,20 @@ public class PlayerController : MonoBehaviour
 
     void HandleFriction()
     {
+        /*
         if(isGrounded())
         {
-            rb.drag = groundDrag;
+            rb.drag = friction;
         }
         else
         {
             rb.drag = 0f;
-        }    
+        }*/
+
+        if(isGrounded())
+        {
+            rb.AddForce(friction * -rb.velocity);
+        }
     }
 
     void HandleGravity()
@@ -109,7 +137,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                rb.velocity -= new Vector3(0, gravity, 0) * Time.deltaTime;
+                rb.velocity += new Vector3(0, gravity, 0) * Time.deltaTime;
             }
         }
 
@@ -142,29 +170,76 @@ public class PlayerController : MonoBehaviour
         //Rotate player
         Quaternion lookRot = Camera.main.transform.rotation;
         float yRot = lookRot.eulerAngles.y;
-        transform.rotation = Quaternion.Euler(0, yRot, 0);
-    }    
+        Quaternion moveRot = Quaternion.Euler(0, yRot, 0);
 
-    void Move()
+        Ray ray = new Ray(transform.position, -transform.up);
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(ray, out hit, groundLayer))
+        {
+            Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
+            transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope + camera
+        }
+    }
+
+
+    void ClampGroundVel()
     {
-        if (isGrounded())
-        {
-            rb.AddForce(moveDir.normalized * accelSpeed * Time.deltaTime, ForceMode.VelocityChange);
-            //rb.velocity += (moveDir.normalized * accelSpeed);
-        }
-        else
-        {
-            rb.AddForce(moveDir.normalized * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
-        }
-
         Vector3 groundVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         if (groundVel.magnitude > maxSpeed)
         {
             Vector3 clampedVel = groundVel.normalized * maxSpeed;
             rb.velocity = new Vector3(clampedVel.x, rb.velocity.y, clampedVel.z);
         }
+    }
 
-        //rb.velocity = new Vector3(xInput * moveSpeed, rb.velocity.y, zInput * moveSpeed); //Use GetAxis for acceleration, but breaks rb.addforce
+    void Move()
+    {
+        //Current settings
+        if (isGrounded())
+        {
+            Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
+            vel = AdjustVelocityToSlope(vel);
+            rb.AddForce(vel, ForceMode.VelocityChange);
+        }
+        else
+        {
+            rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
+        }
+
+
+        /*//Snappy settings - Floaty, need to have a very low air control variable for it to do anything
+        if (moveDir != Vector3.zero)
+        {
+            Vector3 newVel = Vector3.zero;
+            if (isGrounded())
+            {
+                newVel = moveDir * maxSpeed;
+            }
+            else
+            {
+                newVel = moveDir * maxSpeed * airControl; 
+            }
+            rb.velocity += newVel;
+        }
+
+
+        //Snappy settings - Low momentum
+        if (moveDir != Vector3.zero)
+        {
+            if (isGrounded())
+            {
+                Vector3 newVel = moveDir * maxSpeed;
+                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+            }
+            else
+            {
+                Vector3 newVel = moveDir * maxSpeed * airControl;
+                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
+            }
+        }*/
+
+        ClampGroundVel();
     }
 
     void Jump()
@@ -172,7 +247,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(rb.velocity.x, jumpPower, rb.velocity.z), ForceMode.Impulse);
+            rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse);
         }
     }
 

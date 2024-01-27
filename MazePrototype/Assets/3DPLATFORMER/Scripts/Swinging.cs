@@ -13,7 +13,6 @@ public class Swinging : MonoBehaviour
 
     bool canSwing;
     bool isSwinging;
-    [SerializeField] float swingForce;
 
     private void Update()
     {

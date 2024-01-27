@@ -14,7 +14,6 @@ public class rolling : MonoBehaviour
  
     public float rollforce = 1;
     public float rollMax = 15;
-    public float rollJump = 9;
     public float rollAirCtrl = 0;
     public bool isDashing = false;
     private Vector3 direction;
@@ -48,18 +47,15 @@ public class rolling : MonoBehaviour
         isDashing = true;
         dashTimer = 0f;
         float maxreturn = playerController.maxSpeed;
-        float jumpreturn = playerController.jumpPower;
         float airctrlreturn = playerController.airControl;
         while (dashTimer < dashDuration)
         {
             playerController.maxSpeed = rollMax;
-            playerController.jumpPower = rollJump;
             playerController.airControl = rollAirCtrl;
             dashTimer += Time.deltaTime;
             yield return null;
         }
         playerController.maxSpeed = maxreturn;
-        playerController.jumpPower = jumpreturn;
         playerController.airControl = airctrlreturn;
         isDashing = false;
     }
