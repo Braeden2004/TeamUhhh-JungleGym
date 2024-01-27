@@ -6752,6 +6752,7 @@ MonoBehaviour:
   useGravity: 1
   apexHeight: 4
   apexTime: 0.5
+  jumpVel: 0
   animCurve:
     serializedVersion: 2
     m_Curve:
@@ -6870,6 +6871,8 @@ MonoBehaviour:
   playerScale: 0.6
   rollMaxSpeed: 16
   rollFriction: 0.1
+  accelSpeedMultiplier: 0.1
+  jumpHeightMultiplier: 0.5
   rollBoostForce: 25
   rollForce: 5
 --- !u!1 &557073091
@@ -9846,7 +9849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510716}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15077767, y: 8.678706e-16, z: -4.5790317e-17, w: 0.9885677}
+  m_LocalRotation: {x: 0.15077765, y: -0.000000014730808, z: 0.0000000022467623, w: 0.9885677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

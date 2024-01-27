@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove;
 
     [Header("Parameters")]
-    [SerializeField] float accelSpeed;
+    public float accelSpeed;
     public float maxSpeed;
     [Range(0, 1)] public float airControl;
     [Range(0, 4)] public float friction;
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool useGravity = true; //for wallrunning
     [SerializeField] float apexHeight = 4f;
     [SerializeField] float apexTime = 0.5f;
-    float jumpVel;
+    public float jumpVel;
 
     [Header("Slope anim smoothing")]
     //For lerping slope rotation

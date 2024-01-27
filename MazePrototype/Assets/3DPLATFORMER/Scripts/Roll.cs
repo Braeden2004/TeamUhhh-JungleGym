@@ -16,8 +16,10 @@ public class Roll : MonoBehaviour
     [SerializeField] float rollMaxSpeed;
     float originalMaxSpeed;
     [SerializeField] [Range(0, 0.5f)] float rollFriction;
-    // [SerializeField][Range(0, 5f)] float groundFriction; TO BE TESTED
+    //[SerializeField][Range(0, 2f)] float groundFriction; //TO BE TESTED
     float originalFriction;
+    [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
+    [SerializeField][Range(0, 1)] float jumpHeightMultiplier;
 
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
@@ -60,7 +62,7 @@ public class Roll : MonoBehaviour
         
         CheckForSlope();
 
-        /* TO BE TESTED
+        /*//TO BE TESTED
         if(OnSlope() && isRolling)
         {
             player.friction = rollFriction;
@@ -70,7 +72,7 @@ public class Roll : MonoBehaviour
         {
             player.maxSpeed = originalMaxSpeed;
             player.friction = groundFriction;
-        }*/ 
+        }*/
     }
 
     private bool OnSlope()
@@ -96,6 +98,8 @@ public class Roll : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
         player.maxSpeed = rollMaxSpeed;
         player.friction = rollFriction;
+        player.accelSpeed *= accelSpeedMultiplier;
+        player.jumpVel *= jumpHeightMultiplier;
         //player.canMove = false; //TO BE TESTED
         //col.height = playerScale;
         RollMovement();
@@ -106,6 +110,8 @@ public class Roll : MonoBehaviour
         isRolling = false;
         player.maxSpeed = originalMaxSpeed;
         player.friction = originalFriction;
+        player.accelSpeed /= accelSpeedMultiplier;
+        player.jumpVel /= jumpHeightMultiplier;
         //player.canMove = true;
         //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
@@ -150,6 +156,11 @@ public class Roll : MonoBehaviour
         {
             //rb.velocity = slopeDir * rb.velocity.magnitude; //Maintain velocity on sloped surfaces -> lead to a bug where you'd bounce back and forth when the direction of slope changes
             rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
+        }
+
+        if(player.moveDir != slopeDir)
+        {
+            rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
         }
     }
 
