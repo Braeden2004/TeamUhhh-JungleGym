@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, groundLayer))
         {
             Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
-            transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope + camera
+            transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope + camera -> turn off for RollTest
         }
     }
 
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void AnimChecks()
+    void AnimChecks() //Turn off for roll test
     {
         if (moveDir.magnitude < 0.1f)
         {
