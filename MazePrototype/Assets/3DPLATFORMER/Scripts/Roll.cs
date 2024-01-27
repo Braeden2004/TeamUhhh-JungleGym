@@ -16,6 +16,7 @@ public class Roll : MonoBehaviour
     [SerializeField] float rollMaxSpeed;
     float originalMaxSpeed;
     [SerializeField] [Range(0, 0.5f)] float rollFriction;
+    // [SerializeField][Range(0, 5f)] float groundFriction; TO BE TESTED
     float originalFriction;
 
     [Header("Roll speed values")]
@@ -58,6 +59,18 @@ public class Roll : MonoBehaviour
         }
         
         CheckForSlope();
+
+        /* TO BE TESTED
+        if(OnSlope() && isRolling)
+        {
+            player.friction = rollFriction;
+            player.maxSpeed = rollMaxSpeed;
+        }
+        else if(!OnSlope() && isRolling)
+        {
+            player.maxSpeed = originalMaxSpeed;
+            player.friction = groundFriction;
+        }*/ 
     }
 
     private bool OnSlope()
@@ -83,7 +96,7 @@ public class Roll : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
         player.maxSpeed = rollMaxSpeed;
         player.friction = rollFriction;
-        player.canMove = false;
+        //player.canMove = false; //TO BE TESTED
         //col.height = playerScale;
         RollMovement();
     }
@@ -93,7 +106,7 @@ public class Roll : MonoBehaviour
         isRolling = false;
         player.maxSpeed = originalMaxSpeed;
         player.friction = originalFriction;
-        player.canMove = true;
+        //player.canMove = true;
         //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
@@ -108,9 +121,9 @@ public class Roll : MonoBehaviour
             slammed = true;
         }
 
-        else //Otherwise, 
+        else //Otherwise, add a small upwards boost
         {
-            
+            rb.AddForce(Vector3.up * rollBoostForce / 5f, ForceMode.Impulse);
         }
 
         rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope

@@ -6868,7 +6868,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   playerScale: 0.6
-  rollMaxSpeed: 24
+  rollMaxSpeed: 16
   rollFriction: 0.1
   rollBoostForce: 25
   rollForce: 5
