@@ -24,6 +24,7 @@ public class Roll : MonoBehaviour
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
     [SerializeField] float rollForce;
+    bool slammed;
 
     [Header("Slope calculation variables")]
     RaycastHit slopeHit;
@@ -45,22 +46,36 @@ public class Roll : MonoBehaviour
 
     void Update()
     {
+        CheckForSlope();
 
         if (Input.GetButtonDown("Roll"))
         {
             OnStartRoll();
         }
+
         if(Input.GetButtonUp("Roll"))
         {
             OnStopRoll();
         }
+        
+        if(isRolling)
+        {
+            if (OnSlope())
+            {
+                //rb.velocity = slopeDir * rb.velocity.magnitude; //Maintain velocity on sloped surfaces -> lead to a bug where you'd bounce back and forth when the direction of slope changes
+                rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
+            }
 
-        if(player.isGrounded())
+            if (player.moveDir != slopeDir)
+            {
+                rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
+            }
+        }
+        else if (player.isGrounded())
         {
             slammed = false;
         }
-        
-        CheckForSlope();
+
 
         /*//TO BE TESTED
         if(OnSlope() && isRolling)
@@ -82,7 +97,7 @@ public class Roll : MonoBehaviour
             return false;
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.5f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.2f))
         {
             if (slopeHit.normal != Vector3.up)
             {
@@ -102,7 +117,8 @@ public class Roll : MonoBehaviour
         player.jumpVel *= jumpHeightMultiplier;
         //player.canMove = false; //TO BE TESTED
         //col.height = playerScale;
-        RollMovement();
+
+        RollBoosts();
     }
 
     void OnStopRoll()
@@ -116,11 +132,9 @@ public class Roll : MonoBehaviour
         //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
-
-    bool slammed;
-    void RollMovement()
+    void RollBoosts()
     {
-        if(player.moveDir == Vector3.zero && !slammed && !player.isGrounded()) //Slam downward if there's no input
+        if(player.moveDir == Vector3.zero && !player.isGrounded() && !slammed) //Slam downward if there's no input
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.down * rollBoostForce, ForceMode.Impulse);
@@ -151,17 +165,6 @@ public class Roll : MonoBehaviour
         }
 
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
-
-        if (OnSlope() && isRolling)
-        {
-            //rb.velocity = slopeDir * rb.velocity.magnitude; //Maintain velocity on sloped surfaces -> lead to a bug where you'd bounce back and forth when the direction of slope changes
-            rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
-        }
-
-        if(player.moveDir != slopeDir)
-        {
-            rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
-        }
     }
 
 }

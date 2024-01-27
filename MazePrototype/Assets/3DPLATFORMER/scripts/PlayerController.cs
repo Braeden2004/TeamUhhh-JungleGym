@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.5f, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer))
         {
             return true;
         }
