@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16204681}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.102629386, y: -0.000000017642282, z: -0.000000001820228,
+  m_LocalRotation: {x: -0.102629386, y: 0.000000017642279, z: 0.0000000018202276,
     w: 0.9947197}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 51346628}
   - component: {fileID: 51346627}
   - component: {fileID: 51346626}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Swing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6916,7 +6916,7 @@ Transform:
   m_GameObject: {fileID: 555995874}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.6, y: 30.2, z: -19.09}
+  m_LocalPosition: {x: 40.5, y: 29, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6989,7 +6989,7 @@ MonoBehaviour:
   jumpHold: 0
   isFalling: 0
   canMove: 0
-  accelSpeed: 70
+  accelSpeed: 80
   maxSpeed: 8
   airControl: 0.4
   friction: 3
@@ -7122,7 +7122,7 @@ MonoBehaviour:
   rollFriction: 0.1
   accelSpeedMultiplier: 0.1
   jumpHeightMultiplier: 0.5
-  rollBoostForce: 10
+  rollBoostForce: 15
   rollForce: 5
 --- !u!1 &557073091
 GameObject:
@@ -10658,7 +10658,7 @@ Transform:
   m_GameObject: {fileID: 1496800155}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.6, y: 29.2, z: -30.09}
+  m_LocalPosition: {x: 40.5, y: 28, z: -27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11520,8 +11520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713653290}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.07409748, y: -0.000000017687181, z: -0.0000000013141882,
-    w: 0.99725103}
+  m_LocalRotation: {x: -0.07409748, y: 0.000000017687181, z: 0.0000000013141882, w: 0.99725103}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11769,8 +11768,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752242064}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.10262939, y: -0.00000003528456, z: -0.000000003640456, w: 0.9947197}
-  m_LocalPosition: {x: 40.6, y: 29.2, z: -30.09}
+  m_LocalRotation: {x: -0.10262939, y: 0.00000003528456, z: 0.000000003640456, w: 0.9947197}
+  m_LocalPosition: {x: 40.5, y: 28, z: -27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11878,7 +11877,7 @@ GameObject:
   - component: {fileID: 1799160490}
   - component: {fileID: 1799160489}
   - component: {fileID: 1799160488}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}

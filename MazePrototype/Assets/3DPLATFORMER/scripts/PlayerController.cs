@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;
 
+    public Roll roll;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    Vector3 AdjustVelocityToSlope(Vector3 velocity) //Smooth walking down slopes
+    public Vector3 AdjustVelocityToSlope(Vector3 velocity) //Smooth walking down slopes
     {
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit = new RaycastHit();
@@ -99,14 +101,14 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxisRaw("Vertical");
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpHold = true;
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
             jumpHold = false;
-        }
+        }*/
     }
 
     void HandleFriction()
@@ -141,14 +143,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(rb.velocity.y < 0)
+        /*if(rb.velocity.y < 0)
         {
             isFalling = true;
         }
         else
         {
             isFalling = false;
-        }
+        }*/
     }
 
     void HandleForward()
@@ -195,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        //Current settings
+        /*//Current settings
         if (isGrounded())
         {
             Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
@@ -205,10 +207,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
-        }
+        }*/
 
 
-        /*//Snappy settings - Floaty, need to have a very low air control variable for it to do anything
+        //Snappy settings - Floaty, need to have a very low air control variable for it to do anything
         if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
@@ -224,7 +226,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        //Snappy settings - Low momentum
+        /*//Snappy settings - Low momentum
         if (moveDir != Vector3.zero)
         {
             if (isGrounded())

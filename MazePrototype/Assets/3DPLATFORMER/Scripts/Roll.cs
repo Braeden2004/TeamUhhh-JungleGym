@@ -31,7 +31,7 @@ public class Roll : MonoBehaviour
     Vector3 slopeNormal;
     float slopeAngle;
     float slopeAccel;
-    Vector3 slopeDir;
+    public Vector3 slopeDir;
 
     void Start()
     {
@@ -60,6 +60,7 @@ public class Roll : MonoBehaviour
         
         if(isRolling)
         {
+            RollMove();
             if (OnSlope())
             {
                 //rb.velocity = slopeDir * rb.velocity.magnitude; //Maintain velocity on sloped surfaces -> lead to a bug where you'd bounce back and forth when the direction of slope changes
@@ -115,7 +116,7 @@ public class Roll : MonoBehaviour
         player.friction = rollFriction;
         player.accelSpeed *= accelSpeedMultiplier;
         player.jumpVel *= jumpHeightMultiplier;
-        //player.canMove = false; //TO BE TESTED
+        player.canMove = false; //TO BE TESTED
         //col.height = playerScale;
 
         RollBoosts();
@@ -128,7 +129,17 @@ public class Roll : MonoBehaviour
         player.friction = originalFriction;
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
-        //player.canMove = true;
+        /*//Current settings
+        if (isGrounded())
+        {
+            Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
+            vel = AdjustVelocityToSlope(vel);
+            rb.AddForce(vel, ForceMode.VelocityChange);
+        }
+        else
+        {
+            rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
+        }*/player.canMove = true;
         //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
@@ -143,9 +154,10 @@ public class Roll : MonoBehaviour
 
         else //Otherwise, add a small upwards boost
         {
-            rb.AddForce(Vector3.up * rollBoostForce / 5f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * rollBoostForce / 2f, ForceMode.Impulse);
         }
 
+        if(OnSlope())
         rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
     }
 
@@ -167,4 +179,17 @@ public class Roll : MonoBehaviour
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
     }
 
+    void RollMove()
+    {
+        if (player.isGrounded())
+        {
+            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime;
+            vel = player.AdjustVelocityToSlope(vel);
+            rb.AddForce(vel, ForceMode.VelocityChange);
+        }
+        else
+        {
+            rb.AddForce(player.moveDir * player.accelSpeed * Time.deltaTime * player.airControl, ForceMode.VelocityChange);
+        }
+    }
 }
