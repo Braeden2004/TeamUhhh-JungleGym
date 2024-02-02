@@ -129,17 +129,7 @@ public class Roll : MonoBehaviour
         player.friction = originalFriction;
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
-        /*//Current settings
-        if (isGrounded())
-        {
-            Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
-            vel = AdjustVelocityToSlope(vel);
-            rb.AddForce(vel, ForceMode.VelocityChange);
-        }
-        else
-        {
-            rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
-        }*/player.canMove = true;
+        player.canMove = true;
         //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
@@ -175,7 +165,6 @@ public class Roll : MonoBehaviour
 
             //Vector3 slope = Vector3.ProjectOnPlane(rb.velocity, slopeNormal);
         }
-
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
     }
 

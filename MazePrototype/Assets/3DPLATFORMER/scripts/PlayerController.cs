@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool jumpHold;
     public bool isFalling;
     public bool canMove;
+    bool slopeUp;
 
     [Header("Parameters")]
     public float accelSpeed;
@@ -37,8 +38,6 @@ public class PlayerController : MonoBehaviour
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;
-
-    public Roll roll;
 
     // Start is called before the first frame update
     void Start()
@@ -153,6 +152,25 @@ public class PlayerController : MonoBehaviour
         }*/
     }
 
+    void CheckSlopeDirection()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit slopeHit;
+
+        if (Physics.Raycast(ray, out slopeHit, 1.5f, groundLayer))
+        {
+            var dot = Vector3.Dot(slopeHit.normal, transform.forward);
+            if(dot < 0f)
+            {
+                slopeUp = true;
+            }
+            else if(dot > 0f)
+            {
+                slopeUp = false;
+            }
+        }
+    }
+
     void HandleForward()
     {
         //Get camera forward and right
@@ -180,7 +198,8 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, groundLayer))
         {
             Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
-            transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope + camera -> turn off for RollTest
+            //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
+            transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
         }
     }
 
@@ -220,8 +239,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                newVel = moveDir * maxSpeed * airControl; 
+                newVel = moveDir * maxSpeed * airControl;
             }
+
+            CheckSlopeDirection();
+            if(!slopeUp)
+            {
+                newVel = AdjustVelocityToSlope(newVel);
+            }
+
             rb.velocity += newVel;
         }
 
