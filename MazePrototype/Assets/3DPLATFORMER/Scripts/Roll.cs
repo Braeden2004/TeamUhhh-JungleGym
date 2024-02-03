@@ -153,7 +153,7 @@ public class Roll : MonoBehaviour
     {
         if (player.isGrounded())
         {
-            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime * 2f;
+            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime;
             vel = player.AdjustVelocityToSlope(vel);
             rb.AddForce(vel, ForceMode.VelocityChange);
         }

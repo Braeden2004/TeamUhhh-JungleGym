@@ -5,7 +5,7 @@ public class PlayerSwing : MonoBehaviour
     public Transform ropeStartPoint;
 
     SpringJoint joint;
-    private bool isSwinging = false;
+    public bool isSwinging = false;
     public bool canSwing;
 
     void Update()
