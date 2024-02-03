@@ -5,23 +5,27 @@ using UnityEngine;
 
 public class Swinging : MonoBehaviour
 {
-    //HingeJoint hinge;
-    FixedJoint hinge;
-    //CharacterJoint hinge;
+    [SerializeField] HingeJoint hinge;
+    Rigidbody rb;
 
-    GameObject rope;
+    [SerializeField] GameObject rope;
 
-    bool canSwing;
-    bool isSwinging;
+    [SerializeField] bool canSwing;
+    public bool isSwinging;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void Update()
     {
-        if(canSwing)
+        if(canSwing && !isSwinging)
         {
             if (Input.GetKeyDown(KeyCode.E) && hinge == null)
             {
-                hinge = transform.AddComponent<FixedJoint>();
-                hinge.connectedBody = rope.transform.parent.GetComponent<Rigidbody>();
+                hinge = rope.GetComponent<HingeJoint>();
+                hinge.connectedBody = rb;
                 isSwinging = true;
                 canSwing = false;
             }
@@ -30,8 +34,9 @@ public class Swinging : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && hinge != null)
             {
-                Destroy(hinge);
                 isSwinging = false;
+                hinge.connectedBody = null;
+                hinge = null;
             }
         }
     }

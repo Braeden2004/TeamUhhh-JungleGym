@@ -39,11 +39,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;
 
+    //Swinging swinging; //FOR SWINGING OBJECT
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+        //swinging = GetComponent<Swinging>(); //FOR SWINGING OBJECT
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -199,6 +202,7 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
             //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
+            //if(!swinging.isSwinging) //FOR SWINGING OBJECT
             transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
         }
     }
@@ -216,7 +220,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        /*//Current settings
+        /*//Original settings
         if (isGrounded())
         {
             Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
@@ -228,18 +232,16 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
         }*/
 
-
-        //Snappy settings - Floaty, need to have a very low air control variable for it to do anything
         if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
             if (isGrounded())
             {
-                newVel = moveDir * maxSpeed;
+                newVel = moveDir * accelSpeed * Time.deltaTime; //Remove deltatime for extremely snappy movement
             }
             else
             {
-                newVel = moveDir * maxSpeed * airControl;
+                newVel = moveDir * accelSpeed * Time.deltaTime * airControl;
             }
 
             CheckSlopeDirection();
@@ -247,25 +249,8 @@ public class PlayerController : MonoBehaviour
             {
                 newVel = AdjustVelocityToSlope(newVel);
             }
-
             rb.velocity += newVel;
         }
-
-
-        /*//Snappy settings - Low momentum
-        if (moveDir != Vector3.zero)
-        {
-            if (isGrounded())
-            {
-                Vector3 newVel = moveDir * maxSpeed;
-                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
-            }
-            else
-            {
-                Vector3 newVel = moveDir * maxSpeed * airControl;
-                rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
-            }
-        }*/
 
         ClampGroundVel();
     }

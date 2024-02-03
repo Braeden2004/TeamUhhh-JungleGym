@@ -37,8 +37,6 @@ public class Roll : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
-        //col = GetComponent<CapsuleCollider>();
-        //originalScale = col.height;
         originalScale = transform.localScale.y;
         originalMaxSpeed = player.maxSpeed;
         originalFriction = player.friction;
@@ -63,7 +61,6 @@ public class Roll : MonoBehaviour
             RollMove();
             if (OnSlope())
             {
-                //rb.velocity = slopeDir * rb.velocity.magnitude; //Maintain velocity on sloped surfaces -> lead to a bug where you'd bounce back and forth when the direction of slope changes
                 rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
             }
 
@@ -76,19 +73,6 @@ public class Roll : MonoBehaviour
         {
             slammed = false;
         }
-
-
-        /*//TO BE TESTED
-        if(OnSlope() && isRolling)
-        {
-            player.friction = rollFriction;
-            player.maxSpeed = rollMaxSpeed;
-        }
-        else if(!OnSlope() && isRolling)
-        {
-            player.maxSpeed = originalMaxSpeed;
-            player.friction = groundFriction;
-        }*/
     }
 
     private bool OnSlope()
@@ -116,9 +100,7 @@ public class Roll : MonoBehaviour
         player.friction = rollFriction;
         player.accelSpeed *= accelSpeedMultiplier;
         player.jumpVel *= jumpHeightMultiplier;
-        player.canMove = false; //TO BE TESTED
-        //col.height = playerScale;
-
+        player.canMove = false;
         RollBoosts();
     }
 
@@ -130,7 +112,6 @@ public class Roll : MonoBehaviour
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
         player.canMove = true;
-        //col.height = originalScale;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
     void RollBoosts()
@@ -144,7 +125,7 @@ public class Roll : MonoBehaviour
 
         else //Otherwise, add a small upwards boost
         {
-            rb.AddForce(Vector3.up * rollBoostForce / 2f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * rollBoostForce / 3f, ForceMode.Impulse);
         }
 
         if(OnSlope())
@@ -172,7 +153,7 @@ public class Roll : MonoBehaviour
     {
         if (player.isGrounded())
         {
-            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime;
+            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime * 2f;
             vel = player.AdjustVelocityToSlope(vel);
             rb.AddForce(vel, ForceMode.VelocityChange);
         }
