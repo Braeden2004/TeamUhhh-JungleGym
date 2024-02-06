@@ -8,9 +8,14 @@ public class RollingObstacle : MonoBehaviour
     public GameObject cactusPrefab;
     public GameObject spawnPoint;
 
+    private bool hasRolled = false;
+    Rigidbody rb;
+
     public float radius;
     public float angle;
     public float ImpulseStrength;
+    public float spawnDelay;
+    public float breakThreshold;
 
     public GameObject playerRef;
 
@@ -18,7 +23,8 @@ public class RollingObstacle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        rb = gameObject.GetComponent<Rigidbody>();
+        //DElay
     }
 
     // Update is called once per frame
@@ -36,9 +42,10 @@ public class RollingObstacle : MonoBehaviour
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
             //Checks if target is within range and if there are any obstructions between the agent and the target
-            if (GetComponent<Rigidbody>().velocity == Vector3.zero &&distanceToTarget < radius && Physics.Raycast(transform.position, directionToTarget, distanceToTarget))
+            if (hasRolled == false && rb.velocity == Vector3.zero &&distanceToTarget < radius && Physics.Raycast(transform.position, directionToTarget, distanceToTarget))
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * ImpulseStrength);
+                rb.AddForce(transform.forward * ImpulseStrength);
+                hasRolled = true;
             }
         }
     }
@@ -48,12 +55,26 @@ public class RollingObstacle : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //collision.gameObject.health - 1 or something
+            if (rb.velocity.magnitude > breakThreshold)
+            {
+                Debug.Log("SHOULD BREAK");
+                //2 Second delay or something
+                Instantiate(cactusPrefab, spawnPoint.transform.position, cactusPrefab.transform.rotation);
+                Destroy(gameObject);
+            }
+            
+
+            //collision.destroy or wahtever
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
+            if (rb.velocity.magnitude > breakThreshold)
+            {
+                //Same Delay
+                Instantiate(cactusPrefab, spawnPoint.transform.position, cactusPrefab.transform.rotation);
+                Destroy(gameObject);
+            }
             //collision.destroy or wahtever
-
-            Instantiate(cactusPrefab, spawnPoint.transform.position, cactusPrefab.transform.rotation);
         }
     }
 

@@ -454,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 51346624}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.3, y: 1.4, z: -169.9}
+  m_LocalPosition: {x: 42.3, y: 1.6, z: -169.9}
   m_LocalScale: {x: 4.4053116, y: 2.563314, z: 4.3055987}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7061,12 +7061,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544599013}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
+  m_LocalPosition: {x: 15.1, y: -0.14964771, z: -42.869205}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1331199082}
+  m_Children:
+  - {fileID: 1331199082}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547991245
 GameObject:
@@ -10605,7 +10606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510716}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.04531444, y: 0.00000001732247, z: 7.857652e-10, w: 0.9989728}
+  m_LocalRotation: {x: -0.045314416, y: -0.00000001732247, z: -7.857648e-10, w: 0.9989728}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10973,13 +10974,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331199081}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 16.1, y: -0.14964771, z: -42.869205}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 544599014}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 544599014}
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 90}
 --- !u!54 &1331199084
 Rigidbody:
@@ -11095,9 +11095,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cactusPrefab: {fileID: 1331199081}
   spawnPoint: {fileID: 544599013}
-  radius: 5
+  radius: 10
   angle: 90
-  ImpulseStrength: 10
+  ImpulseStrength: 500
+  spawnDelay: 0
+  breakThreshold: 1
   playerRef: {fileID: 356541735}
 --- !u!1 &1370619318
 GameObject:
@@ -12215,7 +12217,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713653290}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.074097484, y: 0.00000001768717, z: 0.0000000013141875, w: 0.99725103}
+  m_LocalRotation: {x: -0.074097484, y: -0.000000017687178, z: -0.000000001314188,
+    w: 0.99725103}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13866,4 +13869,4 @@ SceneRoots:
   - {fileID: 892811753}
   - {fileID: 512487210}
   - {fileID: 312657610}
-  - {fileID: 1331199082}
+  - {fileID: 544599014}
