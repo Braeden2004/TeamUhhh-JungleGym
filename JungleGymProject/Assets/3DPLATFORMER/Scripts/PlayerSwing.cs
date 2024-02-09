@@ -9,11 +9,20 @@ public class PlayerSwing : MonoBehaviour
     public bool canSwing;
     public Rope connectedRope;
     public Rope connectableRope;
+    PlayerController player;
+    Rigidbody rb;
+    //public float swingJumpMaximum; threshold for extra jump WIP
 
     [Header("Spring Joint Parameters")]
     public float springRate = 4.5f;
     public float damperRate = 7f;
     public float massScale = 4.5f;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        player= GetComponent<PlayerController>();
+    }
 
     void Update()
     {
@@ -23,10 +32,15 @@ public class PlayerSwing : MonoBehaviour
             {
                 StartSwinging();
             }
-            else
+            
+        }
+        else if(isSwinging && Input.GetKeyDown(KeyCode.Space))
+        {
+            /*if (player.moveDir != Vector3.zero)
             {
-                ReleaseSwing();
-            }
+                rb.AddForce(player.jumpVel / 2f * transform.up, ForceMode.Impulse); //extra jump for when you're moving slowly WIP
+            }*/
+            ReleaseSwing();
         }
     }
 

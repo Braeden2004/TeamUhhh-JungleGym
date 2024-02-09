@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float accelSpeed;
     public float maxSpeed;
     [Range(0, 1)] public float airControl;
-    [Range(0, 4)] public float friction;
+    [Range(1, 2)] public float friction;
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -115,8 +115,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleFriction()
     {
-        /*
-        if(isGrounded())
+        /*if(isGrounded())
         {
             rb.drag = friction;
         }
@@ -160,7 +159,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit slopeHit;
 
-        if (Physics.Raycast(ray, out slopeHit, 1.5f, groundLayer))
+        if (Physics.Raycast(ray, out slopeHit, 1.1f, groundLayer))
         {
             var dot = Vector3.Dot(slopeHit.normal, transform.forward);
             if(dot < 0f)
