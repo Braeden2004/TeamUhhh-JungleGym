@@ -25,6 +25,7 @@ public class Roll : MonoBehaviour
     [SerializeField] float rollBoostForce;
     [SerializeField] float rollForce;
     bool slammed;
+    bool jumped;
 
     [Header("Slope calculation variables")]
     RaycastHit slopeHit;
@@ -72,6 +73,7 @@ public class Roll : MonoBehaviour
         else if (player.isGrounded())
         {
             slammed = false;
+            jumped = false;
         }
     }
 
@@ -123,9 +125,10 @@ public class Roll : MonoBehaviour
             slammed = true;
         }
 
-        else //Otherwise, add a small upwards boost
+        else if(!jumped)//Otherwise, add a small upwards boost
         {
             rb.AddForce(Vector3.up * rollBoostForce / 3f, ForceMode.Impulse);
+            jumped = true;
         }
 
         if(OnSlope())

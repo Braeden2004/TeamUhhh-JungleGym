@@ -5,28 +5,33 @@ using UnityEngine;
 public class Rope : MonoBehaviour
 {
     public Transform lineBottom;
-    PlayerSwing player;
+    public Transform renderPoint;
     public LineRenderer rope;
     GameObject playerObj;
+    PlayerSwing player;
 
     private void Start()
     {
         rope = GetComponent<LineRenderer>();
-        rope.SetPosition(0, transform.parent.position);
-        rope.SetPosition(1, lineBottom.position);
+        renderPoint = lineBottom;
     }
 
     private void Update()
     {
+        DrawRope(renderPoint);
+
         if (player != null)
         {
-            if (player.isSwinging)
+            if (player.connectedRope == this)
             {
-                rope.SetPosition(1, playerObj.transform.position);
+                if (player.isSwinging)
+                {
+                    renderPoint = playerObj.transform;
+                }
             }
             else
             {
-                DrawRope();
+                renderPoint = lineBottom;
             }
         }
     }
@@ -37,24 +42,12 @@ public class Rope : MonoBehaviour
         {
             playerObj = other.gameObject;
             player = other.GetComponent<PlayerSwing>();
-            player.ropeStartPoint = transform.parent;
-            player.canSwing = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            player.ropeStartPoint = null;
-            player.canSwing = false;
-            //player = null;
-        }
-    }
-
-    void DrawRope()
+    void DrawRope(Transform pointToRender)
     {
         rope.SetPosition(0, transform.parent.position);
-        rope.SetPosition(1, lineBottom.position);
+        rope.SetPosition(1, pointToRender.position);
     }
 }
