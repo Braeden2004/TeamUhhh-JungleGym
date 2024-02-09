@@ -12,7 +12,9 @@ public class Rope : MonoBehaviour
 
     private void Start()
     {
-        rope = GetComponent<LineRenderer>();
+        rope = gameObject.AddComponent<LineRenderer>();
+        rope.startWidth = 0.15f;
+        rope.endWidth = 0.15f;
         renderPoint = lineBottom;
     }
 

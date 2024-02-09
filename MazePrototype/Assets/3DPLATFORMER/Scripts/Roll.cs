@@ -84,7 +84,7 @@ public class Roll : MonoBehaviour
             return false;
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.2f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.1f))
         {
             if (slopeHit.normal != Vector3.up)
             {
@@ -131,15 +131,17 @@ public class Roll : MonoBehaviour
             jumped = true;
         }
 
-        if(OnSlope())
-        rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+        if (OnSlope() && player.moveDir == Vector3.zero)
+        {
+            rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+        }
     }
 
     void CheckForSlope()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
 
-        if (Physics.Raycast(ray, out slopeHit, 1.5f, groundMask))
+        if (Physics.Raycast(ray, out slopeHit, 1.1f, groundMask))
         {
             slopeNormal = slopeHit.normal;
             slopeAngle = Vector3.Angle(Vector3.up, slopeNormal);
