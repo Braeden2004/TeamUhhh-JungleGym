@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float accelSpeed;
     public float maxSpeed;
     [Range(0, 1)] public float airControl;
-    [Range(1, 2)] public float friction;
+    [Range(1, 3)] public float friction;
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -61,8 +61,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
         HandleFriction();
         HandleGravity();
-        HandleForward();
-
+        
         AnimChecks();
 
         Jump();
@@ -70,7 +69,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(canMove)
+
+        HandleForward();
+        if (canMove)
         Move();
     }
 
@@ -219,19 +220,30 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        /*//Original settings
-        if (isGrounded())
-        {
-            Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
-            vel = AdjustVelocityToSlope(vel);
-            rb.AddForce(vel, ForceMode.VelocityChange);
-        }
-        else
-        {
-            rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
-        }*/
-
+        //Original settings
         if (moveDir != Vector3.zero)
+        {
+            Vector3 newVel = Vector3.zero;
+            if (isGrounded())
+            {
+                newVel = moveDir * accelSpeed * Time.deltaTime;
+                rb.AddForce(newVel, ForceMode.VelocityChange);
+            }
+            else
+            {
+                newVel = moveDir * accelSpeed * airControl * Time.deltaTime;
+            }
+
+            CheckSlopeDirection();
+            if (!slopeUp)
+            {
+                newVel = AdjustVelocityToSlope(newVel);
+            }
+
+            rb.AddForce(newVel, ForceMode.VelocityChange);
+        }
+
+        /*if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
             if (isGrounded())
@@ -249,7 +261,7 @@ public class PlayerController : MonoBehaviour
                 newVel = AdjustVelocityToSlope(newVel);
             }
             rb.velocity += newVel;
-        }
+        }*/
 
         ClampGroundVel();
     }

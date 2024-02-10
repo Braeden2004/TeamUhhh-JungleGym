@@ -36083,7 +36083,6 @@ GameObject:
   - component: {fileID: 555995880}
   - component: {fileID: 555995882}
   - component: {fileID: 555995887}
-  - component: {fileID: 555995888}
   - component: {fileID: 555995889}
   - component: {fileID: 555995890}
   m_Layer: 0
@@ -36158,8 +36157,8 @@ MonoBehaviour:
   canMove: 0
   accelSpeed: 48
   maxSpeed: 12
-  airControl: 0.5
-  friction: 1.5
+  airControl: 0.7
+  friction: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -36241,22 +36240,6 @@ MonoBehaviour:
   rollBoostForce: 15
   rollForce: 5
   slopeDir: {x: 0, y: 0, z: 0}
---- !u!114 &555995888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555995874}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953646b53925a5b40acfb0262f50a3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hinge: {fileID: 0}
-  rope: {fileID: 0}
-  canSwing: 0
-  isSwinging: 0
 --- !u!114 &555995889
 MonoBehaviour:
   m_ObjectHideFlags: 0
