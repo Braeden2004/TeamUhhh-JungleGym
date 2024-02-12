@@ -35971,7 +35971,7 @@ MonoBehaviour:
   jumpHold: 0
   isFalling: 0
   canMove: 0
-  accelSpeed: 60
+  accelSpeed: 80
   maxSpeed: 12
   airControl: 0.5
   friction: 1
