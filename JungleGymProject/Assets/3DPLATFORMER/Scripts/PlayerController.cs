@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
         HandleFriction();
         HandleGravity();
-        HandleForward();
+        
 
         AnimChecks();
 
@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         if(canMove)
         Move();
+        HandleForward();
     }
 
     public bool isGrounded()
