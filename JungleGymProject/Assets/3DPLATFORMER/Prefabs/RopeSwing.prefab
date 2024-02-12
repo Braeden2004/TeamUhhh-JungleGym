@@ -454,3 +454,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   self: {fileID: 2042591529072827575}
   triggerRadius: 11
+  player: {fileID: 0}

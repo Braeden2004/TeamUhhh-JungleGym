@@ -8,27 +8,35 @@ public class ContextMenuAppear : MonoBehaviour
     public TextMeshProUGUI self;
     public float triggerRadius = 2f;
 
+    public GameObject player;
+    private PlayerSwing swingScript;
+
     private void Start()
     {
-        
+        swingScript = player.GetComponent<PlayerSwing>();
     }
     void Update()
     {
         //Set mesh render to false
         self.GetComponent<TextMeshProUGUI>().enabled = false;
-        //Check for player within radius
-        Collider[] colliders = Physics.OverlapSphere(transform.position, triggerRadius);
 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, triggerRadius);
+        //Check for player within radius
         foreach (Collider collider in colliders)
         {
             //Check for collision with target
             if (collider.CompareTag("Player"))
             {
-                self.GetComponent<TextMeshProUGUI>().enabled = true;
+                if (swingScript.isSwinging == false)
+                {
+                    self.GetComponent<TextMeshProUGUI>().enabled = true;
+                }
+                else
+                {
+                    self.GetComponent<TextMeshProUGUI>().enabled = false;
+                }
+
             }
-    
         }
-
-
     }
 }
