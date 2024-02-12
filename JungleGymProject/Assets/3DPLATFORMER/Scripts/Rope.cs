@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Rope : MonoBehaviour
 {
     public Transform lineBottom;
     public Transform renderPoint;
     public LineRenderer rope;
+    public TextMeshPro textPrompt;
     GameObject playerObj;
     PlayerSwing player;
 
