@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Audio")]
+    AudioManager audioManager;
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     [Header("References")]
     public Animator animator;
     public ParticleSystem puffLand;
@@ -259,6 +267,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
+            //AUDIO QUEUE
+            audioManager.PlaySFX(audioManager.jump);
+
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse);
         }
