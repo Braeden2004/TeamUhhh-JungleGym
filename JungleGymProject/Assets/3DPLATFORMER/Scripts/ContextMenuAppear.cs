@@ -8,12 +8,15 @@ public class ContextMenuAppear : MonoBehaviour
     public TextMeshProUGUI self;
     public float triggerRadius = 2f;
 
-    public GameObject player;
+    private GameObject player;
     private PlayerSwing swingScript;
 
     private void Start()
     {
+
+        player = GameObject.FindWithTag("Player");
         swingScript = player.GetComponent<PlayerSwing>();
+
     }
     void Update()
     {
