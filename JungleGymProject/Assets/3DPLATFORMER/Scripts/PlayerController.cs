@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public float deceleration;
     public float airDeceleration;
     [Range(0, 1)] public float airControl;
-    //[Range(0, 4)] public float friction;
+    //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
             jumpHold = false;
         }*/
     }
-    public float friction;
+
     void HandleFriction()
     {
         /*if(isGrounded())
