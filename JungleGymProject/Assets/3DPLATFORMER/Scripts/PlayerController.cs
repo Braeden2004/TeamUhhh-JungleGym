@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float accelSpeed;
     public float maxSpeed;
     public float deceleration;
+    public float airDeceleration;
     [Range(0, 1)] public float airControl;
     //[Range(0, 4)] public float friction;
     [SerializeField] LayerMask groundLayer;
@@ -35,10 +36,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
-    [Header("Slope anim smoothing")]
+    /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
-    [SerializeField] float animTime;
+    [SerializeField] float animTime;*/
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
+
     }
 
     public bool isGrounded()
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
             jumpHold = false;
         }*/
     }
-
+    public float friction;
     void HandleFriction()
     {
         /*if(isGrounded())
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(friction * -rb.velocity);
         }*/
 
-        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+       Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
 
         if (isGrounded() && xzVel != Vector3.zero)
         {
@@ -142,6 +144,26 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
         }
+        else if(!isGrounded() && xzVel != Vector3.zero) 
+        {
+            rb.AddForce(airDeceleration * -xzVel);
+        }
+
+        //Move to FixedUpdate for this version
+        /*Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+        if (isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.velocity -= (xzVel / maxSpeed) * friction;
+
+            if (Mathf.Abs(rb.velocity.magnitude) < 0.25f)
+            {
+                rb.velocity = Vector3.zero;
+            }
+        }
+        else if (!isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.velocity -= (xzVel / maxSpeed) * 0.2f;
+        }*/
     }
 
     void HandleGravity()
@@ -269,7 +291,6 @@ public class PlayerController : MonoBehaviour
             }
 
             rb.AddForce(newVel, ForceMode.VelocityChange);
-
         }
 
         /*if (moveDir != Vector3.zero)
