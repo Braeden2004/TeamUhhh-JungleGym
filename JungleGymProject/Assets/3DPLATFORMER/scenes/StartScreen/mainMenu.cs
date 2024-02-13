@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
 {
+
+    private void Awake()
+    {
+
+    }
     public void PlayGame()
     {
         //go to next scene in queue (build settings)

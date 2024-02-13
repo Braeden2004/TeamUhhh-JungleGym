@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class PlayerSwing : MonoBehaviour
 {
+
+    [Header("Audio")]
+    AudioManager audioManager;
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     [Header ("Checks")]
     public Transform ropeStartPoint;
     SpringJoint joint;
@@ -30,6 +39,8 @@ public class PlayerSwing : MonoBehaviour
         {
             if (!isSwinging && canSwing)
             {
+                audioManager.PlaySFX(audioManager.ropeGrab);
+                audioManager.PlaySFX(audioManager.ropeSwing);
                 StartSwinging();
             }
             
@@ -41,6 +52,7 @@ public class PlayerSwing : MonoBehaviour
                 rb.AddForce(player.jumpVel / 2f * transform.up, ForceMode.Impulse); //extra jump for when you're moving slowly WIP
             }*/
             ReleaseSwing();
+            audioManager.PlaySFX(audioManager.jump);
         }
     }
 

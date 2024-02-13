@@ -2049,11 +2049,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5668913169269762293, guid: d61a91eb4f866c74c94951c75c84632c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 280967311977593540, guid: d61a91eb4f866c74c94951c75c84632c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1665411772}
   m_SourcePrefab: {fileID: 100100000, guid: d61a91eb4f866c74c94951c75c84632c, type: 3}
+--- !u!1 &1665411769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280967311977593540, guid: d61a91eb4f866c74c94951c75c84632c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1665411768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1665411770 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2101363166379937118, guid: d61a91eb4f866c74c94951c75c84632c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1665411768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1665411771 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2715644351297822341, guid: d61a91eb4f866c74c94951c75c84632c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1665411768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1665411772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665411769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cd2fbbe63555d4887ec011f8444fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Music_Source: {fileID: 1665411771}
+  SFX_Source: {fileID: 1665411770}
+  title: {fileID: 8300000, guid: f2b808a538effc64bad5022b8ebc04db, type: 3}
+  settings: {fileID: 8300000, guid: d2672fd0fb0295c47a11f49ff49a173d, type: 3}
+  ingame: {fileID: 8300000, guid: 9b652e3133591414c803cd45d03fdcf9, type: 3}
 --- !u!1 &1765171615
 GameObject:
   m_ObjectHideFlags: 0

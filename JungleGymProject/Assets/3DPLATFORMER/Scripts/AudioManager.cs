@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        Music_Source.Stop();
         Music_Source.volume = 0.1f;
         Music_Source.clip = title;
         Music_Source.loop = true;
