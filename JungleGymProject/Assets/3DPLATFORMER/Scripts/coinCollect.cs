@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class coinCollect : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,9 @@ public class coinCollect : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ScoreManager.instance.AddCoin();
+
+
             Destroy(gameObject);
         }
         
