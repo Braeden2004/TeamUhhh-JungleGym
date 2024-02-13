@@ -465,7 +465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16204681}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2426292, y: -1e-45, z: -0, w: 0.9701191}
+  m_LocalRotation: {x: 0.2426292, y: -0, z: -0, w: 0.9701191}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35899,7 +35899,6 @@ GameObject:
   - component: {fileID: 555995880}
   - component: {fileID: 555995882}
   - component: {fileID: 555995887}
-  - component: {fileID: 555995888}
   - component: {fileID: 555995889}
   - component: {fileID: 555995890}
   m_Layer: 0
@@ -35972,10 +35971,11 @@ MonoBehaviour:
   jumpHold: 0
   isFalling: 0
   canMove: 0
-  accelSpeed: 70
-  maxSpeed: 14
-  airControl: 0.5
-  friction: 2
+  accelSpeed: 40
+  maxSpeed: 10
+  deceleration: 10
+  airDeceleration: 1
+  airControl: 0.7
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -35985,31 +35985,6 @@ MonoBehaviour:
   apexHeight: 4
   apexTime: 0.5
   jumpVel: 0
-  animCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  animTime: 1
 --- !u!136 &555995882
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -36050,29 +36025,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   playerScale: 0.6
-  rollMaxSpeed: 18
-  rollFriction: 0.1
-  accelSpeedMultiplier: 0.1
-  jumpHeightMultiplier: 0.5
+  maxSpeedMultiplier: 1.5
+  decelMultiplier: 0.2
+  accelSpeedMultiplier: 0.2
+  jumpHeightMultiplier: 1.1
   rollBoostForce: 15
-  rollForce: 9
+  rollForce: 12
   slopeDir: {x: 0, y: 0, z: 0}
---- !u!114 &555995888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555995874}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 953646b53925a5b40acfb0262f50a3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hinge: {fileID: 0}
-  rope: {fileID: 0}
-  canSwing: 0
-  isSwinging: 0
 --- !u!114 &555995889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54258,7 +54217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510716}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29796067, y: 3e-45, z: -1e-45, w: 0.95457816}
+  m_LocalRotation: {x: 0.29796067, y: -1e-45, z: -0, w: 0.95457816}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -78761,7 +78720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713653290}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2703149, y: -0, z: -0, w: 0.962772}
+  m_LocalRotation: {x: 0.2703149, y: -3e-45, z: 1e-45, w: 0.962772}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -79074,7 +79033,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752242064}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29796067, y: 4e-45, z: -1e-45, w: 0.95457816}
+  m_LocalRotation: {x: 0.29796067, y: -4e-45, z: 1e-45, w: 0.95457816}
   m_LocalPosition: {x: 340.2067, y: 49.69436, z: -33.831436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

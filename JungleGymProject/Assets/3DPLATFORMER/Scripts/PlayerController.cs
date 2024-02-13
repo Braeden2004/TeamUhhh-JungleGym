@@ -26,13 +26,15 @@ public class PlayerController : MonoBehaviour
     public bool jumpHold;
     public bool isFalling;
     public bool canMove;
-    bool slopeUp;
+    bool slopeDown;
 
     [Header("Parameters")]
     public float accelSpeed;
     public float maxSpeed;
+    public float deceleration;
+    public float airDeceleration;
     [Range(0, 1)] public float airControl;
-    [Range(0, 4)] public float friction;
+    //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -43,19 +45,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
-    [Header("Slope anim smoothing")]
+    /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
-    [SerializeField] float animTime;
-
-    //Swinging swinging; //FOR SWINGING OBJECT
+    [SerializeField] float animTime;*/
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        //swinging = GetComponent<Swinging>(); //FOR SWINGING OBJECT
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -68,10 +67,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
+
         HandleFriction();
         HandleGravity();
-        
-
         AnimChecks();
 
         Jump();
@@ -79,14 +77,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(canMove)
-        Move();
+
         HandleForward();
+
+        if (canMove)
+        {
+            Move();
+        }
+
     }
 
     public bool isGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer))
         {
             return true;
         }
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, 1.5f, groundLayer))
+        if (Physics.Raycast(ray, out hit, 1.1f, groundLayer))
         {
             Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
             Vector3 adjustedVel = slopeRot * velocity;
@@ -134,17 +137,49 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0f;
         }*/
 
-        if(isGrounded())
+        /*if(isGrounded())
         {
             rb.AddForce(friction * -rb.velocity);
+        }*/
+
+        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+
+        if (isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.AddForce(deceleration * -xzVel);
+
+            if (Mathf.Abs(rb.velocity.magnitude) < 0.25f)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
+        else if (!isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.AddForce(airDeceleration * -xzVel);
+        }
+
+        //Move to FixedUpdate for this version
+        /*Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+        if (isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.velocity -= (xzVel / maxSpeed) * friction;
+
+            if (Mathf.Abs(rb.velocity.magnitude) < 0.25f)
+            {
+                rb.velocity = Vector3.zero;
+            }
+        }
+        else if (!isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.velocity -= (xzVel / maxSpeed) * 0.2f;
+        }*/
     }
 
     void HandleGravity()
     {
         if (!isGrounded() && useGravity)
         {
-            if(rb.velocity.y < -maxGravity)
+            if (rb.velocity.y < -maxGravity)
             {
                 rb.velocity = new Vector3(rb.velocity.x, -maxGravity, rb.velocity.z);
             }
@@ -154,21 +189,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             isFalling = true;
         }
 
         else
         {
-            if(isFalling == true)
+            if (isFalling == true)
             {
                 //AUDIO QUEUE
                 audioManager.PlaySFX(audioManager.land);
 
                 isFalling = false;
             }
-            
+
         }
     }
 
@@ -179,7 +214,22 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out slopeHit, 1.1f, groundLayer))
         {
-            var dot = Vector3.Dot(slopeHit.normal, transform.forward);
+            float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            float slopeDirAngle = Vector3.Angle(slopeHit.normal, moveDir);
+
+            int x = (int)Mathf.Round(slopeAngle);
+            int y = (int)slopeDirAngle;
+
+            if (x % (90f - y) == 0)
+            {
+                slopeDown = true;
+            }
+            else
+            {
+                slopeDown = false;
+            }
+
+            /*var dot = Vector3.Dot(slopeHit.normal, transform.forward);
             if(dot < 0f)
             {
                 slopeUp = true;
@@ -187,7 +237,7 @@ public class PlayerController : MonoBehaviour
             else if(dot > 0f)
             {
                 slopeUp = false;
-            }
+            }*/
         }
     }
 
@@ -217,7 +267,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, groundLayer))
         {
-            Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
+            //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
             //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
             //if(!swinging.isSwinging) //FOR SWINGING OBJECT
             transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
@@ -237,19 +287,30 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        /*//Original settings
-        if (isGrounded())
-        {
-            Vector3 vel = moveDir * accelSpeed * Time.deltaTime;
-            vel = AdjustVelocityToSlope(vel);
-            rb.AddForce(vel, ForceMode.VelocityChange);
-        }
-        else
-        {
-            rb.AddForce(moveDir * accelSpeed * Time.deltaTime * airControl, ForceMode.VelocityChange);
-        }*/
-
+        //Original settings
         if (moveDir != Vector3.zero)
+        {
+            Vector3 newVel = Vector3.zero;
+            if (isGrounded())
+            {
+                newVel = moveDir * accelSpeed * Time.deltaTime;
+                rb.AddForce(newVel, ForceMode.VelocityChange);
+            }
+            else
+            {
+                newVel = moveDir * accelSpeed * airControl * Time.deltaTime;
+            }
+
+            CheckSlopeDirection();
+            if (slopeDown)
+            {
+                newVel = AdjustVelocityToSlope(newVel);
+            }
+
+            rb.AddForce(newVel, ForceMode.VelocityChange);
+        }
+
+        /*if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
             if (isGrounded())
@@ -267,7 +328,7 @@ public class PlayerController : MonoBehaviour
                 newVel = AdjustVelocityToSlope(newVel);
             }
             rb.velocity += newVel;
-        }
+        }*/
 
         ClampGroundVel();
 
@@ -301,7 +362,7 @@ public class PlayerController : MonoBehaviour
             audioManager.PlaySFX(audioManager.jump);
 
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, jumpVel, 0), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
         }
     }
 
@@ -315,13 +376,13 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("IsIdle", false);
         }
-        
-        if(isGrounded() == true && puffed == false)
+
+        if (isGrounded() == true && puffed == false)
         {
             puffLand.Play();
             puffed = true;
         }
-        if(isGrounded() == false)
+        if (isGrounded() == false)
         {
             puffed = false;
         }

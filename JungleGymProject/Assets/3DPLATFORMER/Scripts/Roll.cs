@@ -22,13 +22,16 @@ public class Roll : MonoBehaviour
     [Header("Player values")]
     [SerializeField][Range(0.4f, 0.7f)] float playerScale;
     float originalScale;
-    [SerializeField] float rollMaxSpeed;
-    float originalMaxSpeed;
-    [SerializeField] [Range(0, 0.5f)] float rollFriction;
-    //[SerializeField][Range(0, 2f)] float groundFriction; //TO BE TESTED
-    float originalFriction;
+    //[SerializeField] float rollMaxSpeed;
+    //float originalMaxSpeed;
+    //[SerializeField] [Range(0, 0.5f)] float rollFriction;
+    //float originalFriction;
+    //[SerializeField] float rollDecel;
+    //float originalDecel;
+    [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
+    [SerializeField][Range(0, 1)] float decelMultiplier;
     [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
-    [SerializeField][Range(0, 1)] float jumpHeightMultiplier;
+    [SerializeField][Range(0, 2)] float jumpHeightMultiplier;
 
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
@@ -48,8 +51,7 @@ public class Roll : MonoBehaviour
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         originalScale = transform.localScale.y;
-        originalMaxSpeed = player.maxSpeed;
-        originalFriction = player.friction;
+        //originalFriction = player.friction;
     }
 
     void Update()
@@ -63,24 +65,27 @@ public class Roll : MonoBehaviour
             audioManager.PlaySFX(audioManager.roll);
         }
 
-        if(Input.GetButtonUp("Roll"))
+        if (Input.GetButtonUp("Roll"))
         {
             OnStopRoll();
         }
-        
-        if(isRolling)
+
+        if (isRolling)
         {
             //AUDIO FOR CONTINUOUS ROLL HERE
             //NEEDS COROUTINE
-            RollMove();
+            //RollMove();
             if (OnSlope())
             {
                 rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
-            }
-
-            if (player.moveDir != slopeDir)
-            {
-                rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
+                if (player.moveDir != slopeDir)
+                {
+                    rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
+                }
+                if (player.moveDir == Vector3.zero)
+                {
+                    //rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+                }
             }
         }
         else if (player.isGrounded())
@@ -111,42 +116,40 @@ public class Roll : MonoBehaviour
     {
         isRolling = true;
         transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
-        player.maxSpeed = rollMaxSpeed;
-        player.friction = rollFriction;
+        player.maxSpeed *= maxSpeedMultiplier;
+        //player.friction = rollFriction;
+        player.deceleration *= decelMultiplier;
         player.accelSpeed *= accelSpeedMultiplier;
         player.jumpVel *= jumpHeightMultiplier;
-        player.canMove = false;
+        //player.canMove = false;
         RollBoosts();
     }
 
     void OnStopRoll()
     {
         isRolling = false;
-        player.maxSpeed = originalMaxSpeed;
-        player.friction = originalFriction;
+        player.maxSpeed /= maxSpeedMultiplier;
+        //player.friction = originalFriction;
+        player.deceleration /= decelMultiplier;
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
-        player.canMove = true;
+        //player.canMove = true;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
+
     void RollBoosts()
     {
-        if(player.moveDir == Vector3.zero && !player.isGrounded() && !slammed) //Slam downward if there's no input
+        if (player.moveDir == Vector3.zero && !player.isGrounded() && !slammed) //Slam downward if there's no input
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.down * rollBoostForce, ForceMode.Impulse);
             slammed = true;
         }
 
-        else if(!jumped)//Otherwise, add a small upwards boost
+        else if (!jumped)//Otherwise, add a small upwards boost
         {
             rb.AddForce(Vector3.up * rollBoostForce / 3f, ForceMode.Impulse);
             jumped = true;
-        }
-
-        if (OnSlope() && player.moveDir == Vector3.zero)
-        {
-            rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
         }
     }
 
@@ -161,13 +164,13 @@ public class Roll : MonoBehaviour
 
             slopeAccel = Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
             slopeDir = Vector3.Cross(Vector3.Cross(slopeNormal, -Vector3.up), slopeNormal).normalized; //Get direction of slope
-
-            //Vector3 slope = Vector3.ProjectOnPlane(rb.velocity, slopeNormal);
+            //float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
+
     }
 
-    void RollMove()
+    /*void RollMove()
     {
         if (player.isGrounded())
         {
@@ -179,5 +182,5 @@ public class Roll : MonoBehaviour
         {
             rb.AddForce(player.moveDir * player.accelSpeed * Time.deltaTime * player.airControl, ForceMode.VelocityChange);
         }
-    }
+    }*/
 }
