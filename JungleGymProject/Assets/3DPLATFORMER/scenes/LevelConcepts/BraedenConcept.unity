@@ -464,7 +464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16204681}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2426292, y: -1e-45, z: -0, w: 0.9701191}
+  m_LocalRotation: {x: 0.2426292, y: -0, z: -0, w: 0.9701191}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -36155,9 +36155,9 @@ MonoBehaviour:
   jumpHold: 0
   isFalling: 0
   canMove: 0
-  accelSpeed: 50
-  maxSpeed: 14
-  deceleration: 15
+  accelSpeed: 60
+  maxSpeed: 10
+  deceleration: 10
   airControl: 0.7
   groundLayer:
     serializedVersion: 2
@@ -36234,11 +36234,11 @@ MonoBehaviour:
     m_Bits: 1024
   playerScale: 0.6
   maxSpeedMultiplier: 1.5
-  decelMultiplier: 0.5
-  accelSpeedMultiplier: 0.3
-  jumpHeightMultiplier: 0.5
+  decelMultiplier: 0.2
+  accelSpeedMultiplier: 0.2
+  jumpHeightMultiplier: 1.1
   rollBoostForce: 15
-  rollForce: 9
+  rollForce: 30
   slopeDir: {x: 0, y: 0, z: 0}
 --- !u!114 &555995889
 MonoBehaviour:
@@ -78967,7 +78967,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713653290}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2703149, y: -0, z: -0, w: 0.962772}
+  m_LocalRotation: {x: 0.2703149, y: -3e-45, z: 1e-45, w: 0.962772}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

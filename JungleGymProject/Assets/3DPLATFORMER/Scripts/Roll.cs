@@ -16,14 +16,13 @@ public class Roll : MonoBehaviour
     //[SerializeField] float rollMaxSpeed;
     //float originalMaxSpeed;
     //[SerializeField] [Range(0, 0.5f)] float rollFriction;
-    //[SerializeField][Range(0, 2f)] float groundFriction; //TO BE TESTED
     //float originalFriction;
     //[SerializeField] float rollDecel;
     //float originalDecel;
     [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
     [SerializeField][Range(0, 1)] float decelMultiplier;
     [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
-    [SerializeField][Range(0, 1)] float jumpHeightMultiplier;
+    [SerializeField][Range(0, 2)] float jumpHeightMultiplier;
 
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
@@ -66,16 +65,14 @@ public class Roll : MonoBehaviour
             if (OnSlope())
             {
                 rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
-            }
-
-            if (player.moveDir != slopeDir)
-            {
-                rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
-            }
-
-            if (OnSlope() && player.moveDir == Vector3.zero)
-            {
-                rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+                if (player.moveDir != slopeDir)
+                {
+                    rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
+                }
+                else if(player.moveDir == Vector3.zero)
+                {
+                    rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+                }
             }
         }
         else if (player.isGrounded())
@@ -92,7 +89,7 @@ public class Roll : MonoBehaviour
             return false;
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.1f))
         {
             if (slopeHit.normal != Vector3.up)
             {
@@ -159,12 +156,11 @@ public class Roll : MonoBehaviour
             slopeAccel = Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
             slopeDir = Vector3.Cross(Vector3.Cross(slopeNormal, -Vector3.up), slopeNormal).normalized; //Get direction of slope
 
-            //Vector3 slope = Vector3.ProjectOnPlane(rb.velocity, slopeNormal);
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
     }
 
-    void RollMove()
+    /*void RollMove()
     {
         if (player.isGrounded())
         {
@@ -176,5 +172,5 @@ public class Roll : MonoBehaviour
         {
             rb.AddForce(player.moveDir * player.accelSpeed * Time.deltaTime * player.airControl, ForceMode.VelocityChange);
         }
-    }
+    }*/
 }

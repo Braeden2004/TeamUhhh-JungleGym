@@ -40,14 +40,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;
 
-    //Swinging swinging; //FOR SWINGING OBJECT
-
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        //swinging = GetComponent<Swinging>(); //FOR SWINGING OBJECT
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -74,12 +71,14 @@ public class PlayerController : MonoBehaviour
         HandleForward();
 
         if (canMove)
-        Move();
+        {
+            Move();
+        }
     }
 
     public bool isGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer))
         {
             return true;
         }
@@ -91,7 +90,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, 1.3f, groundLayer))
+        if (Physics.Raycast(ray, out hit, 1.1f, groundLayer))
         {
             Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
             Vector3 adjustedVel = slopeRot * velocity;
@@ -174,8 +173,9 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit slopeHit;
 
-        if (Physics.Raycast(ray, out slopeHit, 1.3f, groundLayer))
+        if (Physics.Raycast(ray, out slopeHit, 1.1f, groundLayer))
         {
+            float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
             var dot = Vector3.Dot(slopeHit.normal, transform.forward);
             if(dot < 0f)
             {
@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, groundLayer))
         {
-            Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
+            //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
             //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
             //if(!swinging.isSwinging) //FOR SWINGING OBJECT
             transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
