@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
+    public Transform startposition;
 
     [Header("References")]
     public Animator animator;
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour
         jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
+
+       
     }
 
     // Update is called once per frame
@@ -140,6 +143,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public struct JumpEventData
+    {
+        public string playerName;
+        public Vector3 playerlands;
+        public Vector3 playerstarts;
+    }
+
     void HandleGravity()
     {
         if (!isGrounded() && useGravity)
@@ -165,7 +176,16 @@ public class PlayerController : MonoBehaviour
             {
                 //AUDIO QUEUE
                 audioManager.PlaySFX(audioManager.land);
+               
+                
+                var data = new JumpEventData()
+                {
+                    playerName = this.name,
+                    playerlands = transform.position,
+                    playerstarts = startposition.position
+                };
 
+                TelemetryLogger.Log(this, "Jump", data);
                 isFalling = false;
             }
             
@@ -292,9 +312,13 @@ public class PlayerController : MonoBehaviour
             //audioManager.PlaySFX(audioManager.run4);
         }*/
     }
+    
+
 
     void Jump()
     {
+
+        startposition = transform;
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             //AUDIO QUEUE
