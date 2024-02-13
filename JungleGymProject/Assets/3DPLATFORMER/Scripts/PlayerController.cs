@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public float accelSpeed;
     public float maxSpeed;
     [Range(0, 1)] public float airControl;
-    [Range(1, 2)] public float friction;
+    [Range(0, 4)] public float friction;
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
