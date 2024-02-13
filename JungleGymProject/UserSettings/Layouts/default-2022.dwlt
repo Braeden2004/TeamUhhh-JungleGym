@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 1293
+  controlID: 2818
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 1294
+  controlID: 2819
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 1295
+  controlID: 2820
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -440,9 +440,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: fc300000
-      m_LastClickedID: 0
-      m_ExpandedIDs: a0f3fffff4faffff
+      m_SelectedIDs: f06e0000
+      m_LastClickedID: 28400
+      m_ExpandedIDs: f4faffff886f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -862,9 +862,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 339.25815, y: 48.385105, z: -15.846041}
+    m_Target: {x: 323, y: 51.5, z: 38.582787}
     speed: 2
-    m_Value: {x: 339.25815, y: 48.385105, z: -15.846041}
+    m_Value: {x: 323, y: 51.5, z: 38.582787}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -910,13 +910,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.24729311, y: 0.021955127, z: -0.005234339, w: 0.96884865}
+    m_Target: {x: 0.2267739, y: -0.31723273, z: 0.078795895, w: 0.91763854}
     speed: 2
-    m_Value: {x: -0.24729311, y: -0.021955129, z: 0.005234339, w: -0.96884865}
+    m_Value: {x: -0.2267739, y: 0.31723273, z: -0.078795895, w: -0.9176386}
   m_Size:
-    m_Target: 11.564819
+    m_Target: 15.138728
     speed: 2
-    m_Value: 11.564819
+    m_Value: 15.138728
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1077,7 +1077,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/3DPLATFORMER/Scripts
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1085,15 +1085,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 58
   m_LastFolders:
-  - Assets/3DPLATFORMER/Scripts
+  - Assets
   m_LastFoldersGridSize: 58
   m_LastProjectPath: C:\Users\jonat\OneDrive\Documents\GitHub\MazePrototype\JungleGymProject
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 56730000
-    m_LastClickedID: 29526
+    m_SelectedIDs: a6710000
+    m_LastClickedID: 29094
     m_ExpandedIDs: 00000000a6710000a8710000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

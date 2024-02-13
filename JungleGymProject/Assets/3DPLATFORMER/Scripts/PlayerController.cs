@@ -22,8 +22,9 @@ public class PlayerController : MonoBehaviour
     [Header("Parameters")]
     public float accelSpeed;
     public float maxSpeed;
+    public float deceleration;
     [Range(0, 1)] public float airControl;
-    [Range(1, 3)] public float friction;
+    //[Range(0, 4)] public float friction;
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -59,9 +60,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
+
         HandleFriction();
         HandleGravity();
-        
         AnimChecks();
 
         Jump();
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour
     {
 
         HandleForward();
+
         if (canMove)
         Move();
     }
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, 1.5f, groundLayer))
+        if (Physics.Raycast(ray, out hit, 1.3f, groundLayer))
         {
             Quaternion slopeRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
             Vector3 adjustedVel = slopeRot * velocity;
@@ -125,9 +127,21 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0f;
         }*/
 
-        if(isGrounded())
+        /*if(isGrounded())
         {
             rb.AddForce(friction * -rb.velocity);
+        }*/
+
+        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+
+        if (isGrounded() && xzVel != Vector3.zero)
+        {
+            rb.AddForce(deceleration * -xzVel);
+
+            if(Mathf.Abs(rb.velocity.magnitude) < 0.25f)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 
@@ -160,7 +174,7 @@ public class PlayerController : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit slopeHit;
 
-        if (Physics.Raycast(ray, out slopeHit, 1.1f, groundLayer))
+        if (Physics.Raycast(ray, out slopeHit, 1.3f, groundLayer))
         {
             var dot = Vector3.Dot(slopeHit.normal, transform.forward);
             if(dot < 0f)
@@ -241,6 +255,7 @@ public class PlayerController : MonoBehaviour
             }
 
             rb.AddForce(newVel, ForceMode.VelocityChange);
+
         }
 
         /*if (moveDir != Vector3.zero)
@@ -270,8 +285,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpVel, rb.velocity.z);
-            //rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(new Vector3(0, jumpVel, 0), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
         }
     }
 
