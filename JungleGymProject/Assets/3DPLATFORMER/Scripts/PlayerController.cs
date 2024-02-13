@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool jumpHold;
     public bool isFalling;
     public bool canMove;
-    bool slopeUp;
+    bool slopeDown;
 
     [Header("Parameters")]
     public float accelSpeed;
@@ -175,8 +175,22 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out slopeHit, 1.1f, groundLayer))
         {
-            float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
-            var dot = Vector3.Dot(slopeHit.normal, transform.forward);
+            float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            float slopeDirAngle = Vector3.Angle(slopeHit.normal, moveDir);
+
+            int x = (int)Mathf.Round(slopeAngle);
+            int y = (int)slopeDirAngle;
+
+            if(x % (90f - y) == 0)
+            {
+                slopeDown = true;
+            }
+            else
+            {
+                slopeDown = false;
+            }
+
+            /*var dot = Vector3.Dot(slopeHit.normal, transform.forward);
             if(dot < 0f)
             {
                 slopeUp = true;
@@ -184,7 +198,7 @@ public class PlayerController : MonoBehaviour
             else if(dot > 0f)
             {
                 slopeUp = false;
-            }
+            }*/
         }
     }
 
@@ -249,7 +263,7 @@ public class PlayerController : MonoBehaviour
             }
 
             CheckSlopeDirection();
-            if (!slopeUp)
+            if (slopeDown)
             {
                 newVel = AdjustVelocityToSlope(newVel);
             }

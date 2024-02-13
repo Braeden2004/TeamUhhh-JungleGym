@@ -69,9 +69,9 @@ public class Roll : MonoBehaviour
                 {
                     rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
                 }
-                else if(player.moveDir == Vector3.zero)
+                if(player.moveDir == Vector3.zero)
                 {
-                    rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+                    //rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
                 }
             }
         }
@@ -123,6 +123,7 @@ public class Roll : MonoBehaviour
         //player.canMove = true;
         transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
+
     void RollBoosts()
     {
         if(player.moveDir == Vector3.zero && !player.isGrounded() && !slammed) //Slam downward if there's no input
@@ -137,11 +138,6 @@ public class Roll : MonoBehaviour
             rb.AddForce(Vector3.up * rollBoostForce / 3f, ForceMode.Impulse);
             jumped = true;
         }
-
-        if (OnSlope() && player.moveDir == Vector3.zero)
-        {
-            rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
-        }
     }
 
     void CheckForSlope()
@@ -155,9 +151,10 @@ public class Roll : MonoBehaviour
 
             slopeAccel = Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
             slopeDir = Vector3.Cross(Vector3.Cross(slopeNormal, -Vector3.up), slopeNormal).normalized; //Get direction of slope
-
+            //float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
+
     }
 
     /*void RollMove()

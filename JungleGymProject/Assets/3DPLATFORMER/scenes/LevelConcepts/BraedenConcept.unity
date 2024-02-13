@@ -36238,7 +36238,7 @@ MonoBehaviour:
   accelSpeedMultiplier: 0.2
   jumpHeightMultiplier: 1.1
   rollBoostForce: 15
-  rollForce: 30
+  rollForce: 9
   slopeDir: {x: 0, y: 0, z: 0}
 --- !u!114 &555995889
 MonoBehaviour:
