@@ -362,7 +362,7 @@ public class PlayerController : MonoBehaviour
             audioManager.PlaySFX(audioManager.jump);
 
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(0, jumpVel, 0), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
+            rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
         }
     }
 

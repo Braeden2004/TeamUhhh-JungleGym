@@ -78,13 +78,13 @@ public class Roll : MonoBehaviour
             if (OnSlope())
             {
                 rb.AddForce(slopeAccel * rollForce * slopeDir); //Add force down the slope
-                if (player.moveDir != slopeDir)
+                if (player.moveDir != slopeDir && player.moveDir != Vector3.zero)
                 {
                     rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
                 }
                 if (player.moveDir == Vector3.zero)
                 {
-                    //rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
+                    rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
                 }
             }
         }
