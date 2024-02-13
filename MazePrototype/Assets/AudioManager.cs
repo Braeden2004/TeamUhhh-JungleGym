@@ -24,7 +24,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        Music_Source.clip = ingame;
+        Music_Source.volume = 0.1f;
+        Music_Source.clip = title;
         Music_Source.loop = true;
         Music_Source.Play();
     }

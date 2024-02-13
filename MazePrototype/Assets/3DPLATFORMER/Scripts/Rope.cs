@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Rope : MonoBehaviour
 {
+    [Header("Audio")]
+    AudioManager audioManager;
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+
     public Transform lineBottom;
     PlayerSwing player;
     public LineRenderer rope;
@@ -27,6 +36,9 @@ public class Rope : MonoBehaviour
             else
             {
                 DrawRope();
+                //audioManager.PlaySFX(audioManager.ropeSwing);
+                //AUDIO FOR SWINGING
+                //NEEDS COROUTINE
             }
         }
     }

@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Roll : MonoBehaviour
 {
+    [Header("Audio")]
+    AudioManager audioManager;
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+
     PlayerController player;
     Rigidbody rb;
     CapsuleCollider col;
@@ -49,6 +58,8 @@ public class Roll : MonoBehaviour
         if (Input.GetButtonDown("Roll"))
         {
             OnStartRoll();
+            //AUDIO FOR START OF ROLL HERE
+            audioManager.PlaySFX(audioManager.roll);
         }
 
         if(Input.GetButtonUp("Roll"))
@@ -58,6 +69,8 @@ public class Roll : MonoBehaviour
         
         if(isRolling)
         {
+            //AUDIO FOR CONTINUOUS ROLL HERE
+            //NEEDS COROUTINE
             RollMove();
             if (OnSlope())
             {

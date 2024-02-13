@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
+
     [Header("References")]
     public Animator animator;
     public ParticleSystem puffLand;
@@ -153,14 +154,22 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*if(rb.velocity.y < 0)
+        if(rb.velocity.y < 0)
         {
             isFalling = true;
         }
+
         else
         {
-            isFalling = false;
-        }*/
+            if(isFalling == true)
+            {
+                //AUDIO QUEUE
+                audioManager.PlaySFX(audioManager.land);
+
+                isFalling = false;
+            }
+            
+        }
     }
 
     void CheckSlopeDirection()
@@ -261,6 +270,27 @@ public class PlayerController : MonoBehaviour
         }
 
         ClampGroundVel();
+
+
+        //AUDIO FOR MOVE HERE
+        //NEEDS COROUTINE
+        /*int randmove = Random.Range(0, 3);
+        if(randmove == 0)
+        {
+            //audioManager.PlaySFX(audioManager.run1);
+        }
+        if (randmove == 1)
+        {
+            //audioManager.PlaySFX(audioManager.run2);
+        }
+        if (randmove == 2)
+        {
+            //audioManager.PlaySFX(audioManager.run3);
+        }
+        if (randmove == 3)
+        {
+            //audioManager.PlaySFX(audioManager.run4);
+        }*/
     }
 
     void Jump()

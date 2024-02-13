@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class PlayerSwing : MonoBehaviour
 {
+    [Header("Audio")]
+    AudioManager audioManager;
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+
     public Transform ropeStartPoint;
 
     SpringJoint joint;
@@ -15,6 +24,10 @@ public class PlayerSwing : MonoBehaviour
             if (!isSwinging && canSwing)
             {
                 StartSwinging();
+
+                //AUDIO QUEUE
+                audioManager.PlaySFX(audioManager.ropeGrab);
+                audioManager.PlaySFX(audioManager.ropeSwing);
             }
             else
             {
