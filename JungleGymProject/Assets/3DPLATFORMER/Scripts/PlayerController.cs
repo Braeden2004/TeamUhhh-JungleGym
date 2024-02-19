@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
     {
         GetInput();
 
-        HandleFriction();
         HandleGravity();
         AnimChecks();
 
@@ -79,6 +78,7 @@ public class PlayerController : MonoBehaviour
     {
 
         HandleForward();
+        HandleFriction();
 
         if (canMove)
         {
@@ -293,12 +293,12 @@ public class PlayerController : MonoBehaviour
             Vector3 newVel = Vector3.zero;
             if (isGrounded())
             {
-                newVel = moveDir * accelSpeed * Time.deltaTime;
+                newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
                 rb.AddForce(newVel, ForceMode.VelocityChange);
             }
             else
             {
-                newVel = moveDir * accelSpeed * airControl * Time.deltaTime;
+                newVel = moveDir * accelSpeed * airControl * Time.fixedDeltaTime;
             }
 
             CheckSlopeDirection();
