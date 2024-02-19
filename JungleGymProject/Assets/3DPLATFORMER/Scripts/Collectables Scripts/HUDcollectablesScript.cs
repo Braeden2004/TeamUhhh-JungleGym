@@ -20,14 +20,14 @@ public class HUDcollectablesScript : MonoBehaviour
         if (textMeshProTicket != null)
         {
             //draw tickets
-            textMeshProTicket.text = "X " + ScoreManager.instance.ticketTotal.ToString();
+            textMeshProTicket.text = ScoreManager.instance.ticketTotal.ToString();
         }
 
         // Update the text to display Clipboard value
         if (textMeshProClipboard != null)
         {
             //draw Clipboards
-            textMeshProClipboard.text = "X " + ScoreManager.instance.clipboardTotal.ToString();
+            textMeshProClipboard.text = ScoreManager.instance.clipboardTotal.ToString() + " / 4";
         }
 
     }
