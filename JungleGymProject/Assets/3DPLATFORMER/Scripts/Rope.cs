@@ -10,7 +10,7 @@ public class Rope : MonoBehaviour
     public LineRenderer rope;
     public TextMeshPro textPrompt;
     GameObject playerObj;
-    PlayerSwing player;
+    public PlayerSwing player;
 
     private void Start()
     {
