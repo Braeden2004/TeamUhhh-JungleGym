@@ -5,8 +5,10 @@ using UnityEngine;
 public class Balloon : MonoBehaviour
 {
     Rigidbody rb;
+    Rigidbody playerBody;
     public Rope attachedRope;
     float timer;
+    bool addForceToPlayer;
     [SerializeField] float popForce;
     [SerializeField] float popTimer;
     [SerializeField] float floatSpeed;
@@ -20,32 +22,56 @@ public class Balloon : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (attachedRope != null)
         {
             if (attachedRope.player != null)
             {
+                playerBody = attachedRope.player.gameObject.GetComponent<Rigidbody>();
 
-                attachedRope.player.joint.minDistance = maxDist;
-                attachedRope.player.joint.maxDistance = maxDist;
-                rb.AddForce(Vector3.up * floatSpeed * Time.deltaTime);
-                rb.AddForce(transform.forward * floatSpeed * Time.deltaTime);
-                attachedRope.player.joint.connectedAnchor = transform.position;
+                if (attachedRope.player.joint != null)
+                {
+                    SpringJoint attachedPlayerJoint = attachedRope.player.joint;
+
+                    attachedPlayerJoint.minDistance = maxDist;
+                    attachedPlayerJoint.maxDistance = maxDist;
+
+                    //Move this out for auto movement
+                    Vector3 balloonForce = (Vector3.up * floatSpeed * Time.deltaTime) + (transform.forward * floatSpeed * Time.deltaTime);
+                    rb.AddForce(balloonForce);
+
+                    //rb.AddForce(attachedRope.player.gameObject.GetComponent<Rigidbody>().velocity.normalized); //WIP player drags balloon
+
+                    attachedPlayerJoint.connectedAnchor = transform.position;
+
+                    if (attachedRope.player.gameObject.GetComponent<PlayerController>().moveDir == Vector3.zero)
+                    {
+                        Vector3 velocityDifference = rb.velocity - playerBody.velocity;
+                        playerBody.velocity += velocityDifference;
+                    }
+
+                    addForceToPlayer = true;
+
+                    //Move this out for auto pop
+                    timer += Time.deltaTime;
+                    if (timer > popTimer)
+                    {
+                        Pop();
+                    }
+                }
             }
         }
 
-        timer += Time.deltaTime;
-        if(timer > popTimer) 
-        {
-            Pop();
-        }
+        
     }
 
     void Pop()
     {
-        //attachedRope.player.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        attachedRope.player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * popForce, ForceMode.Impulse);
+        if (addForceToPlayer)
+        {
+            attachedRope.player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * popForce, ForceMode.Impulse);
+        }
         attachedRope.player.ReleaseSwing();
         Destroy(this.gameObject);
     }
