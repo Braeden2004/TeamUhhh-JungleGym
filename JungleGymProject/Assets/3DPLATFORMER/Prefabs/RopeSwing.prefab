@@ -304,7 +304,6 @@ GameObject:
   - component: {fileID: 3339853505658498027}
   - component: {fileID: 2042591529072827575}
   - component: {fileID: 9189937400841867704}
-  - component: {fileID: 3612208631009051018}
   m_Layer: 5
   m_Name: '[E] Grab'
   m_TagString: Untagged
@@ -441,17 +440,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useStaticBillboard: 1
---- !u!114 &3612208631009051018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7790845635792976403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e36b9b2f67aca34780717269abd266a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  self: {fileID: 2042591529072827575}
-  triggerRadius: 4
