@@ -390,10 +390,15 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump Logic
-        if ((jumpBufferCounter > 0)&& isGrounded())
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
+            //make player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
+
+            //reset values
+            coyoteTimeCounter = 0f;
+            jumpBufferCounter = 0;
         }
         
 
