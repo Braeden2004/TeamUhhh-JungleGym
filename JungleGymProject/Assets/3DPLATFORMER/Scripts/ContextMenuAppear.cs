@@ -11,15 +11,21 @@ public class ContextMenuAppear : MonoBehaviour
     private GameObject player;
     private PlayerSwing swingScript;
 
+    private GameObject RopeSwing;
+    private Rope ropeScript;
+
     private void Start()
     {
 
         player = GameObject.FindWithTag("Player");
         swingScript = player.GetComponent<PlayerSwing>();
+        ropeScript = RopeSwing.GetComponent<Rope>();
 
     }
     void Update()
     {
+
+        /*
         //Set mesh render to false
         self.GetComponent<TextMeshProUGUI>().enabled = false;
 
@@ -41,5 +47,6 @@ public class ContextMenuAppear : MonoBehaviour
 
             }
         }
+        */
     }
 }
