@@ -78,7 +78,7 @@ public class Roll : MonoBehaviour
             if (OnSlope())
             {
                 rb.AddForce(slopeAccel * rollForce * slopeDir, ForceMode.Acceleration); //Add force down the slope
-                print(slopeAccel * rollForce * slopeDir);
+
                 if (player.moveDir != slopeDir)
                 {
                     rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill

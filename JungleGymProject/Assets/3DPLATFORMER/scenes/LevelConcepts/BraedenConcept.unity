@@ -35973,8 +35973,8 @@ MonoBehaviour:
   canMove: 0
   accelSpeed: 45
   maxSpeed: 15
-  deceleration: 15
-  airDeceleration: 3
+  deceleration: 45
+  airDeceleration: 9
   airControl: 0.75
   groundLayer:
     serializedVersion: 2
@@ -36045,6 +36045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeStartPoint: {fileID: 0}
+  joint: {fileID: 0}
   isSwinging: 0
   canSwing: 0
   connectedRope: {fileID: 0}
@@ -54217,7 +54218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181510716}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29796067, y: -1e-45, z: -0, w: 0.95457816}
+  m_LocalRotation: {x: 0.29796067, y: 3e-45, z: -1e-45, w: 0.95457816}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -78720,7 +78721,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1713653290}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2703149, y: 1e-45, z: -0, w: 0.962772}
+  m_LocalRotation: {x: 0.2703149, y: -3e-45, z: 1e-45, w: 0.962772}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -79033,7 +79034,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752242064}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29796067, y: -4e-45, z: 1e-45, w: 0.95457816}
+  m_LocalRotation: {x: 0.29796067, y: 4e-45, z: -1e-45, w: 0.95457816}
   m_LocalPosition: {x: 340.2067, y: 49.69436, z: -33.831436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
