@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/3DPLATFORMER/scenes/StartScreen/Menu.unity
     guid: bf619a7f15a3218418c5d1598f9e8372
   - enabled: 1
-    path: Assets/3DPLATFORMER/scenes/MapScenes/MapScene.unity
+    path: Assets/3DPLATFORMER/scenes/MapScenes/MapSceneOLD.unity
     guid: 632187075d2ac564b831869f67fd0bc2
   - enabled: 0
     path: Assets/Scenes/Player2Win.unity
