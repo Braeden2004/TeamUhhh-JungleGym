@@ -27,7 +27,7 @@ public class HUDcollectablesScript : MonoBehaviour
         if (textMeshProClipboard != null)
         {
             //draw Clipboards
-            textMeshProClipboard.text = ScoreManager.instance.clipboardTotal.ToString() + " / 4";
+            textMeshProClipboard.text = ScoreManager.instance.clipboardTotal.ToString();
         }
 
     }
