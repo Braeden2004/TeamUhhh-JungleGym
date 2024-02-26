@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferCounter;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
-    public float isGroundedDistance;
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -96,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, isGroundedDistance, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer))
         {
             return true;
         }
