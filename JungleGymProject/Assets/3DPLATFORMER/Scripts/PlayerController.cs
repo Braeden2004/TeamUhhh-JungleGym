@@ -362,12 +362,6 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-        
-        //AUDIO QUEUE
-        audioManager.PlaySFX(audioManager.jump);
-
-        
         //Cyote Time
         if (isGrounded())
         {
@@ -391,6 +385,9 @@ public class PlayerController : MonoBehaviour
         //Jump Logic
         if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
+            //AUDIO QUEUE
+            audioManager.PlaySFX(audioManager.jump);
+
             //make player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
