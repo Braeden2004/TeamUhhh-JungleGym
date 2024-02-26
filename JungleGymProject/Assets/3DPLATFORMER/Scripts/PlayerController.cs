@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
+    //JumpBuffer + Cyote Time
+    public float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+    public float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
@@ -356,14 +362,49 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        //Cyote Time
+        if (isGrounded())
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        //Jump Buffer
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        //Jump Logic
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
 
+            //make player jump
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
+
+            //reset values
+            coyoteTimeCounter = 0f;
+            jumpBufferCounter = 0;
+        }
+        
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        {
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
         }
+        */
     }
 
     void AnimChecks() //Turn off for roll test
