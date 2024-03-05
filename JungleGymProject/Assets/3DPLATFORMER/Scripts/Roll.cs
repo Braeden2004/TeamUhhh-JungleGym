@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Roll : MonoBehaviour
 {
     [Header("Audio")]
@@ -46,23 +47,32 @@ public class Roll : MonoBehaviour
     float slopeAccel;
     public Vector3 slopeDir;
 
+    float rollingNumber;
+
     void Start()
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         originalScale = transform.localScale.y;
         //originalFriction = player.friction;
+
+        rollingNumber = 0;
     }
 
     void Update()
     {
         CheckForSlope();
 
+
         if (Input.GetButtonDown("Roll"))
         {
             OnStartRoll();
             //AUDIO FOR START OF ROLL HERE
             audioManager.PlaySFX(audioManager.roll);
+
+            rollingNumber++;
+
+            TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
         }
 
         if (Input.GetButtonUp("Roll"))
