@@ -16,4 +16,12 @@ public class ScoreManager : MonoBehaviour
     {
         coinTotal += 1;
     }
+
+    public void Update()
+    {
+        if (coinTotal == 5) 
+        {
+            TelemetryLogger.Log(this, "Ticket Time", Time.deltaTime);
+        }
+    }
 }
