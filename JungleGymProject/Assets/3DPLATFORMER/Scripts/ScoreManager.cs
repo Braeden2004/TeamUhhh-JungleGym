@@ -8,6 +8,9 @@ public class ScoreManager : MonoBehaviour
 
     public int coinTotal = 0;
 
+    float timer;
+    float totalTimer;
+
     private void Awake()
     {
         instance = this;
@@ -15,11 +18,21 @@ public class ScoreManager : MonoBehaviour
     public void AddCoin()
     {
         coinTotal += 1;
-        TelemetryLogger.Log(this, "Clipboard");
+        if (int i = 0; i = 5; int++)
+            {
+            TelemetryLogger.Log(this, "Clipboard");
+            timer = time.deltaTime;
+            }
     }
 
     public void Update()
     {
+        if (AddCoin())
+        {
+            totalTimer = timer - timer;
+            TelemetryLogger.Log(this, "Time between clipboard", totalTimer);
+        }
+
         if (coinTotal == 5) 
         {
             TelemetryLogger.Log(this, "Clipboard", Time.deltaTime);
