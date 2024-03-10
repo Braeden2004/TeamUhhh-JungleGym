@@ -15,14 +15,15 @@ public class ScoreManager : MonoBehaviour
     {
         instance = this;
     }
+
     public void AddCoin()
     {
-        coinTotal += 1;
-        if (int i = 0; i = 5; int++)
-            {
+        coinTotal++;
+        if (int i; i = 5; i++)
+        {
             TelemetryLogger.Log(this, "Clipboard");
             timer = time.deltaTime;
-            }
+        }
     }
 
     public void Update()
