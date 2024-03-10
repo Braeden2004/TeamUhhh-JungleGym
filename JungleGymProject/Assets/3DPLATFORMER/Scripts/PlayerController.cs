@@ -47,9 +47,10 @@ public class PlayerController : MonoBehaviour
 
     //JumpBuffer + Cyote Time
     public float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
+    public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
+    public float coyoteTimeCounter;
+    public bool canJump = true;
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -365,10 +366,17 @@ public class PlayerController : MonoBehaviour
         //Cyote Time
         if (isGrounded())
         {
+            //stops player from double jumping
+            canJump = true;
+
             coyoteTimeCounter = coyoteTime;
         }
         else
         {
+            //stops player from double jumping
+            canJump = false;
+
+            //countdown timer
             coyoteTimeCounter -= Time.deltaTime;
         }
 
@@ -383,7 +391,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump Logic
-        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0) && (canJump == true)) 
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
