@@ -16,7 +16,7 @@ public class Rope : MonoBehaviour
     //Braeden Variables for Context Menu
     public TextMeshProUGUI grabText;
 
-
+    [SerializeField] GameObject telemteryTrigger;
     private void Start()
     {
         rope = gameObject.AddComponent<LineRenderer>();
@@ -42,10 +42,13 @@ public class Rope : MonoBehaviour
 
                     //Make context menu false
                     grabText.GetComponent<TextMeshProUGUI>().enabled = false;
+                    telemteryTrigger.SetActive(true);
                 }
             }
             else
             {
+                telemteryTrigger.SetActive(false);
+
                 renderPoint = lineBottom;
             }
         }

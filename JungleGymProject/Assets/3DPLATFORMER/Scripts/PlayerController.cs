@@ -366,8 +366,6 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
-
         //Cyote Time
         if (isGrounded())
         {
@@ -381,6 +379,9 @@ public class PlayerController : MonoBehaviour
         //Jump Buffer
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            jumpTotal++;
+            TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
+
             jumpBufferCounter = jumpBufferTime;
         }
         else

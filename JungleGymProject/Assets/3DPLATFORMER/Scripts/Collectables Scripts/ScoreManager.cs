@@ -29,19 +29,10 @@ public class ScoreManager : MonoBehaviour
         {
             TelemetryLogger.Log(this, "Clipboard Collected Time", Time.deltaTime);
         }
-    }
 
-    public void Update()
-    {
-        if (clipboardTotal == 5) 
+        if (clipboardTotal == 5)
         {
             TelemetryLogger.Log(this, "Clipboard Collected Total Time", Time.deltaTime);
         }
-
-        if (ticketTotal == 5)
-        {
-            TelemetryLogger.Log(this, "Ticket Collected Total Time", Time.deltaTime);
-        }
     }
-
 }
