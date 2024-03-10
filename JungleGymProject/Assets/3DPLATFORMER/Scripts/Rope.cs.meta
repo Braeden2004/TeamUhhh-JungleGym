@@ -3,7 +3,15 @@ guid: 90b88cc7b2618bb449c937b7af30e878
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - lineBottom: {instanceID: 0}
+  - renderPoint: {instanceID: 0}
+  - rope: {instanceID: 0}
+  - textPrompt: {instanceID: 0}
+  - player: {instanceID: 0}
+  - grabText: {instanceID: 0}
+  - telemteryTrigger: {fileID: 4980345454348803166, guid: d474bb771ba9d3840b69d4dbcdc3050e,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

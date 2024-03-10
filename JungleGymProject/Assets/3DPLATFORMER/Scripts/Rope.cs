@@ -47,9 +47,9 @@ public class Rope : MonoBehaviour
             }
             else
             {
+                renderPoint = lineBottom;
                 telemteryTrigger.SetActive(false);
 
-                renderPoint = lineBottom;
             }
         }
     }
