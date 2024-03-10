@@ -13,7 +13,6 @@ public class Roll : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-
     PlayerController player;
     Rigidbody rb;
     CapsuleCollider col;

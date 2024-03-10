@@ -9,12 +9,20 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject player; //Add your player
     [SerializeField] GameObject pauseMenuUI;
 
+    public Transform Player;
+
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
+
+            TelemetryLogger.Log(this, "Player Pause Position", Player.transform.position);
+            TelemetryLogger.Log(this, "Tickets Collected", ScoreManager.instance.ticketTotal);
+            TelemetryLogger.Log(this, "Clipboards Collected", ScoreManager.instance.clipboardTotal);
+
         }
     }
 

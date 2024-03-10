@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
+    public int jumpTotal;
 
     [Header("References")]
     public Animator animator;
@@ -68,6 +69,8 @@ public class PlayerController : MonoBehaviour
         jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
+
+        jumpTotal = 0;
     }
 
     // Update is called once per frame
@@ -363,6 +366,8 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
+
         //Cyote Time
         if (isGrounded())
         {
