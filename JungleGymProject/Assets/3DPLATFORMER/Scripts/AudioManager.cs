@@ -22,6 +22,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip settings;
     public AudioClip ingame;
 
+    public AudioClip ticketGet;
+    public AudioClip clipboardGet;
+
     private void Start()
     {
         Music_Source.Stop();
