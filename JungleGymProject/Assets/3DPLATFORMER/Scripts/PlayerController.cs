@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed;
     public float deceleration;
     public float airDeceleration;
-    [Range(0, 1)] public float airControl;
+    [Range(0, 2)] public float airControl;
     //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
@@ -49,9 +49,10 @@ public class PlayerController : MonoBehaviour
 
     //JumpBuffer + Cyote Time
     public float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
+    public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
+    public float coyoteTimeCounter;
+    public bool hasJumped = false;
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -373,6 +374,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //countdown timer
             coyoteTimeCounter -= Time.deltaTime;
         }
 
@@ -383,6 +385,7 @@ public class PlayerController : MonoBehaviour
             TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
 
             jumpBufferCounter = jumpBufferTime;
+
         }
         else
         {
@@ -390,7 +393,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump Logic
-        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0) && (!hasJumped))
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
@@ -402,6 +405,18 @@ public class PlayerController : MonoBehaviour
             //reset values
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0;
+            hasJumped = true;
+
+        }
+
+        //check for grounded
+        if ((isGrounded()) == true)
+        {
+            if (rb.velocity.y < 0)
+            {
+                hasJumped = false;
+            }
+
         }
         
 
@@ -434,6 +449,5 @@ public class PlayerController : MonoBehaviour
         {
             puffed = false;
         }
-
     }
 }
