@@ -13,7 +13,7 @@ public class PlayerSwing : MonoBehaviour
 
     [Header ("Checks")]
     public Transform ropeStartPoint;
-    SpringJoint joint;
+    public SpringJoint joint;
     public bool isSwinging = false;
     public bool canSwing;
     public Rope connectedRope;
@@ -80,7 +80,7 @@ public class PlayerSwing : MonoBehaviour
         connectedRope = connectableRope;
     }
 
-    void ReleaseSwing()
+    public void ReleaseSwing()
     {
         isSwinging = false;
         Destroy(joint);

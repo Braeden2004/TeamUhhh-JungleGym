@@ -10,7 +10,12 @@ public class Rope : MonoBehaviour
     public LineRenderer rope;
     public TextMeshPro textPrompt;
     GameObject playerObj;
-    PlayerSwing player;
+    public PlayerSwing player;
+
+
+    //Braeden Variables for Context Menu
+    public TextMeshProUGUI grabText;
+
 
     private void Start()
     {
@@ -18,6 +23,9 @@ public class Rope : MonoBehaviour
         rope.startWidth = 0.15f;
         rope.endWidth = 0.15f;
         renderPoint = lineBottom;
+
+        //Start context menu false
+        grabText.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
     private void Update()
@@ -31,6 +39,9 @@ public class Rope : MonoBehaviour
                 if (player.isSwinging)
                 {
                     renderPoint = playerObj.transform;
+
+                    //Make context menu false
+                    grabText.GetComponent<TextMeshProUGUI>().enabled = false;
                 }
             }
             else
@@ -46,6 +57,21 @@ public class Rope : MonoBehaviour
         {
             playerObj = other.gameObject;
             player = other.GetComponent<PlayerSwing>();
+
+            //Make context menu visible
+            grabText.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerObj = other.gameObject;
+            player = other.GetComponent<PlayerSwing>();
+
+            //Make context menu false
+            grabText.GetComponent<TextMeshProUGUI>().enabled = false;
         }
     }
 
