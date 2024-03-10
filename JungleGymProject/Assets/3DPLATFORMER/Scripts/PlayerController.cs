@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed;
     public float deceleration;
     public float airDeceleration;
-    [Range(0, 1)] public float airControl;
+    [Range(0, 2)] public float airControl;
     //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
     public float coyoteTimeCounter;
-    public bool canJump = true;
+    public bool hasJumped = false;
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -366,16 +366,10 @@ public class PlayerController : MonoBehaviour
         //Cyote Time
         if (isGrounded())
         {
-            //stops player from double jumping
-            canJump = true;
-
             coyoteTimeCounter = coyoteTime;
         }
         else
         {
-            //stops player from double jumping
-            canJump = false;
-
             //countdown timer
             coyoteTimeCounter -= Time.deltaTime;
         }
@@ -384,6 +378,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpBufferCounter = jumpBufferTime;
+
         }
         else
         {
@@ -391,7 +386,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump Logic
-        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0) && (canJump == true)) 
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0) && (!hasJumped))
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
@@ -403,6 +398,18 @@ public class PlayerController : MonoBehaviour
             //reset values
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0;
+            hasJumped = true;
+
+        }
+
+        //check for grounded
+        if ((isGrounded()) == true)
+        {
+            if (rb.velocity.y < 0)
+            {
+                hasJumped = false;
+            }
+
         }
         
 
@@ -435,6 +442,5 @@ public class PlayerController : MonoBehaviour
         {
             puffed = false;
         }
-
     }
 }
