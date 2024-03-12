@@ -381,8 +381,6 @@ public class PlayerController : MonoBehaviour
         //Jump Buffer
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            jumpTotal++;
-            TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
 
             jumpBufferCounter = jumpBufferTime;
 
@@ -397,6 +395,9 @@ public class PlayerController : MonoBehaviour
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
+
+            jumpTotal++;
+            TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
 
             //make player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
