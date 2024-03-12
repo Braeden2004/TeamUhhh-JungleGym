@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour
     public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
     public float coyoteTimeCounter;
-    public bool hasJumped = false;
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -381,17 +380,18 @@ public class PlayerController : MonoBehaviour
         //Jump Buffer
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            //reset timer
             jumpBufferCounter = jumpBufferTime;
 
         }
-        else
+        else if (jumpBufferCounter>0)
         {
+            //count down timer
             jumpBufferCounter -= Time.deltaTime;
         }
 
         //Jump Logic
-        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0) && (!hasJumped))
+        if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.jump);
@@ -406,28 +406,14 @@ public class PlayerController : MonoBehaviour
             //reset values
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0;
-            hasJumped = true;
-
         }
 
-        //check for grounded
-        if ((isGrounded()) == true)
+        //Prevent player from double Jumping
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (rb.velocity.y < 0)
-            {
-                hasJumped = false;
-            }
-
+            coyoteTimeCounter = 0f;
         }
-        
 
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(rb.velocity.x, jumpVel, rb.velocity.z), ForceMode.Impulse); //Change rb.velocity.x/z values to 0 for less boosty jump
-        }
-        */
     }
 
     void AnimChecks() //Turn off for roll test
