@@ -15,19 +15,13 @@ public class Roll : MonoBehaviour
 
     PlayerController player;
     Rigidbody rb;
-    CapsuleCollider col;
     public bool isRolling;
     [SerializeField] LayerMask groundMask;
+    [SerializeField] Animator anim;
 
     [Header("Player values")]
     [SerializeField][Range(0.4f, 0.7f)] float playerScale;
     float originalScale;
-    //[SerializeField] float rollMaxSpeed;
-    //float originalMaxSpeed;
-    //[SerializeField] [Range(0, 0.5f)] float rollFriction;
-    //float originalFriction;
-    //[SerializeField] float rollDecel;
-    //float originalDecel;
     [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
     [SerializeField][Range(0, 1)] float decelMultiplier;
     [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
@@ -50,8 +44,7 @@ public class Roll : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
-        originalScale = transform.localScale.y;
-        //originalFriction = player.friction;
+        //originalScale = transform.localScale.y;
     }
 
     void Update()
@@ -77,16 +70,17 @@ public class Roll : MonoBehaviour
             //RollMove();
             if (OnSlope())
             {
-                rb.AddForce(slopeAccel * rollForce * slopeDir, ForceMode.Acceleration); //Add force down the slope
+                Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
+                rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
 
-                if (player.moveDir != slopeDir)
+                /*if (player.moveDir != slopeDir) 
                 {
-                    rb.AddForce(rollForce * slopeDir); //Add extra force if a player is trying to roll up a hill
+                    rb.AddForce(rollForce * slopeDir * Time.deltaTime); //Add extra force if a player is trying to roll up a hill -> This is either too strong or weak
                 }
-                if (player.moveDir == Vector3.zero)
+                else if (player.moveDir == Vector3.zero)
                 {
-                    rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope
-                }
+                    rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope -> This causes massive acceleration randomly
+                }*/
             }
         }
         else if (player.isGrounded())
@@ -94,6 +88,8 @@ public class Roll : MonoBehaviour
             slammed = false;
             jumped = false;
         }
+
+        UpdateAnim();
     }
 
     private bool OnSlope()
@@ -116,13 +112,11 @@ public class Roll : MonoBehaviour
     void OnStartRoll()
     {
         isRolling = true;
-        transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
+        //transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
         player.maxSpeed *= maxSpeedMultiplier;
-        //player.friction = rollFriction;
         player.deceleration *= decelMultiplier;
         player.accelSpeed *= accelSpeedMultiplier;
         player.jumpVel *= jumpHeightMultiplier;
-        //player.canMove = false;
         RollBoosts();
     }
 
@@ -130,12 +124,10 @@ public class Roll : MonoBehaviour
     {
         isRolling = false;
         player.maxSpeed /= maxSpeedMultiplier;
-        //player.friction = originalFriction;
         player.deceleration /= decelMultiplier;
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
-        //player.canMove = true;
-        transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
+        //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
 
     void RollBoosts()
@@ -168,20 +160,20 @@ public class Roll : MonoBehaviour
             //float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
-
     }
 
-    /*void RollMove()
+    void UpdateAnim()
     {
-        if (player.isGrounded())
+        if(isRolling)
         {
-            Vector3 vel = player.moveDir * player.accelSpeed * Time.deltaTime;
-            vel = player.AdjustVelocityToSlope(vel);
-            rb.AddForce(vel, ForceMode.VelocityChange);
+            anim.SetBool("IsRolling", isRolling);
         }
         else
         {
-            rb.AddForce(player.moveDir * player.accelSpeed * Time.deltaTime * player.airControl, ForceMode.VelocityChange);
+            anim.SetBool("IsRolling", false);
         }
-    }*/
+
+        float isAtMaxSpeed = rb.velocity.magnitude / player.maxSpeed;
+        anim.SetFloat("Velocity", isAtMaxSpeed);
+    }
 }

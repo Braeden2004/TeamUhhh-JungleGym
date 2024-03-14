@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;*/
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -97,8 +96,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer))
         {
+            animator.SetBool("IsGrounded", true);
             return true;
         }
+        animator.SetBool("IsGrounded", false);
         return false;
     }
 
@@ -150,35 +151,14 @@ public class PlayerController : MonoBehaviour
 
         Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
 
-        if (isGrounded() && xzVel != Vector3.zero)
+        if (isGrounded() && xzVel.magnitude > 0.1f)
         {
             rb.AddForce(deceleration * -xzVel);
-
-            if (Mathf.Abs(rb.velocity.magnitude) < 0.25f)
-            {
-                rb.velocity = Vector3.zero;
-            }
         }
         else if (!isGrounded() && xzVel != Vector3.zero)
         {
             rb.AddForce(airDeceleration * -xzVel);
         }
-
-        //Move to FixedUpdate for this version
-        /*Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
-        if (isGrounded() && xzVel != Vector3.zero)
-        {
-            rb.velocity -= (xzVel / maxSpeed) * friction;
-
-            if (Mathf.Abs(rb.velocity.magnitude) < 0.25f)
-            {
-                rb.velocity = Vector3.zero;
-            }
-        }
-        else if (!isGrounded() && xzVel != Vector3.zero)
-        {
-            rb.velocity -= (xzVel / maxSpeed) * 0.2f;
-        }*/
     }
 
     void HandleGravity()
@@ -275,7 +255,6 @@ public class PlayerController : MonoBehaviour
         {
             //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
             //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
-            //if(!swinging.isSwinging) //FOR SWINGING OBJECT
             transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
         }
     }
@@ -407,7 +386,7 @@ public class PlayerController : MonoBehaviour
         */
     }
 
-    void AnimChecks() //Turn off for roll test
+    void AnimChecks()
     {
         if (moveDir.magnitude < 0.1f)
         {
