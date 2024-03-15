@@ -20,16 +20,17 @@ public class PlayerModelRotationHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.moveDir != Vector3.zero)
+        
+        if (roll.isRolling && roll.OnSlope())
         {
-            Quaternion desiredRot = Quaternion.LookRotation(player.moveDir);
+            Quaternion desiredRot = Quaternion.LookRotation(roll.slopeDir);
             Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
             Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
             playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
         }
-        else if(player.moveDir == Vector3.zero && roll.isRolling && roll.OnSlope())
+        else if (player.moveDir != Vector3.zero)
         {
-            Quaternion desiredRot = Quaternion.LookRotation(roll.slopeDir);
+            Quaternion desiredRot = Quaternion.LookRotation(player.moveDir);
             Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
             Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
             playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
