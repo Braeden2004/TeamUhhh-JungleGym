@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class clipboardScript : MonoBehaviour
 {
-    [Header("Audio")]
+    //Unique Clipboard name
+    public string clipboardName;
+
     AudioManager audioManager;
     private void Awake()
     {
@@ -20,11 +22,17 @@ public class clipboardScript : MonoBehaviour
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.clipboardGet);
-            audioManager.PlaySFX(audioManager.ticketGet);
-
+            audioManager.PlaySFX(audioManager.ticketGet); 
+            
+            //increase score
             ScoreManager.instance.AddClipboard();
+            
+            //Clipboard has been collected (use this for telemetry)
+            Debug.Log(clipboardName + " Clipboard was collected");
 
+            //destroy itself
             Destroy(gameObject);
+
         }
     }
 }
