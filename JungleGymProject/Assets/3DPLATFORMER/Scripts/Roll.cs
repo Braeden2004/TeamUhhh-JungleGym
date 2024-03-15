@@ -92,7 +92,7 @@ public class Roll : MonoBehaviour
         UpdateAnim();
     }
 
-    private bool OnSlope()
+    public bool OnSlope()
     {
         if (!player.isGrounded())
         {

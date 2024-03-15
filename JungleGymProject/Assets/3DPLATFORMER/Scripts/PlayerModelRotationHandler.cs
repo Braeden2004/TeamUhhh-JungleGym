@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerModelRotationHandler : MonoBehaviour
 {
     PlayerController player;
+    Roll roll;
     [SerializeField] GameObject playerObj;
     [SerializeField] float rotationSpeed;
 
@@ -13,6 +14,7 @@ public class PlayerModelRotationHandler : MonoBehaviour
     void Start()
     {
         player = GetComponent<PlayerController>();
+        roll = GetComponent<Roll>();
     }
 
     // Update is called once per frame
@@ -21,6 +23,13 @@ public class PlayerModelRotationHandler : MonoBehaviour
         if (player.moveDir != Vector3.zero)
         {
             Quaternion desiredRot = Quaternion.LookRotation(player.moveDir);
+            Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
+            Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
+            playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
+        }
+        else if(player.moveDir == Vector3.zero && roll.isRolling && roll.OnSlope())
+        {
+            Quaternion desiredRot = Quaternion.LookRotation(roll.slopeDir);
             Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
             Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
             playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
