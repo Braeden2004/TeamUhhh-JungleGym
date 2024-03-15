@@ -19,7 +19,8 @@ public class Rope : MonoBehaviour
     [SerializeField] GameObject telemteryTrigger;
     private void Start()
     {
-        rope = gameObject.AddComponent<LineRenderer>();
+        //rope = gameObject.AddComponent<LineRenderer>();
+        rope = gameObject.GetComponent<LineRenderer>();
         rope.startWidth = 0.15f;
         rope.endWidth = 0.15f;
         renderPoint = lineBottom;
