@@ -9,8 +9,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 1303299601406483602, guid: 4db3f4e76196870408acbb8944f6e268,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 03199b9d3c97c304f856be755c9acc01, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -18,8 +17,7 @@ BlendTree:
     m_DirectBlendParameter: Velocity
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -2481799806079911011, guid: 4db3f4e76196870408acbb8944f6e268,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 3a38f22c0e43f794188174e1dfd03dfb, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -40,7 +38,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Armature|run
+  m_Name: Jump
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -53,7 +51,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 03199b9d3c97c304f856be755c9acc01, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3a38f22c0e43f794188174e1dfd03dfb, type: 2}
   m_Tag: 
   m_SpeedParameter: Velocity
   m_MirrorParameter: 
