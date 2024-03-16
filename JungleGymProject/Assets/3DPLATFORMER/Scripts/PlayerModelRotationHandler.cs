@@ -20,7 +20,6 @@ public class PlayerModelRotationHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (player.moveDir == Vector3.zero && roll.isRolling && roll.OnSlope())
         {
             Quaternion desiredRot = Quaternion.LookRotation(roll.slopeDir);
