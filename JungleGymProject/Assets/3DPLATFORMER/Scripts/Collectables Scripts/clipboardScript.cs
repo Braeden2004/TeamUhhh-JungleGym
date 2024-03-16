@@ -29,6 +29,7 @@ public class clipboardScript : MonoBehaviour
             
             //Clipboard has been collected (use this for telemetry)
             Debug.Log(clipboardName + " Clipboard was collected");
+            TelemetryLogger.Log(this, "Clipboard Collected", clipboardName);
 
             //destroy itself
             Destroy(gameObject);
