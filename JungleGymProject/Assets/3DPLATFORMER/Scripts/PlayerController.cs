@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Animator animator;
     public ParticleSystem puffLand;
+    public Roll roll;
     Rigidbody rb;
 
     [Header("Input")]
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
-    //JumpBuffer + Cyote Time
+    //JumpBuffer + Coyote Time
     public float jumpBufferTime = 0.2f;
     public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
@@ -57,6 +58,9 @@ public class PlayerController : MonoBehaviour
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;*/
+
+    public float friction;
+    public float rollFriction;
 
     void Start()
     {
@@ -136,24 +140,46 @@ public class PlayerController : MonoBehaviour
             jumpHold = false;
         }*/
     }
-
+    public float frictionRate;
+    public float rollFrictionRate;
+    public float airFrictionRate;
     void HandleFriction()
     {
-        /*if(isGrounded())
+        /*if(isGrounded() && !roll.isRolling)
         {
             rb.drag = friction;
         }
-        else
+        else if (roll.isRolling)
+        {
+            rb.drag = rollFriction;
+        }
+        else if(!isGrounded())
         {
             rb.drag = 0f;
         }*/
+
+        if (isGrounded() && moveDir == Vector3.zero)
+        {
+            if (!roll.isRolling)
+            {
+                rb.velocity -= frictionRate * rb.velocity;
+            }
+            else if(roll.isRolling)
+            {
+                rb.velocity -= rollFrictionRate * rb.velocity;
+            }
+        }
+        else if (!isGrounded() && !roll.isRolling)
+        {
+            rb.velocity -= airFrictionRate * rb.velocity;
+        }
 
         /*if(isGrounded())
         {
             rb.AddForce(friction * -rb.velocity);
         }*/
 
-        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+        /*Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
 
         if (isGrounded() && xzVel.magnitude > 0.1f)
         {
@@ -162,7 +188,7 @@ public class PlayerController : MonoBehaviour
         else if (!isGrounded() && xzVel != Vector3.zero)
         {
             rb.AddForce(airDeceleration * -xzVel);
-        }
+        }*/
     }
 
     void HandleGravity()
