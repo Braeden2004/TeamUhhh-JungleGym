@@ -8,7 +8,6 @@ public class Rope : MonoBehaviour
     public Transform lineBottom;
     public Transform renderPoint;
     public LineRenderer rope;
-    public TextMeshPro textPrompt;
     GameObject playerObj;
     public PlayerSwing player;
 
@@ -43,13 +42,19 @@ public class Rope : MonoBehaviour
 
                     //Make context menu false
                     grabText.GetComponent<TextMeshProUGUI>().enabled = false;
-                    telemteryTrigger.SetActive(true);
+                    if (telemteryTrigger != null)
+                    {
+                        telemteryTrigger.SetActive(true);
+                    }
                 }
             }
             else
             {
                 renderPoint = lineBottom;
-                telemteryTrigger.SetActive(false);
+                if (telemteryTrigger != null)
+                {
+                    telemteryTrigger.SetActive(false);
+                }
 
             }
         }

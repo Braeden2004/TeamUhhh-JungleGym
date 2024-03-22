@@ -34,10 +34,12 @@ public class PlayerController : MonoBehaviour
     [Header("Parameters")]
     public float accelSpeed;
     public float maxSpeed;
-    public float deceleration;
-    public float airDeceleration;
+    //public float deceleration;
+    //public float airDeceleration;
+    public float frictionRate;
+    public float airFrictionRate;
+    [SerializeField] float timeToZero;
     [Range(0, 2)] public float airControl;
-    //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -59,9 +61,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationCurve animCurve;
     [SerializeField] float animTime;*/
 
-    public float friction;
-    public float rollFriction;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -72,6 +71,8 @@ public class PlayerController : MonoBehaviour
         jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
+
+        frictionRate = maxSpeed / timeToZero;
 
         jumpTotal = 0;
     }
@@ -140,9 +141,7 @@ public class PlayerController : MonoBehaviour
             jumpHold = false;
         }*/
     }
-    public float frictionRate;
-    public float rollFrictionRate;
-    public float airFrictionRate;
+
     void HandleFriction()
     {
         /*if(isGrounded() && !roll.isRolling)
@@ -160,18 +159,12 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded() && moveDir == Vector3.zero)
         {
-            if (!roll.isRolling)
-            {
-                rb.velocity -= frictionRate * rb.velocity;
-            }
-            else if(roll.isRolling)
-            {
-                rb.velocity -= rollFrictionRate * rb.velocity;
-            }
+            rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
         else if (!isGrounded() && !roll.isRolling)
         {
-            rb.velocity -= airFrictionRate * rb.velocity;
+            Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;
         }
 
         /*if(isGrounded())
@@ -302,7 +295,6 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        //Original settings
         if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
@@ -310,6 +302,7 @@ public class PlayerController : MonoBehaviour
             {
                 newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
                 rb.AddForce(newVel, ForceMode.VelocityChange);
+                print(rb.velocity.magnitude);
             }
             else
             {

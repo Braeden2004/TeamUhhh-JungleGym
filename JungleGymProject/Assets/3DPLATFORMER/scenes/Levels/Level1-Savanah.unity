@@ -358,11 +358,13 @@ MonoBehaviour:
   groundMaxSpeedMultiplier: 2
   slopeMaxSpeedMultiplier: 3
   decelMultiplier: 0.2
-  accelSpeedMultiplier: 0.3
+  frictionMultiplier: 0.05
+  accelSpeedMultiplier: 0.2
   jumpHeightMultiplier: 1.2
-  rollBoostForce: 15
-  rollForce: 15
+  rollBoostForce: 20
+  rollForce: 40
   slopeDir: {x: 0, y: 0, z: 0}
+  maxSpeedTimer: 3
 --- !u!136 &306611731
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -396,7 +398,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -435,10 +437,11 @@ MonoBehaviour:
   jumpHold: 0
   isFalling: 0
   canMove: 0
-  accelSpeed: 45
+  accelSpeed: 50
   maxSpeed: 10
-  deceleration: 60
-  airDeceleration: 12
+  frictionRate: 0
+  airFrictionRate: 0.5
+  timeToZero: 1
   airControl: 1.2
   groundLayer:
     serializedVersion: 2
@@ -447,17 +450,12 @@ MonoBehaviour:
   maxGravity: 30
   useGravity: 1
   apexHeight: 4
-  apexTime: 0.44
+  apexTime: 0.45
   jumpVel: 0
   jumpBufferTime: 0.2
   jumpBufferCounter: 0
   coyoteTime: 0.2
   coyoteTimeCounter: 0
-  friction: 5
-  rollFriction: 2
-  frictionRate: 0.25
-  rollFrictionRate: 0.0125
-  airFrictionRate: 0.0125
 --- !u!114 &306611734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11451,7 +11449,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284264047}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 10338507dddc4f24ab334623b3060f18, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -12788,7 +12786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626172046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055451736, y: -0.7049291, z: 0.055451736, w: 0.7049292}
+  m_LocalRotation: {x: 0.05545173, y: -0.7049291, z: 0.055451732, w: 0.7049292}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
