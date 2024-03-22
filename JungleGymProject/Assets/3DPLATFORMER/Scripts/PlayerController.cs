@@ -56,6 +56,9 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime = 0.2f;
     public float coyoteTimeCounter;
 
+    //variable jump height
+    public float minimumJumpHeight = 1.5f;
+
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
@@ -410,6 +413,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             coyoteTimeCounter = 0f;
+        }
+
+        //Variable Jump Height //SOURCE: https://www.youtube.com/watch?v=Mo1-sKYbks0
+        if (Input.GetKeyUp(KeyCode.Space) && (rb.velocity.y > 0))
+        {
+            Debug.Log("Reducing jump height");
+
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / minimumJumpHeight, rb.velocity.z); //reduce upward velocity
         }
 
     }
