@@ -20,7 +20,11 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 3a38f22c0e43f794188174e1dfd03dfb, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
+<<<<<<< HEAD
     m_TimeScale: 2
+=======
+    m_TimeScale: 1
+>>>>>>> parent of a90291b (working on metrics and destructable object)
     m_CycleOffset: 0
     m_DirectBlendParameter: Velocity
     m_Mirror: 0
@@ -248,9 +252,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: IsRolling
     m_EventTreshold: 0
+<<<<<<< HEAD
   - m_ConditionMode: 1
     m_ConditionEvent: IsGrounded
     m_EventTreshold: 0
+=======
+>>>>>>> parent of a90291b (working on metrics and destructable object)
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3465141661031120038}
   m_Solo: 0
@@ -313,7 +320,11 @@ AnimatorStateMachine:
     m_Position: {x: -230, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4751805868776171069}
+<<<<<<< HEAD
     m_Position: {x: 40, y: -170, z: 0}
+=======
+    m_Position: {x: 30, y: -150, z: 0}
+>>>>>>> parent of a90291b (working on metrics and destructable object)
   - serializedVersion: 1
     m_State: {fileID: -3026328814063879003}
     m_Position: {x: -10, y: 210, z: 0}
