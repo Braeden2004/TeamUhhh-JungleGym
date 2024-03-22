@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public ParticleSystem puffLand;
     public Roll roll;
+    PlayerSwing swing;
     Rigidbody rb;
 
     [Header("Input")]
@@ -68,6 +69,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+
+        swing = GetComponent<PlayerSwing>();
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -164,7 +167,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
-        else if (!isGrounded() && !roll.isRolling)
+        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging)
         {
             Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;

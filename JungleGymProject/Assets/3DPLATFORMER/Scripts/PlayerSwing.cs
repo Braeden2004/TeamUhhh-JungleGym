@@ -16,8 +16,10 @@ public class PlayerSwing : MonoBehaviour
     public SpringJoint joint;
     public bool isSwinging = false;
     public bool canSwing;
+    bool swung;
     public Rope connectedRope;
     public Rope connectableRope;
+    [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
     PlayerController player;
     Rigidbody rb;
     //public float swingJumpMaximum; threshold for extra jump WIP
@@ -30,7 +32,7 @@ public class PlayerSwing : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        player= GetComponent<PlayerController>();
+        player = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -42,6 +44,7 @@ public class PlayerSwing : MonoBehaviour
                 audioManager.PlaySFX(audioManager.ropeGrab);
                 audioManager.PlaySFX(audioManager.ropeSwing);
                 StartSwinging();
+                player.maxSpeed *= maxSpeedMultiplier;
             }
             
         }
@@ -53,6 +56,13 @@ public class PlayerSwing : MonoBehaviour
             }*/
             ReleaseSwing();
             audioManager.PlaySFX(audioManager.jump);
+            swung = true;
+        }
+
+        if(player.isGrounded() && swung)
+        {
+            swung = false;
+            player.maxSpeed /= maxSpeedMultiplier;
         }
     }
 
