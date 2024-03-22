@@ -654,7 +654,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57cdc1cb40dcb5849959290f047afb84, type: 2}
+  - {fileID: 2100000, guid: c82c0e92203cccd4f9863ad025712d4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11096,7 +11096,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57cdc1cb40dcb5849959290f047afb84, type: 2}
+  - {fileID: 2100000, guid: c82c0e92203cccd4f9863ad025712d4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11488,7 +11488,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57cdc1cb40dcb5849959290f047afb84, type: 2}
+  - {fileID: 2100000, guid: c82c0e92203cccd4f9863ad025712d4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12649,6 +12649,8 @@ MonoBehaviour:
   rollscript: {fileID: 0}
   rb: {fileID: 306611732}
   minVelocity: 1
+  freezeTimeTotal: 5
+  freeze: 0
 --- !u!65 &1294593984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12925,7 +12927,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626172046}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055451736, y: -0.7049291, z: 0.055451736, w: 0.7049292}
+  m_LocalRotation: {x: 0.05545173, y: -0.7049291, z: 0.055451732, w: 0.7049292}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
