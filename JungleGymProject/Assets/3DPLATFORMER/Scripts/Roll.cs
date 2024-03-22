@@ -22,10 +22,13 @@ public class Roll : MonoBehaviour
     [Header("Player values")]
     [SerializeField][Range(0.4f, 0.7f)] float playerScale;
     float originalScale;
-    [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
+    [SerializeField][Range(1, 3)] float groundMaxSpeedMultiplier;
+    [SerializeField][Range(2, 6)] float slopeMaxSpeedMultiplier;
     [SerializeField][Range(0, 1)] float decelMultiplier;
+    [SerializeField][Range(0, 1)] float frictionMultiplier;
     [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
     [SerializeField][Range(0, 2)] float jumpHeightMultiplier;
+    float originalMaxSpeed;
 
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
@@ -41,14 +44,16 @@ public class Roll : MonoBehaviour
     public Vector3 slopeDir;
 
     float rollingNumber;
+    bool rolledOnSlope;
+    public float maxSpeedTimer;
+    float timer;
 
     void Start()
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         originalScale = transform.localScale.y;
-        //originalFriction = player.friction;
-
+        originalMaxSpeed = player.maxSpeed;
         rollingNumber = 0;
     }
 
@@ -73,6 +78,27 @@ public class Roll : MonoBehaviour
             OnStopRoll();
         }
 
+        if (player.isGrounded())
+        {
+            slammed = false;
+            jumped = false;
+        }
+
+        if(rolledOnSlope)
+        {
+            player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
+            timer += Time.deltaTime;
+            if(timer > maxSpeedTimer)
+            {
+                player.maxSpeed = originalMaxSpeed * groundMaxSpeedMultiplier;
+            }
+        }
+
+        UpdateAnim();
+    }
+
+    private void FixedUpdate()
+    {
         if (isRolling)
         {
             //AUDIO FOR CONTINUOUS ROLL HERE
@@ -82,24 +108,20 @@ public class Roll : MonoBehaviour
             {
                 Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
                 rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
+                rolledOnSlope = true;
 
-                /*if (player.moveDir != slopeDir) 
+                var dot = Vector3.Dot(slopeHit.normal, transform.forward);
+                if (dot < 0f)
                 {
-                    rb.AddForce(rollForce * slopeDir * Time.deltaTime); //Add extra force if a player is trying to roll up a hill -> This is either too strong or weak
+                    rb.AddForce(slopeForce, ForceMode.Acceleration); //Add extra force if a player is trying to roll up a hill
                 }
-                else if (player.moveDir == Vector3.zero)
+                
+                /*else if (player.moveDir == Vector3.zero)
                 {
                     rb.velocity = slopeDir * rb.velocity.magnitude; //Set velocity direction to follow slope -> This causes massive acceleration randomly
                 }*/
             }
         }
-        else if (player.isGrounded())
-        {
-            slammed = false;
-            jumped = false;
-        }
-
-        UpdateAnim();
     }
 
     public bool OnSlope()
@@ -122,9 +144,10 @@ public class Roll : MonoBehaviour
     void OnStartRoll()
     {
         isRolling = true;
+        player.maxSpeed *= groundMaxSpeedMultiplier;
         //transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
-        player.maxSpeed *= maxSpeedMultiplier;
-        player.deceleration *= decelMultiplier;
+        //player.deceleration *= decelMultiplier;
+        player.frictionRate *= frictionMultiplier;
         player.accelSpeed *= accelSpeedMultiplier;
         player.jumpVel *= jumpHeightMultiplier;
         RollBoosts();
@@ -133,10 +156,12 @@ public class Roll : MonoBehaviour
     void OnStopRoll()
     {
         isRolling = false;
-        player.maxSpeed /= maxSpeedMultiplier;
-        player.deceleration /= decelMultiplier;
+        player.maxSpeed = originalMaxSpeed;
+        //player.deceleration /= decelMultiplier;
+        player.frictionRate /= frictionMultiplier;
         player.accelSpeed /= accelSpeedMultiplier;
         player.jumpVel /= jumpHeightMultiplier;
+        rolledOnSlope = false;
         //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
 
@@ -151,7 +176,7 @@ public class Roll : MonoBehaviour
 
         else if (!jumped)//Otherwise, add a small upwards boost
         {
-            rb.AddForce(Vector3.up * rollBoostForce / 3f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * rollBoostForce / 2f, ForceMode.Impulse);
             jumped = true;
         }
     }
@@ -183,7 +208,8 @@ public class Roll : MonoBehaviour
             anim.SetBool("IsRolling", false);
         }
 
-        float isAtMaxSpeed = rb.velocity.magnitude / player.maxSpeed;
+        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        float isAtMaxSpeed = xzVel.magnitude / player.maxSpeed;
         anim.SetFloat("Velocity", isAtMaxSpeed);
     }
 }

@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Animator animator;
     public ParticleSystem puffLand;
+    public Roll roll;
     Rigidbody rb;
 
     [Header("Input")]
@@ -33,10 +34,12 @@ public class PlayerController : MonoBehaviour
     [Header("Parameters")]
     public float accelSpeed;
     public float maxSpeed;
-    public float deceleration;
-    public float airDeceleration;
+    //public float deceleration;
+    //public float airDeceleration;
+    public float frictionRate;
+    public float airFrictionRate;
+    [SerializeField] float timeToZero;
     [Range(0, 2)] public float airControl;
-    //public float friction; //Re-enable for friction rework
     [SerializeField] LayerMask groundLayer;
 
     [Header("Gravity + Jumping")]
@@ -47,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
-    //JumpBuffer + Cyote Time
+    //JumpBuffer + Coyote Time
     public float jumpBufferTime = 0.2f;
     public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
@@ -71,6 +74,8 @@ public class PlayerController : MonoBehaviour
         jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
+
+        frictionRate = maxSpeed / timeToZero;
 
         jumpTotal = 0;
     }
@@ -142,21 +147,35 @@ public class PlayerController : MonoBehaviour
 
     void HandleFriction()
     {
-        /*if(isGrounded())
+        /*if(isGrounded() && !roll.isRolling)
         {
             rb.drag = friction;
         }
-        else
+        else if (roll.isRolling)
+        {
+            rb.drag = rollFriction;
+        }
+        else if(!isGrounded())
         {
             rb.drag = 0f;
         }*/
+
+        if (isGrounded() && moveDir == Vector3.zero)
+        {
+            rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
+        }
+        else if (!isGrounded() && !roll.isRolling)
+        {
+            Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;
+        }
 
         /*if(isGrounded())
         {
             rb.AddForce(friction * -rb.velocity);
         }*/
 
-        Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
+        /*Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized;
 
         if (isGrounded() && xzVel.magnitude > 0.1f)
         {
@@ -165,7 +184,7 @@ public class PlayerController : MonoBehaviour
         else if (!isGrounded() && xzVel != Vector3.zero)
         {
             rb.AddForce(airDeceleration * -xzVel);
-        }
+        }*/
     }
 
     void HandleGravity()
@@ -279,7 +298,6 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        //Original settings
         if (moveDir != Vector3.zero)
         {
             Vector3 newVel = Vector3.zero;
@@ -287,6 +305,7 @@ public class PlayerController : MonoBehaviour
             {
                 newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
                 rb.AddForce(newVel, ForceMode.VelocityChange);
+                print(rb.velocity.magnitude);
             }
             else
             {
