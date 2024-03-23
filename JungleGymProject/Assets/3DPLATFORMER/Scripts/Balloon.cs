@@ -40,16 +40,16 @@ public class Balloon : MonoBehaviour
                     //Move this out for auto movement
                     Vector3 balloonForce = (Vector3.up * floatSpeed * Time.deltaTime) + (transform.forward * floatSpeed * Time.deltaTime);
                     rb.AddForce(balloonForce);
-
-                    //rb.AddForce(attachedRope.player.gameObject.GetComponent<Rigidbody>().velocity.normalized); //WIP player drags balloon
+                    //attachedRope.player.gameObject.GetComponent<PlayerController>().useGravity = false;
+                    //playerBody.AddForce(balloonForce);
 
                     attachedPlayerJoint.connectedAnchor = transform.position;
 
-                    if (attachedRope.player.gameObject.GetComponent<PlayerController>().moveDir == Vector3.zero)
+                    /*if (attachedRope.player.gameObject.GetComponent<PlayerController>().moveDir == Vector3.zero)
                     {
                         Vector3 velocityDifference = rb.velocity - playerBody.velocity;
                         playerBody.velocity += velocityDifference;
-                    }
+                    }*/
 
                     addForceToPlayer = true;
 

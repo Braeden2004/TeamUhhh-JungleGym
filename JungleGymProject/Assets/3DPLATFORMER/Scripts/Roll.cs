@@ -14,6 +14,7 @@ public class Roll : MonoBehaviour
     }
 
     PlayerController player;
+    Glide glide;
     Rigidbody rb;
     public bool isRolling;
     [SerializeField] LayerMask groundMask;
@@ -52,6 +53,7 @@ public class Roll : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+        glide = GetComponent<Glide>();
         originalScale = transform.localScale.y;
         originalMaxSpeed = player.maxSpeed;
         rollingNumber = 0;
@@ -101,6 +103,7 @@ public class Roll : MonoBehaviour
     {
         if (isRolling)
         {
+            glide.tired = true;
             //AUDIO FOR CONTINUOUS ROLL HERE
             //NEEDS COROUTINE
             //RollMove();

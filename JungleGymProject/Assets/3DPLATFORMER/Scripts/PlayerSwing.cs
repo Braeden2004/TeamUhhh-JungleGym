@@ -54,6 +54,7 @@ public class PlayerSwing : MonoBehaviour
             {
                 rb.AddForce(player.jumpVel / 2f * transform.up, ForceMode.Impulse); //extra jump for when you're moving slowly WIP
             }*/
+
             ReleaseSwing();
             audioManager.PlaySFX(audioManager.jump);
             swung = true;
@@ -78,9 +79,9 @@ public class PlayerSwing : MonoBehaviour
         joint.maxDistance = distanceFromPoint * 0.8f;
         joint.minDistance = distanceFromPoint * 0.25f;
 
-        joint.spring = 4.5f;
-        joint.damper = 7f;
-        joint.massScale = 4.5f;
+        joint.spring = springRate;
+        joint.damper = damperRate;
+        joint.massScale = massScale;
     }
 
     void StartSwinging()
@@ -99,7 +100,7 @@ public class PlayerSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Rope")
+        if(other.tag == "Balloon")
         {
             ropeStartPoint = other.gameObject.transform.parent;
             canSwing = true;
@@ -109,7 +110,7 @@ public class PlayerSwing : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Rope")
+        if (other.tag == "Balloon")
         {
             ropeStartPoint = null;
             canSwing = false;

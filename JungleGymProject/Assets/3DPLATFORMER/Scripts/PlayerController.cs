@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     {
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
+        jumpVel = 2 * apexHeight / apexTime;
     }
 
     public int jumpTotal;
@@ -19,7 +21,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public ParticleSystem puffLand;
     public Roll roll;
-    PlayerSwing swing;
+    PlayerSwing balloon;
+    HingeRopeSwing swing;
     Rigidbody rb;
 
     [Header("Input")]
@@ -70,7 +73,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
 
-        swing = GetComponent<PlayerSwing>();
+        balloon = GetComponent<PlayerSwing>();
+        swing = GetComponent<HingeRopeSwing>();
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -96,7 +100,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         HandleForward();
         HandleFriction();
 
@@ -138,14 +141,14 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxisRaw("Vertical");
 
 
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpHold = true;
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
             jumpHold = false;
-        }*/
+        }
     }
 
     void HandleFriction()
@@ -167,7 +170,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
-        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging)
+        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging && !balloon.isSwinging)
         {
             Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;
@@ -272,20 +275,22 @@ public class PlayerController : MonoBehaviour
         //Set desired move direction to be based on camera direction
         moveDir = (forwardRelative + rightRelative).normalized;
 
-        //Rotate player
-        Quaternion lookRot = Camera.main.transform.rotation;
-        float yRot = lookRot.eulerAngles.y;
-        Quaternion moveRot = Quaternion.Euler(0, yRot, 0);
+        /*
+            //Rotate player
+            Quaternion lookRot = Camera.main.transform.rotation;
+            float yRot = lookRot.eulerAngles.y;
+            Quaternion moveRot = Quaternion.Euler(0, yRot, 0);
 
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit = new RaycastHit();
+            Ray ray = new Ray(transform.position, -transform.up);
+            RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, groundLayer))
-        {
-            //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
-            //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
-        }
+            if (Physics.Raycast(ray, out hit, groundLayer))
+            {
+                //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
+                //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
+                transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
+            }
+        */
     }
 
 
@@ -308,7 +313,6 @@ public class PlayerController : MonoBehaviour
             {
                 newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
                 rb.AddForce(newVel, ForceMode.VelocityChange);
-                print(rb.velocity.magnitude);
             }
             else
             {
