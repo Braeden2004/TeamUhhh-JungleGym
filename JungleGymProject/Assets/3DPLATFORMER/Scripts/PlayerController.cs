@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour
     //variable jump height
     public float minimumJumpHeight = 1.5f;
 
+    //wallbounce
+    public float wallBounceDistance = 5f;
+    public float minWallBounceVelocity = 5f;
+    public float wallBounceForce = 2f; // higher = lower bounce
+
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
@@ -92,6 +97,7 @@ public class PlayerController : MonoBehaviour
         AnimChecks();
 
         Jump();
+        hitWall();
     }
 
     private void FixedUpdate()
@@ -115,6 +121,20 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         animator.SetBool("IsGrounded", false);
+        return false;
+    }
+
+    public bool hitWall()
+    {
+        //debug raycast
+        Debug.DrawRay(transform.position, Vector3.left * wallBounceDistance, Color.red);
+
+        //check if player is hitting a wall
+        if (Physics.Raycast(transform.position, Vector3.left, wallBounceDistance, groundLayer))
+        {
+            Debug.Log("Hit Wall");
+            return true;
+        }
         return false;
     }
 
@@ -425,6 +445,17 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / minimumJumpHeight, rb.velocity.z); //reduce upward velocity
         }
+
+        //jump when rolling into a wall
+        if (roll.isRolling ==true && rb.velocity.magnitude > minWallBounceVelocity && isGrounded() && hitWall())
+        {
+            //make player jump
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(new Vector3(rb.velocity.x, jumpVel / wallBounceForce, rb.velocity.z), ForceMode.Impulse);
+
+            Debug.Log("WALLBOUNCE");
+        }
+        
 
     }
 
