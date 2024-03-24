@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public ParticleSystem puffLand;
     public Roll roll;
+    PlayerSwing swing;
     Rigidbody rb;
 
     [Header("Input")]
@@ -56,8 +57,13 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime = 0.2f;
     public float coyoteTimeCounter;
 
-    //variable jump
+    //variable jump height
     public float minimumJumpHeight = 1.5f;
+
+    //wallbounce
+    public float wallBounceDistance = 5f;
+    public float minWallBounceVelocity = 5f;
+    public float wallBounceForce = 2f; // higher = lower bounce
 
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
@@ -68,6 +74,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
+
+        swing = GetComponent<PlayerSwing>();
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
@@ -89,6 +97,7 @@ public class PlayerController : MonoBehaviour
         AnimChecks();
 
         Jump();
+        hitWall();
     }
 
     private void FixedUpdate()
@@ -112,6 +121,20 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         animator.SetBool("IsGrounded", false);
+        return false;
+    }
+
+    public bool hitWall()
+    {
+        //debug raycast
+        Debug.DrawRay(transform.position, Vector3.left * wallBounceDistance, Color.red);
+
+        //check if player is hitting a wall
+        if (Physics.Raycast(transform.position, Vector3.left, wallBounceDistance, groundLayer))
+        {
+            Debug.Log("Hit Wall");
+            return true;
+        }
         return false;
     }
 
@@ -164,7 +187,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
-        else if (!isGrounded() && !roll.isRolling)
+        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging)
         {
             Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;
@@ -420,8 +443,19 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Reducing jump height");
 
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y/ minimumJumpHeight, rb.velocity.z); //reduce upward velocity
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / minimumJumpHeight, rb.velocity.z); //reduce upward velocity
         }
+
+        //jump when rolling into a wall
+        if (roll.isRolling ==true && rb.velocity.magnitude > minWallBounceVelocity && isGrounded() && hitWall())
+        {
+            //make player jump
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(new Vector3(rb.velocity.x, jumpVel / wallBounceForce, rb.velocity.z), ForceMode.Impulse);
+
+            Debug.Log("WALLBOUNCE");
+        }
+        
 
     }
 
