@@ -6,8 +6,7 @@ using Cinemachine;
 
 public class enableCamera : MonoBehaviour
 {
-    //public GameObject to store the other camera
-    public CinemachineBrain brain;
+
     public GameObject otherCamera;
 
     //enable camera when player enters the trigger
