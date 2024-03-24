@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
 {
+
     [Header("Audio")]
     AudioManager audioManager;
     private void Awake()
@@ -14,6 +16,9 @@ public class PlayerController : MonoBehaviour
     }
 
     public int jumpTotal;
+
+    [Header("Cinemachine")]
+    public CinemachineBrain cinemachineBrain;
 
     [Header("References")]
     public Animator animator;
@@ -88,9 +93,12 @@ public class PlayerController : MonoBehaviour
         jumpTotal = 0;
     }
 
+
     // Update is called once per frame
     void Update()
     {
+        CutsceneCheck(); // freeze player if camera is blending to another
+
         GetInput();
 
         HandleGravity();
@@ -102,7 +110,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         HandleForward();
         HandleFriction();
 
@@ -478,6 +485,20 @@ public class PlayerController : MonoBehaviour
         if (isGrounded() == false)
         {
             puffed = false;
+        }
+    }
+
+    void CutsceneCheck()
+    {
+        if (cinemachineBrain.IsBlending == true)
+        {
+            //freeze player
+            rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            //unfreeze player 
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 }
