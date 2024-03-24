@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
 
     public int jumpTotal;
 
-    [Header("Cinemachine")]
-    public CinemachineBrain cinemachineBrain;
+    //get cinemachine brain
+    private CinemachineBrain cinemachineBrain;
 
     [Header("References")]
     public Animator animator;
@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
 
         swing = GetComponent<PlayerSwing>();
+
+        cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
 
         //Initialize gravity & jump velocity
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
