@@ -25,11 +25,14 @@ public class Roll : MonoBehaviour
     float originalScale;
     [SerializeField][Range(1, 3)] float groundMaxSpeedMultiplier;
     [SerializeField][Range(2, 6)] float slopeMaxSpeedMultiplier;
-    [SerializeField][Range(0, 1)] float decelMultiplier;
+    //[SerializeField][Range(0, 1)] float decelMultiplier;
     [SerializeField][Range(0, 1)] float frictionMultiplier;
     [SerializeField][Range(0, 1)] float accelSpeedMultiplier;
     [SerializeField][Range(0, 2)] float jumpHeightMultiplier;
     float originalMaxSpeed;
+    float originalAccel;
+    float originalFriction;
+    float originalJumpHeight;
 
     [Header("Roll speed values")]
     [SerializeField] float rollBoostForce;
@@ -45,24 +48,31 @@ public class Roll : MonoBehaviour
     public Vector3 slopeDir;
 
     float rollingNumber;
-    bool rolledOnSlope;
+    public bool rolledOnSlope;
     public float maxSpeedTimer;
     float timer;
+
+    HingeRopeSwing swing;
+    PlayerSwing balloon;
 
     void Start()
     {
         player = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
         glide = GetComponent<Glide>();
+        swing = GetComponent<HingeRopeSwing>();
+        balloon = GetComponent<PlayerSwing>();
         originalScale = transform.localScale.y;
         originalMaxSpeed = player.maxSpeed;
+        originalAccel = player.accelSpeed;
+        originalFriction = player.frictionRate;
+        originalJumpHeight = player.jumpVel;
         rollingNumber = 0;
     }
 
     void Update()
     {
         CheckForSlope();
-
 
         if (Input.GetButtonDown("Roll"))
         {
@@ -75,7 +85,7 @@ public class Roll : MonoBehaviour
             TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
         }
 
-        if (Input.GetButtonUp("Roll"))
+        if (Input.GetButtonUp("Roll") && !swing.isSwinging)
         {
             OnStopRoll();
         }
@@ -109,6 +119,12 @@ public class Roll : MonoBehaviour
             //RollMove();
             if (OnSlope())
             {
+                var slopeDot = Vector3.Dot(rb.velocity, slopeDir);
+                if(slopeDot > 0)
+                {
+
+                }
+
                 Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
                 rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
                 rolledOnSlope = true;
@@ -147,12 +163,12 @@ public class Roll : MonoBehaviour
     void OnStartRoll()
     {
         isRolling = true;
-        player.maxSpeed *= groundMaxSpeedMultiplier;
+        player.maxSpeed = originalMaxSpeed * groundMaxSpeedMultiplier;
         //transform.localScale = new Vector3(transform.localScale.x, playerScale, transform.localScale.z);
         //player.deceleration *= decelMultiplier;
-        player.frictionRate *= frictionMultiplier;
-        player.accelSpeed *= accelSpeedMultiplier;
-        player.jumpVel *= jumpHeightMultiplier;
+        player.frictionRate = originalFriction * frictionMultiplier;
+        player.accelSpeed = originalAccel * accelSpeedMultiplier;
+        player.jumpVel = originalJumpHeight * jumpHeightMultiplier;
         RollBoosts();
     }
 
@@ -160,10 +176,10 @@ public class Roll : MonoBehaviour
     {
         isRolling = false;
         player.maxSpeed = originalMaxSpeed;
+        player.accelSpeed = originalAccel;
         //player.deceleration /= decelMultiplier;
-        player.frictionRate /= frictionMultiplier;
-        player.accelSpeed /= accelSpeedMultiplier;
-        player.jumpVel /= jumpHeightMultiplier;
+        player.frictionRate = originalFriction;
+        player.jumpVel = originalJumpHeight;
         rolledOnSlope = false;
         //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }

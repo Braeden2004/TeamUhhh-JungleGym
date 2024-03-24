@@ -11,8 +11,11 @@ public class PlayerController : MonoBehaviour
     {
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        //Initialize gravity, friction, max jump height
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
         jumpVel = 2 * apexHeight / apexTime;
+        frictionRate = maxSpeed / timeToZero;
     }
 
     public int jumpTotal;
@@ -76,13 +79,8 @@ public class PlayerController : MonoBehaviour
         balloon = GetComponent<PlayerSwing>();
         swing = GetComponent<HingeRopeSwing>();
 
-        //Initialize gravity & jump velocity
-        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
-        jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
-
-        frictionRate = maxSpeed / timeToZero;
 
         jumpTotal = 0;
     }
@@ -170,7 +168,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
-        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging && !balloon.isSwinging)
+        else if (!isGrounded() && !roll.isRolling) //&& !swing.isSwinging) //&& !balloon.isSwinging)
         {
             Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;

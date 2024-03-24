@@ -6,19 +6,35 @@ public class HingeRopeSwing : MonoBehaviour
     Transform bottomOfRope;
     public bool isSwinging;
     bool canSwing;
+    public bool hasSwung;
     Rigidbody ropeBody;
     ConfigurableJoint joint;
     PlayerController player;
+    Roll roll;
     public Vector3 ropeVelWhenGrabbed;
+    [SerializeField][Range(0, 1)] float accelMultiplier;
+    [SerializeField][Range(0, 2)] float maxSpeedMultiplier;
+    float originalAccel;
+    float originalMaxSpeed;
 
     private void Start()
     {
         player = GetComponent<PlayerController>();
+        roll = GetComponent<Roll>();
+        originalAccel = player.accelSpeed;
+        originalMaxSpeed = player.maxSpeed;
     }
 
     private void Update()
     {
         Swing();
+
+        if(player.isGrounded() && hasSwung && !roll.isRolling)
+        {
+            hasSwung = false;
+            player.accelSpeed = originalAccel;
+            player.maxSpeed = originalMaxSpeed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,15 +63,23 @@ public class HingeRopeSwing : MonoBehaviour
         {
             isSwinging = true;
             ConfigureJoint();
-            player.maxSpeed *= 2;
+            player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
+            player.accelSpeed = originalAccel * accelMultiplier;
+            if(roll.isRolling)
+            {
+                roll.isRolling = false;
+            }
         }
 
-        else if(Input.GetKeyDown(KeyCode.E) && isSwinging)
+        else if(isSwinging)
         {
-            isSwinging = false;
-            Destroy(joint);
-            ropeBody = null;
-            player.maxSpeed /= 2;
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            {
+                isSwinging = false;
+                Destroy(joint);
+                ropeBody = null;
+                hasSwung = true;
+            }
         }
     }
 
