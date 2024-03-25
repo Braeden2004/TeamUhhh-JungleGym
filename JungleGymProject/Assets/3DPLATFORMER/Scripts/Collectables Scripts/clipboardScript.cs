@@ -8,6 +8,7 @@ public class clipboardScript : MonoBehaviour
 {
     //Unique Clipboard name
     public string clipboardName;
+    public ParticleSystem collectParticle;
 
     AudioManager audioManager;
     private void Awake()
@@ -23,7 +24,10 @@ public class clipboardScript : MonoBehaviour
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.clipboardGet);
             audioManager.PlaySFX(audioManager.ticketGet); 
-            
+
+            //spawn particle effect
+            Instantiate(collectParticle, transform.position, Quaternion.identity);
+
             //increase score
             ScoreManager.instance.AddClipboard();
             

@@ -1574,6 +1574,8 @@ MonoBehaviour:
   minVelocity: 1
   freezeTimeTotal: 0
   freeze: 0
+  destroyParticle: {fileID: 9157105887693468085, guid: c4f829cb7dd4b864caf8832ec5b1ee55,
+    type: 3}
 --- !u!65 &7474767369981862498
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class BreakableWall : MonoBehaviour
     private int currentfreezeTime;
     public bool freeze;
 
+    public ParticleSystem destroyParticle;
+
 
     //getrollscript
     private void Start()
@@ -33,6 +35,9 @@ public class BreakableWall : MonoBehaviour
             {
                 if (rb.velocity.magnitude > minVelocity)
                 {
+                    //spawn particle effect
+                    Instantiate(destroyParticle, transform.position, Quaternion.identity);
+
                     //destroy the wall
                     Destroy(gameObject);
                 }

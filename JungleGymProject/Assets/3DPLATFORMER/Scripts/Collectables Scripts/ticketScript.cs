@@ -14,6 +14,8 @@ public class ticketScript : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
+    public ParticleSystem collectParticle;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +23,9 @@ public class ticketScript : MonoBehaviour
         {
             //AUDIO QUEUE
             audioManager.PlaySFX(audioManager.ticketGet);
+
+            //spawn particle effect
+            Instantiate(collectParticle, transform.position, Quaternion.identity);
 
             ScoreManager.instance.AddTicket();
 

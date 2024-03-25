@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ba205caf1bbe048828aac03351b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectParticle: {fileID: 8771972552311404798, guid: bbf9e36a48d6c5648a13889afab076fd,
+    type: 3}
 --- !u!114 &8038992682785935674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c861d47424bf84db80eac5fe870af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: 360
 --- !u!136 &3045060967158796923
 CapsuleCollider:
   m_ObjectHideFlags: 0
