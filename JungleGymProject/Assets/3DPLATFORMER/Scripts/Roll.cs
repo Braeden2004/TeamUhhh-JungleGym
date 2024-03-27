@@ -49,11 +49,15 @@ public class Roll : MonoBehaviour
 
     float rollingNumber;
     public bool rolledOnSlope;
-    public float maxSpeedTimer;
-    float timer;
+    public float maxSpeedTimeLimit;
+    float maxSpeedTimer;
+    float reverseRollTimer;
+    public float reverseRollDelay;
 
     HingeRopeSwing swing;
     PlayerSwing balloon;
+
+    public AnimationCurve animCurve;
 
     void Start()
     {
@@ -82,7 +86,7 @@ public class Roll : MonoBehaviour
 
             rollingNumber++;
 
-            TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
+            //TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
         }
 
         if (Input.GetButtonUp("Roll") && !swing.isSwinging)
@@ -99,8 +103,8 @@ public class Roll : MonoBehaviour
         if(rolledOnSlope)
         {
             player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
-            timer += Time.deltaTime;
-            if(timer > maxSpeedTimer)
+            maxSpeedTimer += Time.deltaTime;
+            if(maxSpeedTimer > maxSpeedTimeLimit)
             {
                 player.maxSpeed = originalMaxSpeed * groundMaxSpeedMultiplier;
             }
@@ -119,14 +123,23 @@ public class Roll : MonoBehaviour
             //RollMove();
             if (OnSlope())
             {
+                Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
+
                 var slopeDot = Vector3.Dot(rb.velocity, slopeDir);
                 if(slopeDot > 0)
                 {
-
+                    rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
+                    reverseRollTimer = 0;
                 }
+                else if(slopeDot < 0)
+                {
+                   reverseRollTimer += Time.deltaTime;
+                    if(reverseRollTimer > reverseRollDelay)
+                    {
+                        rb.AddForce(slopeForce, ForceMode.Acceleration);
+                    }
+                }    
 
-                Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
-                rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
                 rolledOnSlope = true;
 
                 var dot = Vector3.Dot(slopeHit.normal, transform.forward);
@@ -181,6 +194,8 @@ public class Roll : MonoBehaviour
         player.frictionRate = originalFriction;
         player.jumpVel = originalJumpHeight;
         rolledOnSlope = false;
+        reverseRollTimer = 0;
+        maxSpeedTimer = 0;
         //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
 
@@ -209,7 +224,7 @@ public class Roll : MonoBehaviour
             slopeNormal = slopeHit.normal;
             slopeAngle = Vector3.Angle(Vector3.up, slopeNormal);
 
-            slopeAccel = Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
+            slopeAccel = Mathf.Tan(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
             slopeDir = Vector3.Cross(Vector3.Cross(slopeNormal, -Vector3.up), slopeNormal).normalized; //Get direction of slope
             //float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
         }

@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour
             audioManager.PlaySFX(audioManager.jump);
 
             jumpTotal++;
-            TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
+            //TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
 
             //make player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
