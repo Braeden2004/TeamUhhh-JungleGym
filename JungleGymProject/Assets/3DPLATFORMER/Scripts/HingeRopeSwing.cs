@@ -8,6 +8,7 @@ public class HingeRopeSwing : MonoBehaviour
     bool canSwing;
     public bool hasSwung;
     Rigidbody ropeBody;
+    Rigidbody rb;
     ConfigurableJoint joint;
     PlayerController player;
     Roll roll;
@@ -21,6 +22,7 @@ public class HingeRopeSwing : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         roll = GetComponent<Roll>();
+        rb = GetComponent<Rigidbody>();
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
     }
@@ -73,9 +75,17 @@ public class HingeRopeSwing : MonoBehaviour
 
         else if(isSwinging)
         {
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Roll"))
             {
                 isSwinging = false;
+                Destroy(joint);
+                ropeBody = null;
+                hasSwung = true;
+            }
+            else if(Input.GetKeyDown(KeyCode.Space))
+            {
+                isSwinging = false;
+                rb.AddForce(new Vector3(0, player.jumpVel, 0), ForceMode.Impulse);
                 Destroy(joint);
                 ropeBody = null;
                 hasSwung = true;
