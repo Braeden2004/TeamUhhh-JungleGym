@@ -20,8 +20,10 @@ public class PlayerSwing : MonoBehaviour
     public Rope connectedRope;
     public Rope connectableRope;
     [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
+    float originalMaxSpeed;
     PlayerController player;
     Rigidbody rb;
+    Roll roll;
     //public float swingJumpMaximum; threshold for extra jump WIP
 
     [Header("Spring Joint Parameters")]
@@ -33,6 +35,8 @@ public class PlayerSwing : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
+        roll = GetComponent<Roll>();
+        originalMaxSpeed = player.maxSpeed;
     }
 
     void Update()
@@ -44,16 +48,17 @@ public class PlayerSwing : MonoBehaviour
                 audioManager.PlaySFX(audioManager.ropeGrab);
                 audioManager.PlaySFX(audioManager.ropeSwing);
                 StartSwinging();
-                player.maxSpeed *= maxSpeedMultiplier;
+                player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
+                if (roll.isRolling)
+                {
+                    roll.isRolling = false;
+                }
             }
             
         }
-        else if(isSwinging && Input.GetKeyDown(KeyCode.Space))
+        else if(isSwinging)
         {
-            /*if (player.moveDir != Vector3.zero)
-            {
-                rb.AddForce(player.jumpVel / 2f * transform.up, ForceMode.Impulse); //extra jump for when you're moving slowly WIP
-            }*/
+            if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
             ReleaseSwing();
             audioManager.PlaySFX(audioManager.jump);
             swung = true;
@@ -62,7 +67,7 @@ public class PlayerSwing : MonoBehaviour
         if(player.isGrounded() && swung)
         {
             swung = false;
-            player.maxSpeed /= maxSpeedMultiplier;
+            player.maxSpeed = originalMaxSpeed;
         }
     }
 
@@ -78,9 +83,9 @@ public class PlayerSwing : MonoBehaviour
         joint.maxDistance = distanceFromPoint * 0.8f;
         joint.minDistance = distanceFromPoint * 0.25f;
 
-        joint.spring = 4.5f;
-        joint.damper = 7f;
-        joint.massScale = 4.5f;
+        joint.spring = springRate;
+        joint.damper = damperRate;
+        joint.massScale = massScale;
     }
 
     void StartSwinging()
@@ -99,7 +104,7 @@ public class PlayerSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Rope")
+        if(other.tag == "Balloon")
         {
             ropeStartPoint = other.gameObject.transform.parent;
             canSwing = true;
@@ -109,7 +114,7 @@ public class PlayerSwing : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Rope")
+        if (other.tag == "Balloon")
         {
             ropeStartPoint = null;
             canSwing = false;

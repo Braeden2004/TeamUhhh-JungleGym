@@ -9,10 +9,12 @@ public class Glide : MonoBehaviour
     float originalGrav;
     float originalMaxGrav;
     float originalAirControl;
+    float timer;
+    public bool tired;
 
-    [SerializeField] float newGrav;
-    [SerializeField] float airControl;
-    [SerializeField] float newMaxGrav;
+    [SerializeField][Range(0,1)] float gravityMultiplier;
+    [SerializeField][Range(1,3)] float airControlMultiplier;
+    [SerializeField] float timeLimit;
 
     void Start()
     {
@@ -25,17 +27,29 @@ public class Glide : MonoBehaviour
 
     void Update()
     {
-        if(playerController.jumpHold && playerController.isFalling)
+        if(playerController.jumpHold && playerController.isFalling && !tired)
         {
-            playerController.gravity = newGrav;
-            playerController.maxGravity = newMaxGrav;
-            playerController.airControl = airControl;
+            playerController.gravity = originalGrav * gravityMultiplier;
+            playerController.maxGravity = originalMaxGrav * gravityMultiplier;
+            playerController.airControl = originalAirControl * airControlMultiplier;
+            timer += Time.deltaTime;
+            if(timer > timeLimit)
+            {
+                tired = true;
+                timer = 0; 
+            }
         }
         else
         {
             playerController.gravity = originalGrav;
             playerController.maxGravity = originalMaxGrav;
             playerController.airControl = originalAirControl;
+        }
+
+        if(playerController.isGrounded())
+        {
+            tired = false;
+            timer = 0;
         }
     }
 }

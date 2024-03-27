@@ -1,30 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
 [System.Serializable]
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Audio")]
     AudioManager audioManager;
     private void Awake()
     {
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        //Initialize gravity, friction, max jump height
+        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
+        jumpVel = 2 * apexHeight / apexTime;
+        frictionRate = maxSpeed / timeToZero;
     }
 
     public int jumpTotal;
-
-    //get cinemachine brain
-    private CinemachineBrain cinemachineBrain;
 
     [Header("References")]
     public Animator animator;
     public ParticleSystem puffLand;
     public Roll roll;
-    PlayerSwing swing;
+    PlayerSwing balloon;
+    HingeRopeSwing swing;
     Rigidbody rb;
 
     [Header("Input")]
@@ -65,11 +66,6 @@ public class PlayerController : MonoBehaviour
     //variable jump height
     public float minimumJumpHeight = 1.5f;
 
-    //wallbounce
-    public float wallBounceDistance = 5f;
-    public float minWallBounceVelocity = 5f;
-    public float wallBounceForce = 2f; // higher = lower bounce
-
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
@@ -80,27 +76,18 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
 
-        swing = GetComponent<PlayerSwing>();
+        balloon = GetComponent<PlayerSwing>();
+        swing = GetComponent<HingeRopeSwing>();
 
-        cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
-
-        //Initialize gravity & jump velocity
-        gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
-        jumpVel = 2 * apexHeight / apexTime;
         useGravity = true;
         canMove = true;
-
-        frictionRate = maxSpeed / timeToZero;
 
         jumpTotal = 0;
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        CutsceneCheck(); // freeze player if camera is blending to another
-
         GetInput();
 
         HandleGravity();
@@ -132,20 +119,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    public bool HitWall()
-    {
-        //debug raycast
-        Debug.DrawRay(transform.position, Vector3.left * wallBounceDistance, Color.red);
-
-        //check if player is hitting a wall
-        if (Physics.Raycast(transform.position, Vector3.left, wallBounceDistance, groundLayer))
-        {
-            Debug.Log("Hit Wall");
-            return true;
-        }
-        return false;
-    }
-
     public Vector3 AdjustVelocityToSlope(Vector3 velocity) //Smooth walking down slopes
     {
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -166,14 +139,14 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxisRaw("Vertical");
 
 
-        /*if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpHold = true;
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
             jumpHold = false;
-        }*/
+        }
     }
 
     void HandleFriction()
@@ -195,7 +168,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity -= frictionRate * rb.velocity * Time.fixedDeltaTime;
         }
-        else if (!isGrounded() && !roll.isRolling && !swing.isSwinging)
+        else if (!isGrounded() && !roll.isRolling) //&& !swing.isSwinging) //&& !balloon.isSwinging)
         {
             Vector3 xzVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity -= airFrictionRate * xzVel * Time.fixedDeltaTime;
@@ -300,20 +273,22 @@ public class PlayerController : MonoBehaviour
         //Set desired move direction to be based on camera direction
         moveDir = (forwardRelative + rightRelative).normalized;
 
-        //Rotate player
-        Quaternion lookRot = Camera.main.transform.rotation;
-        float yRot = lookRot.eulerAngles.y;
-        Quaternion moveRot = Quaternion.Euler(0, yRot, 0);
+        /*
+            //Rotate player
+            Quaternion lookRot = Camera.main.transform.rotation;
+            float yRot = lookRot.eulerAngles.y;
+            Quaternion moveRot = Quaternion.Euler(0, yRot, 0);
 
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit = new RaycastHit();
+            Ray ray = new Ray(transform.position, -transform.up);
+            RaycastHit hit = new RaycastHit();
 
-        if (Physics.Raycast(ray, out hit, groundLayer))
-        {
-            //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
-            //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
-        }
+            if (Physics.Raycast(ray, out hit, groundLayer))
+            {
+                //Quaternion rotationRef = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, hit.normal) * moveRot, animCurve.Evaluate(animTime)); //Get rotation of slope
+                //transform.rotation = Quaternion.Euler(rotationRef.eulerAngles.x, yRot, rotationRef.eulerAngles.z); //Rotate to slope
+                transform.rotation = Quaternion.Euler(transform.rotation.x, yRot, transform.rotation.z);
+            }
+        */
     }
 
 
@@ -336,7 +311,6 @@ public class PlayerController : MonoBehaviour
             {
                 newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
                 rb.AddForce(newVel, ForceMode.VelocityChange);
-                print(rb.velocity.magnitude);
             }
             else
             {
@@ -454,19 +428,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / minimumJumpHeight, rb.velocity.z); //reduce upward velocity
         }
 
-        /*
-        //jump when rolling into a wall
-        if (roll.isRolling ==true && rb.velocity.magnitude > minWallBounceVelocity && isGrounded() && HitWall())
-        {
-            //make player jump
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(rb.velocity.x, jumpVel / wallBounceForce, rb.velocity.z), ForceMode.Impulse);
-
-            Debug.Log("WALLBOUNCE");
-        }
-        */
-        
-
     }
 
     void AnimChecks()
@@ -488,20 +449,6 @@ public class PlayerController : MonoBehaviour
         if (isGrounded() == false)
         {
             puffed = false;
-        }
-    }
-
-    void CutsceneCheck()
-    {
-        if (cinemachineBrain.IsBlending == true)
-        {
-            //freeze player
-            rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
-        }
-        else
-        {
-            //unfreeze player 
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 }
