@@ -8,6 +8,11 @@ public class clipboardScript : MonoBehaviour
 {
     //Unique Clipboard name
     public string clipboardName;
+
+    //clipboard type
+    public enum ClipboardType { HubClipboard, SavanahClipboard, TundraClipboard, GauntletClipboard }
+    [SerializeField] ClipboardType clipboardType;
+
     public ParticleSystem collectParticle;
 
     AudioManager audioManager;
@@ -29,7 +34,7 @@ public class clipboardScript : MonoBehaviour
             Instantiate(collectParticle, transform.position, Quaternion.identity);
 
             //increase score
-            ScoreManager.instance.AddClipboard();
+            ScoreManager.instance.AddClipboard(clipboardType);
             
             //Clipboard has been collected (use this for telemetry)
             Debug.Log(clipboardName + " Clipboard was collected");

@@ -107,7 +107,6 @@ public class PlayerController : MonoBehaviour
         AnimChecks();
 
         Jump();
-        hitWall();
     }
 
     private void FixedUpdate()
@@ -133,7 +132,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    public bool hitWall()
+    public bool HitWall()
     {
         //debug raycast
         Debug.DrawRay(transform.position, Vector3.left * wallBounceDistance, Color.red);
@@ -455,8 +454,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y / minimumJumpHeight, rb.velocity.z); //reduce upward velocity
         }
 
+        /*
         //jump when rolling into a wall
-        if (roll.isRolling ==true && rb.velocity.magnitude > minWallBounceVelocity && isGrounded() && hitWall())
+        if (roll.isRolling ==true && rb.velocity.magnitude > minWallBounceVelocity && isGrounded() && HitWall())
         {
             //make player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -464,6 +464,7 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log("WALLBOUNCE");
         }
+        */
         
 
     }
