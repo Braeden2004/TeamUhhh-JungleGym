@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
             if (isGrounded())
             {
                 newVel = moveDir * accelSpeed * Time.fixedDeltaTime;
-                rb.AddForce(newVel, ForceMode.VelocityChange);
+                rb.AddForce(newVel, ForceMode.VelocityChange); //Add extra force when on the ground to reach max speed faster
             }
             else
             {

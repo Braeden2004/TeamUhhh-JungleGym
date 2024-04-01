@@ -47,7 +47,7 @@ public class HingeRopeSwing : MonoBehaviour
         if(other.gameObject.tag == "Rope")
         {
             canSwing = true;
-            bottomOfRope = other.gameObject.transform; //hinge joint breaks if added to the bottom of rope rather than the whole rope
+            bottomOfRope = other.gameObject.transform.GetChild(0); 
             ropeBody = other.GetComponent<Rigidbody>();
         }
     }
@@ -66,10 +66,10 @@ public class HingeRopeSwing : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.E) && !isSwinging && canSwing)
         {
-            //still doesn't snap properly, possibly due to update vs fixedupdate
+            //Snap to bottom of rope, slightly off sometimes due to update/fixedupdate (?)
             ropeBody.velocity = Vector3.zero;
             ropeBody.velocity = rb.velocity;
-            rb.position = bottomOfRope.position + offset;
+            rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
             transform.position = bottomOfRope.position + offset;
 
             isSwinging = true;

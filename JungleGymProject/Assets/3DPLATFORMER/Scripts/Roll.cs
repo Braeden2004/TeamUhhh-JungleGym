@@ -57,8 +57,6 @@ public class Roll : MonoBehaviour
     HingeRopeSwing swing;
     PlayerSwing balloon;
 
-    public AnimationCurve animCurve;
-
     void Start()
     {
         player = GetComponent<PlayerController>();
@@ -100,13 +98,15 @@ public class Roll : MonoBehaviour
             jumped = false;
         }
 
-        if(rolledOnSlope)
+        if(rolledOnSlope && !OnSlope())
         {
             player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
             maxSpeedTimer += Time.deltaTime;
             if(maxSpeedTimer > maxSpeedTimeLimit)
             {
                 player.maxSpeed = originalMaxSpeed * groundMaxSpeedMultiplier;
+                maxSpeedTimer = 0;
+                rolledOnSlope = false;
             }
         }
 
@@ -128,6 +128,7 @@ public class Roll : MonoBehaviour
                 var slopeDot = Vector3.Dot(rb.velocity, slopeDir);
                 if(slopeDot > 0)
                 {
+                    //rb.velocity += slopeForce * Time.fixedDeltaTime;
                     rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
                     reverseRollTimer = 0;
                 }
