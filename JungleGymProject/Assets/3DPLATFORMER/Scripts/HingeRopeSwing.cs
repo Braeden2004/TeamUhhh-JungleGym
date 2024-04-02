@@ -21,9 +21,6 @@ public class HingeRopeSwing : MonoBehaviour
     float jumpBoost;
     float originalAccel;
     float originalMaxSpeed;
-    bool startTimer;
-    float timer;
-    [SerializeField] float swingBuffer;
 
     private void Start()
     {
@@ -32,17 +29,11 @@ public class HingeRopeSwing : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
-        timer = swingBuffer;
     }
 
     private void Update()
     {
         Swing();
-
-        if(startTimer)
-        {
-            timer += Time.deltaTime;
-        }
 
         if(player.isGrounded() && hasSwung && !roll.isRolling)
         {
@@ -74,13 +65,16 @@ public class HingeRopeSwing : MonoBehaviour
     {
         //ropeVelWhenGrabbed = rb.velocity;
 
-        if(!isSwinging && canSwing && timer >= swingBuffer) //Input.GetKeyDown(KeyCode.E) && 
+        if(!isSwinging && canSwing) //Input.GetKeyDown(KeyCode.E) && 
         {
-            /*//Snap to bottom of rope, slightly off sometimes due to update/fixedupdate (?)
-            ropeBody.velocity = Vector3.zero;
-            ropeBody.velocity = rb.velocity;
-            rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
-            transform.position = bottomOfRope.position + offset;*/
+            //Snap to bottom of rope if underneath
+            if (transform.position.y < bottomOfRope.position.y) 
+            {
+                ropeBody.velocity = Vector3.zero;
+                ropeBody.velocity = rb.velocity;
+                rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
+                transform.position = bottomOfRope.position + offset;
+            } 
 
             isSwinging = true;
             ConfigureJoint();
@@ -111,8 +105,7 @@ public class HingeRopeSwing : MonoBehaviour
                 Destroy(joint);
                 ropeBody = null;
                 hasSwung = true;
-                timer = 0;
-                startTimer = true;
+                canSwing = false;
             }
         }
     }
