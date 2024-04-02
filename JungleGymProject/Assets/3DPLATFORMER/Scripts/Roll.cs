@@ -134,7 +134,7 @@ public class Roll : MonoBehaviour
                 }
                 else if(slopeDot < 0)
                 {
-                   reverseRollTimer += Time.deltaTime;
+                   reverseRollTimer += Time.fixedDeltaTime;
                     if(reverseRollTimer > reverseRollDelay)
                     {
                         rb.AddForce(slopeForce, ForceMode.Acceleration);
