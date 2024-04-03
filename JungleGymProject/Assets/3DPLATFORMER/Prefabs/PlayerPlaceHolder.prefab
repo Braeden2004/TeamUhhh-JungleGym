@@ -246,6 +246,9 @@ MonoBehaviour:
   rolledOnSlope: 0
   maxSpeedTimeLimit: 2
   reverseRollDelay: 1.5
+  onSlide: 0
+  timeSinceSlide: 0
+  rollSlideBuffer: 0.5
 --- !u!114 &421993096873194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +305,7 @@ MonoBehaviour:
   maxSpeedMultiplier: 1.6
   jumpMultiplier: 0.8
   offset: {x: 0, y: 0, z: 0}
+  slideDownSpeed: 0
 --- !u!114 &4372406829596587120
 MonoBehaviour:
   m_ObjectHideFlags: 0
