@@ -58,10 +58,12 @@ public class PlayerSwing : MonoBehaviour
         }
         else if(isSwinging)
         {
-            if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
-            ReleaseSwing();
-            audioManager.PlaySFX(audioManager.jump);
-            swung = true;
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            {
+                ReleaseSwing();
+                audioManager.PlaySFX(audioManager.jump);
+                swung = true;
+            }
         }
 
         if(player.isGrounded() && swung)
@@ -69,6 +71,8 @@ public class PlayerSwing : MonoBehaviour
             swung = false;
             player.maxSpeed = originalMaxSpeed;
         }
+
+        print(ropeStartPoint);
     }
 
     void ConfigureSpringJoint()
@@ -97,6 +101,7 @@ public class PlayerSwing : MonoBehaviour
 
     public void ReleaseSwing()
     {
+        ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
         connectedRope = null;

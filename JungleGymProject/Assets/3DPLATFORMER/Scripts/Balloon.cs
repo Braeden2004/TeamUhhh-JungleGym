@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Balloon : MonoBehaviour
@@ -32,6 +33,7 @@ public class Balloon : MonoBehaviour
 
                 if (attachedRope.player.joint != null)
                 {
+                    print("working");
                     SpringJoint attachedPlayerJoint = attachedRope.player.joint;
 
                     attachedPlayerJoint.minDistance = maxDist;
@@ -41,7 +43,7 @@ public class Balloon : MonoBehaviour
                     Vector3 balloonForce = (Vector3.up * floatSpeed * Time.deltaTime) + (transform.forward * floatSpeed * Time.deltaTime);
                     rb.AddForce(balloonForce);
                     //attachedRope.player.gameObject.GetComponent<PlayerController>().useGravity = false;
-                    //playerBody.AddForce(balloonForce);
+                    playerBody.AddForce(balloonForce);
 
                     attachedPlayerJoint.connectedAnchor = transform.position;
 
@@ -62,9 +64,26 @@ public class Balloon : MonoBehaviour
                 }
             }
         }
-
-        
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerObj = other.gameObject;
+            player = other.GetComponent<PlayerSwing>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            playerObj = null;
+            player = null;
+        }
+    }
+
 
     void Pop()
     {
