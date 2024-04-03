@@ -17,6 +17,7 @@ public class HingeRopeSwing : MonoBehaviour
     [SerializeField][Range(0, 2)] float maxSpeedMultiplier;
     [SerializeField][Range(0, 1)] float jumpMultiplier;
     [SerializeField] Vector3 offset;
+    [SerializeField] float slideDownSpeed;
     float jumpBoost;
     float originalAccel;
     float originalMaxSpeed;
@@ -44,17 +45,17 @@ public class HingeRopeSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Rope")
+        if(other.gameObject.CompareTag("Rope"))
         {
             canSwing = true;
-            bottomOfRope = other.gameObject.transform; //hinge joint breaks if added to the bottom of rope rather than the whole rope
+            bottomOfRope = other.gameObject.transform.GetChild(0); 
             ropeBody = other.GetComponent<Rigidbody>();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Rope")
+        if (other.CompareTag("Rope"))
         {
             canSwing = false;
         }
@@ -64,13 +65,16 @@ public class HingeRopeSwing : MonoBehaviour
     {
         //ropeVelWhenGrabbed = rb.velocity;
 
-        if(Input.GetKeyDown(KeyCode.E) && !isSwinging && canSwing)
+        if(!isSwinging && canSwing) //Input.GetKeyDown(KeyCode.E) && 
         {
-            //still doesn't snap properly, possibly due to update vs fixedupdate
-            ropeBody.velocity = Vector3.zero;
-            ropeBody.velocity = rb.velocity;
-            rb.position = bottomOfRope.position + offset;
-            transform.position = bottomOfRope.position + offset;
+            //Snap to bottom of rope if underneath
+            if (transform.position.y < bottomOfRope.position.y) 
+            {
+                ropeBody.velocity = Vector3.zero;
+                ropeBody.velocity = rb.velocity;
+                rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
+                transform.position = bottomOfRope.position + offset;
+            } 
 
             isSwinging = true;
             ConfigureJoint();
@@ -86,7 +90,8 @@ public class HingeRopeSwing : MonoBehaviour
 
         else if(isSwinging)
         {
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Roll"))
+            MoveOnRope();
+            if (Input.GetButtonDown("Roll")) //Input.GetKeyDown(KeyCode.E) ||
             {
                 isSwinging = false;
                 Destroy(joint);
@@ -100,6 +105,23 @@ public class HingeRopeSwing : MonoBehaviour
                 Destroy(joint);
                 ropeBody = null;
                 hasSwung = true;
+                canSwing = false;
+            }
+        }
+    }
+
+    void MoveOnRope()
+    {
+        if (transform.position.y >= bottomOfRope.position.y)
+        {
+            if (joint != null)
+            {
+                float newY = joint.connectedAnchor.y;
+                joint.autoConfigureConnectedAnchor = false;
+
+                newY -= Time.deltaTime * slideDownSpeed;
+                Vector3 newPos = new Vector3(joint.connectedAnchor.x, newY, joint.connectedAnchor.z);
+                joint.connectedAnchor = newPos;
             }
         }
     }
@@ -108,6 +130,7 @@ public class HingeRopeSwing : MonoBehaviour
     {
         joint = gameObject.AddComponent<ConfigurableJoint>();
         joint.connectedBody = ropeBody;
+        joint.autoConfigureConnectedAnchor = true;
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
         joint.zMotion = ConfigurableJointMotion.Locked;

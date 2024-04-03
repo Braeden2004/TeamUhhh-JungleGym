@@ -6,6 +6,8 @@ public class PlayerModelRotationHandler : MonoBehaviour
 {
     PlayerController player;
     Roll roll;
+    Rigidbody rb;
+    HingeRopeSwing swing;
     [SerializeField] GameObject playerObj;
     [SerializeField] float rotationSpeed;
 
@@ -15,21 +17,16 @@ public class PlayerModelRotationHandler : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         roll = GetComponent<Roll>();
+        rb = GetComponent<Rigidbody>();
+        swing = GetComponent<HingeRopeSwing>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.moveDir == Vector3.zero && roll.isRolling && roll.OnSlope())
+        if (roll.isRolling && roll.OnSlope())
         {
-            Quaternion desiredRot = Quaternion.LookRotation(roll.slopeDir);
-            Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
-            Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
-            playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
-        }
-        else if (player.moveDir != Vector3.zero && roll.isRolling && roll.OnSlope())
-        {
-            Quaternion desiredRot = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
+            Quaternion desiredRot = Quaternion.LookRotation(rb.velocity);
             Quaternion additionalRot = Quaternion.Euler(0, 90f, 0); //Take this out when player model is fixed
             Quaternion rot = desiredRot * additionalRot; //Take this out when player model is fixed
             playerObj.transform.rotation = Quaternion.Slerp(playerObj.transform.rotation, rot, rotationSpeed * Time.deltaTime);
