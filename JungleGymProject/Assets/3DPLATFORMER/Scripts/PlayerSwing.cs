@@ -19,8 +19,6 @@ public class PlayerSwing : MonoBehaviour
     bool swung;
     public Rope connectedRope;
     public Rope connectableRope;
-    [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
-    float originalMaxSpeed;
     PlayerController player;
     Roll roll;
     public Balloon connectedBalloon;
@@ -46,7 +44,6 @@ public class PlayerSwing : MonoBehaviour
                 audioManager.PlaySFX(audioManager.ropeGrab);
                 audioManager.PlaySFX(audioManager.ropeSwing);
                 StartSwinging();
-                player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
                 if (roll.isRolling)
                 {
                     roll.isRolling = false;

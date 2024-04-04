@@ -86,7 +86,9 @@ public class Balloon : MonoBehaviour
         if (addForceToPlayer)
         {
             playerObj.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * popForce, ForceMode.Impulse);
+            addForceToPlayer = false;
         }
+
         if (attached)
         {
             playerObj.GetComponent<PlayerSwing>().ReleaseSwing();
