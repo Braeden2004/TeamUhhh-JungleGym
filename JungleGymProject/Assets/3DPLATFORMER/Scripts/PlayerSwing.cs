@@ -22,9 +22,8 @@ public class PlayerSwing : MonoBehaviour
     [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
     float originalMaxSpeed;
     PlayerController player;
-    Rigidbody rb;
     Roll roll;
-    //public float swingJumpMaximum; threshold for extra jump WIP
+    public Balloon connectedBalloon;
 
     [Header("Spring Joint Parameters")]
     public float springRate = 4.5f;
@@ -33,7 +32,6 @@ public class PlayerSwing : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
         roll = GetComponent<Roll>();
         originalMaxSpeed = player.maxSpeed;
@@ -71,8 +69,6 @@ public class PlayerSwing : MonoBehaviour
             swung = false;
             player.maxSpeed = originalMaxSpeed;
         }
-
-        print(ropeStartPoint);
     }
 
     void ConfigureSpringJoint()
@@ -97,6 +93,11 @@ public class PlayerSwing : MonoBehaviour
         isSwinging = true;
         ConfigureSpringJoint();
         connectedRope = connectableRope;
+        if(connectedRope.balloon != null)
+        {
+            connectedBalloon = connectableRope.balloon;
+            connectedBalloon.attached = true;
+        }
     }
 
     public void ReleaseSwing()
@@ -104,7 +105,9 @@ public class PlayerSwing : MonoBehaviour
         ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
+        connectableRope.playerObj = null;
         connectedRope = null;
+        connectedBalloon = null;
     }
 
     private void OnTriggerEnter(Collider other)
