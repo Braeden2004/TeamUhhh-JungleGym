@@ -16,15 +16,11 @@ public class PlayerSwing : MonoBehaviour
     public SpringJoint joint;
     public bool isSwinging = false;
     public bool canSwing;
-    bool swung;
     public Rope connectedRope;
     public Rope connectableRope;
-    [SerializeField][Range(1, 2)] float maxSpeedMultiplier;
-    float originalMaxSpeed;
     PlayerController player;
-    Rigidbody rb;
     Roll roll;
-    //public float swingJumpMaximum; threshold for extra jump WIP
+    public Balloon connectedBalloon;
 
     [Header("Spring Joint Parameters")]
     public float springRate = 4.5f;
@@ -33,42 +29,31 @@ public class PlayerSwing : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
         roll = GetComponent<Roll>();
-        originalMaxSpeed = player.maxSpeed;
+        //originalMaxSpeed = player.maxSpeed;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (!isSwinging && canSwing)
         {
-            if (!isSwinging && canSwing)
+            audioManager.PlaySFX(audioManager.ropeGrab);
+            audioManager.PlaySFX(audioManager.ropeSwing);
+            StartSwinging();
+            if (roll.isRolling)
             {
-                audioManager.PlaySFX(audioManager.ropeGrab);
-                audioManager.PlaySFX(audioManager.ropeSwing);
-                StartSwinging();
-                player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
-                if (roll.isRolling)
-                {
-                    roll.isRolling = false;
-                }
+                roll.isRolling = false;
             }
-            
         }
         else if(isSwinging)
         {
-            if(Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
-            ReleaseSwing();
-            audioManager.PlaySFX(audioManager.jump);
-            swung = true;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            {
+                ReleaseSwing();
+            }
         }
 
-        if(player.isGrounded() && swung)
-        {
-            swung = false;
-            player.maxSpeed = originalMaxSpeed;
-        }
     }
 
     void ConfigureSpringJoint()
@@ -93,13 +78,21 @@ public class PlayerSwing : MonoBehaviour
         isSwinging = true;
         ConfigureSpringJoint();
         connectedRope = connectableRope;
+        if(connectedRope.balloon != null)
+        {
+            connectedBalloon = connectableRope.balloon;
+            connectedBalloon.attached = true;
+        }
     }
 
     public void ReleaseSwing()
     {
+        canSwing = false;
+        ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
         connectedRope = null;
+        connectedBalloon = null;
     }
 
     private void OnTriggerEnter(Collider other)

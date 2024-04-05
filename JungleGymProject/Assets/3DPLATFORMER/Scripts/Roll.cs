@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -49,11 +52,20 @@ public class Roll : MonoBehaviour
 
     float rollingNumber;
     public bool rolledOnSlope;
-    public float maxSpeedTimer;
-    float timer;
+    public float maxSpeedTimeLimit;
+    float maxSpeedTimer;
+    float reverseRollTimer;
+    public float reverseRollDelay;
 
     HingeRopeSwing swing;
     PlayerSwing balloon;
+
+    [Header("Red Slide")]
+    private LayerMask slideLayer;
+    public bool onSlide;
+    private float slideCheckDistance = 2f;
+    public float timeSinceSlide;
+    public float rollSlideBuffer;
 
     void Start()
     {
@@ -62,6 +74,7 @@ public class Roll : MonoBehaviour
         glide = GetComponent<Glide>();
         swing = GetComponent<HingeRopeSwing>();
         balloon = GetComponent<PlayerSwing>();
+        slideLayer = LayerMask.GetMask("Slide");
         originalScale = transform.localScale.y;
         originalMaxSpeed = player.maxSpeed;
         originalAccel = player.accelSpeed;
@@ -72,9 +85,10 @@ public class Roll : MonoBehaviour
 
     void Update()
     {
+        CheckForSlide();
         CheckForSlope();
 
-        if (Input.GetButtonDown("Roll"))
+        if ((Input.GetButtonDown("Roll")) || onSlide == true)
         {
             OnStartRoll();
             //AUDIO FOR START OF ROLL HERE
@@ -82,11 +96,14 @@ public class Roll : MonoBehaviour
 
             rollingNumber++;
 
-            TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
+            //TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
         }
 
-        if (Input.GetButtonUp("Roll") && !swing.isSwinging)
+        if (Input.GetButtonUp("Roll") && !swing.isSwinging || (onSlide == false && timeSinceSlide*Time.deltaTime < rollSlideBuffer*Time.deltaTime))
         {
+            //check if im holding down roll button
+            if (Input.GetButton("Roll")) return; // this is to prevent player from getting kicked out of roll state when leaving a slide
+
             OnStopRoll();
         }
 
@@ -96,13 +113,15 @@ public class Roll : MonoBehaviour
             jumped = false;
         }
 
-        if(rolledOnSlope)
+        if(rolledOnSlope && !OnSlope())
         {
             player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
-            timer += Time.deltaTime;
-            if(timer > maxSpeedTimer)
+            maxSpeedTimer += Time.deltaTime;
+            if(maxSpeedTimer > maxSpeedTimeLimit)
             {
                 player.maxSpeed = originalMaxSpeed * groundMaxSpeedMultiplier;
+                maxSpeedTimer = 0;
+                rolledOnSlope = false;
             }
         }
 
@@ -119,14 +138,24 @@ public class Roll : MonoBehaviour
             //RollMove();
             if (OnSlope())
             {
+                Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
+
                 var slopeDot = Vector3.Dot(rb.velocity, slopeDir);
                 if(slopeDot > 0)
                 {
-
+                    //rb.velocity += slopeForce * Time.fixedDeltaTime;
+                    rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
+                    reverseRollTimer = 0;
                 }
+                else if(slopeDot < 0)
+                {
+                   reverseRollTimer += Time.fixedDeltaTime;
+                    if(reverseRollTimer > reverseRollDelay)
+                    {
+                        rb.AddForce(slopeForce, ForceMode.Acceleration);
+                    }
+                }    
 
-                Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
-                rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
                 rolledOnSlope = true;
 
                 var dot = Vector3.Dot(slopeHit.normal, transform.forward);
@@ -169,7 +198,12 @@ public class Roll : MonoBehaviour
         player.frictionRate = originalFriction * frictionMultiplier;
         player.accelSpeed = originalAccel * accelSpeedMultiplier;
         player.jumpVel = originalJumpHeight * jumpHeightMultiplier;
-        RollBoosts();
+
+        if (onSlide == false)
+        {
+           RollBoosts();
+        }
+
     }
 
     void OnStopRoll()
@@ -181,6 +215,8 @@ public class Roll : MonoBehaviour
         player.frictionRate = originalFriction;
         player.jumpVel = originalJumpHeight;
         rolledOnSlope = false;
+        reverseRollTimer = 0;
+        maxSpeedTimer = 0;
         //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
     }
 
@@ -209,12 +245,28 @@ public class Roll : MonoBehaviour
             slopeNormal = slopeHit.normal;
             slopeAngle = Vector3.Angle(Vector3.up, slopeNormal);
 
-            slopeAccel = Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
+            slopeAccel = Mathf.Tan(slopeAngle * Mathf.Deg2Rad); //Calculate slope acceleration
             slopeDir = Vector3.Cross(Vector3.Cross(slopeNormal, -Vector3.up), slopeNormal).normalized; //Get direction of slope
             //float slopeAngle = Vector3.Angle(slopeHit.normal, transform.forward);
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
     }
+  
+    private void CheckForSlide()
+    {
+        //--Check for Slide--//
+        if (Physics.Raycast(transform.position, Vector3.down, slideCheckDistance, slideLayer))
+        {
+            onSlide = true;
+            timeSinceSlide = 0;
+        }
+        else
+        {
+            onSlide = false;
+            timeSinceSlide += 1 * Time.deltaTime;
+        }
+    }
+
 
     void UpdateAnim()
     {
