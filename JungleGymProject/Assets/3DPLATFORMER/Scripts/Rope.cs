@@ -50,21 +50,21 @@ public class Rope : MonoBehaviour
                     }
                 }
             }
-            
-        }
-        else
-        {
-            renderPoint = lineBottom;
-            if (balloon != null)
+            else
             {
-                balloon.attached = false;
-            }
-            if (telemteryTrigger != null)
-            {
-                telemteryTrigger.SetActive(false);
-            }
+                renderPoint = lineBottom;
+                if (balloon != null)
+                {
+                    balloon.attached = false;
+                }
+                if (telemteryTrigger != null)
+                {
+                    telemteryTrigger.SetActive(false);
+                }
 
+            }
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -85,6 +85,7 @@ public class Rope : MonoBehaviour
         {
             playerObj = null;
             player = null;
+            renderPoint = lineBottom;
 
             //Make context menu false
             grabText.GetComponent<TextMeshProUGUI>().enabled = false;
