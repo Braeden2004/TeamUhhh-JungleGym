@@ -8,8 +8,9 @@ public class Rope : MonoBehaviour
     public Transform lineBottom;
     public Transform renderPoint;
     public LineRenderer rope;
-    GameObject playerObj;
-    public PlayerSwing player;
+    public GameObject playerObj;
+    PlayerSwing player;
+    public Balloon balloon;
 
 
     //Braeden Variables for Context Menu
@@ -39,6 +40,7 @@ public class Rope : MonoBehaviour
                 if (player.isSwinging)
                 {
                     renderPoint = playerObj.transform;
+                    balloon.attached = true;
 
                     //Make context menu false
                     grabText.GetComponent<TextMeshProUGUI>().enabled = false;
@@ -51,13 +53,17 @@ public class Rope : MonoBehaviour
             else
             {
                 renderPoint = lineBottom;
+                if (balloon != null)
+                {
+                    balloon.attached = false;
+                }
                 if (telemteryTrigger != null)
                 {
                     telemteryTrigger.SetActive(false);
                 }
-
             }
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,8 +82,8 @@ public class Rope : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            playerObj = other.gameObject;
-            player = other.GetComponent<PlayerSwing>();
+            //playerObj = null;
+            //player = null;
 
             //Make context menu false
             grabText.GetComponent<TextMeshProUGUI>().enabled = false;

@@ -9,7 +9,7 @@ public class HingeRopeSwing : MonoBehaviour
     public bool hasSwung;
     Rigidbody ropeBody;
     Rigidbody rb;
-    ConfigurableJoint joint;
+    public ConfigurableJoint joint;
     PlayerController player;
     Roll roll;
     public Vector3 ropeVelWhenGrabbed;
@@ -70,8 +70,6 @@ public class HingeRopeSwing : MonoBehaviour
             //Snap to bottom of rope if underneath
             if (transform.position.y < bottomOfRope.position.y) 
             {
-                ropeBody.velocity = Vector3.zero;
-                ropeBody.velocity = rb.velocity;
                 rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
                 transform.position = bottomOfRope.position + offset;
             } 
@@ -97,6 +95,7 @@ public class HingeRopeSwing : MonoBehaviour
                 Destroy(joint);
                 ropeBody = null;
                 hasSwung = true;
+                canSwing = false;
             }
             else if(Input.GetKeyDown(KeyCode.Space))
             {
