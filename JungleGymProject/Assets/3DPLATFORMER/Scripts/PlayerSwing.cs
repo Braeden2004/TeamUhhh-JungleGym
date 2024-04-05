@@ -32,7 +32,7 @@ public class PlayerSwing : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         roll = GetComponent<Roll>();
-        originalMaxSpeed = player.maxSpeed;
+        //originalMaxSpeed = player.maxSpeed;
     }
 
     void Update()
@@ -64,7 +64,7 @@ public class PlayerSwing : MonoBehaviour
         if(player.isGrounded() && swung)
         {
             swung = false;
-            player.maxSpeed = originalMaxSpeed;
+            //player.maxSpeed = originalMaxSpeed;
         }
     }
 
@@ -102,7 +102,7 @@ public class PlayerSwing : MonoBehaviour
         ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
-        connectableRope.playerObj = null;
+        connectedRope.playerObj = null;
         connectedRope = null;
         connectedBalloon = null;
     }
