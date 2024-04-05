@@ -18,12 +18,29 @@ public class AudioManager : MonoBehaviour
     public AudioClip run3;
     public AudioClip run4;
 
-    public AudioClip title;
-    public AudioClip settings;
-    public AudioClip ingame;
-
+    public AudioClip baloonRise;
+    public AudioClip balloonPop;
+    public AudioClip wallBreak;
+    public AudioClip monkeyGrunt1;
+    public AudioClip monkeyGrunt2;
+    public AudioClip monkeyGrunt3;
     public AudioClip ticketGet;
     public AudioClip clipboardGet;
+
+    public AudioClip ambience;
+
+    public AudioClip menuHover;
+    public AudioClip menuPress;
+
+    public AudioClip Pause;
+    //Quiet down music on pause
+
+    public AudioClip title;
+    public AudioClip hubMusic;
+    public AudioClip level1Music;
+    public AudioClip level2Music;
+    public AudioClip endScreen;
+
 
     private void Start()
     {
