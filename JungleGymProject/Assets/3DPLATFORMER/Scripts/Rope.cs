@@ -85,7 +85,6 @@ public class Rope : MonoBehaviour
         {
             playerObj = null;
             player = null;
-            renderPoint = lineBottom;
 
             //Make context menu false
             grabText.GetComponent<TextMeshProUGUI>().enabled = false;
