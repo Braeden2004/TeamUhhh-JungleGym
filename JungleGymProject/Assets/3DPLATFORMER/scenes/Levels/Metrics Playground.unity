@@ -74102,6 +74102,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2101363166379937118, guid: d61a91eb4f866c74c94951c75c84632c,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -839153742519632896, guid: 672038e9ea7cb7b48b6f30893d20966d,
+        type: 2}
+    - target: {fileID: 2715644351297822341, guid: d61a91eb4f866c74c94951c75c84632c,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715644351297822341, guid: d61a91eb4f866c74c94951c75c84632c,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -4891849136422201578, guid: 672038e9ea7cb7b48b6f30893d20966d,
+        type: 2}
     - target: {fileID: 7997294300556300249, guid: d61a91eb4f866c74c94951c75c84632c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -80068,7 +80085,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626172046}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.05944279, y: -0.7046038, z: -0.059442777, w: 0.7046039}
+  m_LocalRotation: {x: -0.059442792, y: -0.7046038, z: -0.059442777, w: 0.7046039}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
