@@ -11,6 +11,7 @@ TagManager:
   - Balloon
   - FxTemporaire
   - RedSlide
+  - HiddenMonkey
   layers:
   - Default
   - TransparentFX

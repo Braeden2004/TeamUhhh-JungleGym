@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lilmonkey 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63dcade96d99a8f41b8c12bc78f1c412,
+        type: 3}
+      propertyPath: m_TagString
+      value: HiddenMonkey
+      objectReference: {fileID: 0}
     - target: {fileID: 1364974133809703462, guid: 63dcade96d99a8f41b8c12bc78f1c412,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
