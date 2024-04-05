@@ -16,7 +16,6 @@ public class PlayerSwing : MonoBehaviour
     public SpringJoint joint;
     public bool isSwinging = false;
     public bool canSwing;
-    bool swung;
     public Rope connectedRope;
     public Rope connectableRope;
     PlayerController player;
@@ -56,16 +55,9 @@ public class PlayerSwing : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
             {
                 ReleaseSwing();
-                audioManager.PlaySFX(audioManager.jump);
-                swung = true;
             }
         }
 
-        if(player.isGrounded() && swung)
-        {
-            swung = false;
-            //player.maxSpeed = originalMaxSpeed;
-        }
     }
 
     void ConfigureSpringJoint()

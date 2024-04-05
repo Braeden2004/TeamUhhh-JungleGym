@@ -50,16 +50,20 @@ public class Rope : MonoBehaviour
                     }
                 }
             }
-            else
+            
+        }
+        else
+        {
+            renderPoint = lineBottom;
+            if (balloon != null)
             {
-                renderPoint = lineBottom;
                 balloon.attached = false;
-                if (telemteryTrigger != null)
-                {
-                    telemteryTrigger.SetActive(false);
-                }
-
             }
+            if (telemteryTrigger != null)
+            {
+                telemteryTrigger.SetActive(false);
+            }
+
         }
     }
 
