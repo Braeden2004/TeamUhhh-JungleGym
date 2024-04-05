@@ -61,7 +61,6 @@ public class Rope : MonoBehaviour
                 {
                     telemteryTrigger.SetActive(false);
                 }
-
             }
         }
 
@@ -83,8 +82,8 @@ public class Rope : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            playerObj = null;
-            player = null;
+            //playerObj = null;
+            //player = null;
 
             //Make context menu false
             grabText.GetComponent<TextMeshProUGUI>().enabled = false;

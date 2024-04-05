@@ -94,7 +94,6 @@ public class PlayerSwing : MonoBehaviour
         ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
-        connectedRope.playerObj = null;
         connectedRope = null;
         connectedBalloon = null;
     }
