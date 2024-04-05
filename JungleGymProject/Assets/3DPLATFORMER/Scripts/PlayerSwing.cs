@@ -36,23 +36,19 @@ public class PlayerSwing : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (!isSwinging && canSwing)
         {
-            if (!isSwinging && canSwing)
+            audioManager.PlaySFX(audioManager.ropeGrab);
+            audioManager.PlaySFX(audioManager.ropeSwing);
+            StartSwinging();
+            if (roll.isRolling)
             {
-                audioManager.PlaySFX(audioManager.ropeGrab);
-                audioManager.PlaySFX(audioManager.ropeSwing);
-                StartSwinging();
-                if (roll.isRolling)
-                {
-                    roll.isRolling = false;
-                }
+                roll.isRolling = false;
             }
-            
         }
         else if(isSwinging)
         {
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
             {
                 ReleaseSwing();
             }
@@ -91,6 +87,7 @@ public class PlayerSwing : MonoBehaviour
 
     public void ReleaseSwing()
     {
+        canSwing = false;
         ropeStartPoint = null;
         isSwinging = false;
         Destroy(joint);
