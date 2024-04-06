@@ -187,10 +187,10 @@ MonoBehaviour:
   run: {fileID: 8300000, guid: ee393940191150244b91822d4f607361, type: 3}
   baloonRise: {fileID: 8300000, guid: 449dbe2202634914993a94fc9b8a0c55, type: 3}
   balloonPop: {fileID: 8300000, guid: 771ee0f63c0cccc41a08a69a7537af7b, type: 3}
-  wallBreak: {fileID: 0}
+  wallBreak: {fileID: 8300000, guid: 45c885aa807acb14085f336d38c7585e, type: 3}
   monkeyGrunt: {fileID: 8300000, guid: 55ec29855be3b994a8c7536f529a2dc0, type: 3}
-  ticketGet: {fileID: 0}
-  clipboardGet: {fileID: 0}
+  ticketGet: {fileID: 8300000, guid: 00984beef6f657f4c97a910d7dcb90b7, type: 3}
+  clipboardGet: {fileID: 8300000, guid: 55683249a0784764b8e0229c3512f8f4, type: 3}
   ambience: {fileID: 8300000, guid: 9b652e3133591414c803cd45d03fdcf9, type: 3}
   menuHover: {fileID: 8300000, guid: b5fa580142736c849b98c65e1959e540, type: 3}
   menuPress: {fileID: 8300000, guid: 44edef634f260e14296410024f080a54, type: 3}
