@@ -38,8 +38,8 @@ public class PlayerSwing : MonoBehaviour
     {
         if (!isSwinging && canSwing)
         {
-            audioManager.PlaySFX(audioManager.ropeGrab);
-            audioManager.PlaySFX(audioManager.ropeSwing);
+            audioManager.PlaySFX(1, audioManager.ropeGrab);
+            audioManager.PlaySFX(1, audioManager.ropeSwing);
             StartSwinging();
             if (roll.isRolling)
             {

@@ -93,7 +93,7 @@ public class Roll : MonoBehaviour
         {
             OnStartRoll();
             //AUDIO FOR START OF ROLL HERE
-            audioManager.PlaySFX(audioManager.roll);
+            audioManager.PlaySFX(1,audioManager.roll);
 
             rollingNumber++;
 

@@ -22,7 +22,7 @@ public class ticketScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //AUDIO QUEUE
-            audioManager.PlaySFX(audioManager.ticketGet);
+            audioManager.PlaySFX(1, audioManager.ticketGet);
 
             //spawn particle effect
             Instantiate(collectParticle, transform.position, Quaternion.identity);

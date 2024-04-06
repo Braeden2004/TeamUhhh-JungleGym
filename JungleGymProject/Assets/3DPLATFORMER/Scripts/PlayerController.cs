@@ -212,10 +212,10 @@ public class PlayerController : MonoBehaviour
 
         else
         {
-            if (isFalling == true)
+            if (isFalling == true && swing.isSwinging != true)
             {
                 //AUDIO QUEUE
-                audioManager.PlaySFX(audioManager.land);
+                audioManager.PlaySFX(1, audioManager.land);
 
                 isFalling = false;
             }
@@ -399,8 +399,11 @@ public class PlayerController : MonoBehaviour
         //Jump Logic
         if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
-            //AUDIO QUEUE
-            audioManager.PlaySFX(audioManager.jump);
+            //AUDIO QUEUE for Jump
+            audioManager.defaultPitchSFX(1);
+            audioManager.PlaySFX(2, audioManager.jump);
+            audioManager.PitchAdjustSFX(1, 0.6f,0.8f);
+            audioManager.PlaySFX(1, audioManager.monkeyGrunt);
 
             jumpTotal++;
             //TelemetryLogger.Log(this, "Jump Amount", jumpTotal);

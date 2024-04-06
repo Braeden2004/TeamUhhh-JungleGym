@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
     [Header("-----------Audio Source ----------------")]
     [SerializeField]  AudioSource Music_Source;
     [SerializeField]  AudioSource SFX_Source;
+    [SerializeField] AudioSource SFX2_Source;
+    [SerializeField] AudioSource SFX3_Source;
     [SerializeField] AudioSource RSFX_Source;
 
     [Header("-----------Audio Clip ----------------")]
@@ -47,9 +49,20 @@ public class AudioManager : MonoBehaviour
         Music_Source.Play();
     }
 
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(int slot, AudioClip clip)
     {
-        SFX_Source.PlayOneShot(clip);
+        if (slot == 1)
+        {
+            SFX_Source.PlayOneShot(clip);
+        }
+        if (slot == 2)
+        {
+            SFX2_Source.PlayOneShot(clip);
+        }
+        if (slot == 3)
+        {
+            SFX3_Source.PlayOneShot(clip);
+        }
     }
 
     public void PlayRSFX(AudioClip clip)
@@ -63,19 +76,42 @@ public class AudioManager : MonoBehaviour
         RSFX_Source.Stop();
     }
 
-    public void PitchAdjustSFX()
+    public void PitchAdjustSFX(int slot, float min, float max)
     {
-        SFX_Source.pitch = Random.Range(0.5f, 1.8f);
+        if (slot == 1)
+        {
+            SFX_Source.pitch = Random.Range(min, max);
+        }
+        if (slot == 2)
+        {
+            SFX2_Source.pitch = Random.Range(min, max);
+        }
+        if (slot == 3)
+        {
+            SFX3_Source.pitch = Random.Range(min, max);
+        }
     }
 
-    public void PitchAdjustRSFX()
+    public void PitchAdjustRSFX(float min, float max)
     {
-        RSFX_Source.pitch = Random.Range(0.5f, 1.8f);
+        RSFX_Source.pitch = Random.Range(min, max);
     }
 
-    public void defaultPitchSFX()
+    public void defaultPitchSFX(int slot)
     {
-        SFX_Source.pitch = 1f;
+        if (slot == 1)
+        {
+            SFX_Source.pitch = 1f;
+        }
+        if (slot == 2)
+        {
+            SFX2_Source.pitch = 1f;
+        }
+        if (slot == 3)
+        {
+            SFX3_Source.pitch = 1f;
+        }
+        
     }
 
     public void defaultPitchRSFX()
