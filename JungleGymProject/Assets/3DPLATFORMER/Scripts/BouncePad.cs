@@ -16,6 +16,13 @@ public class BouncePad : MonoBehaviour
             rb = collision.gameObject.GetComponent<Rigidbody>();
             rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
         }
+
+        //make the hidden monkey fellas bounce
+        if (collision.gameObject.tag == "HiddenMonkey")
+        {
+            rb = collision.gameObject.GetComponent<Rigidbody>();
+            rb.AddForce(Vector3.up * bounceForce/2, ForceMode.Impulse);
+        }
     }
 
 }

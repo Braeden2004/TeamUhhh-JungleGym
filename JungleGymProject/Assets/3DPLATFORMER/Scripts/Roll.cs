@@ -63,6 +63,7 @@ public class Roll : MonoBehaviour
     [Header("Red Slide")]
     private LayerMask slideLayer;
     public bool onSlide;
+    public bool onSlideTrigger;
     private float slideCheckDistance = 2f;
     public float timeSinceSlide;
     public float rollSlideBuffer;
@@ -262,7 +263,33 @@ public class Roll : MonoBehaviour
         }
         else
         {
-            onSlide = false;
+            if (onSlideTrigger == false) onSlide = false;
+            else onSlide = true;
+
+            timeSinceSlide += 1 * Time.deltaTime;
+        }
+    }
+
+    //sliding zone trigger
+    public void OnTriggerStay(Collider other)
+    {
+
+        if (other.gameObject.layer == 11) //slide layer is #11
+        {
+            Debug.Log("ONSlide");
+
+            onSlideTrigger = true;
+            timeSinceSlide = 0;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 11) //slide layer is #11
+        {
+            Debug.Log("OFFSlide");
+
+            onSlideTrigger = false;
             timeSinceSlide += 1 * Time.deltaTime;
         }
     }

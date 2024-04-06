@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 5910476301805215775}
   - component: {fileID: 4372406829596587120}
   - component: {fileID: 1164842203538601426}
+  - component: {fileID: 4223071871068115654}
   m_Layer: 0
   m_Name: PlayerPlaceHolder
   m_TagString: Player
@@ -247,6 +248,7 @@ MonoBehaviour:
   maxSpeedTimeLimit: 2
   reverseRollDelay: 1.5
   onSlide: 0
+  onSlideTrigger: 0
   timeSinceSlide: 0
   rollSlideBuffer: 0.5
 --- !u!114 &421993096873194
@@ -267,7 +269,7 @@ MonoBehaviour:
   canSwing: 0
   connectedRope: {fileID: 0}
   connectableRope: {fileID: 0}
-  maxSpeedMultiplier: 1.5
+  connectedBalloon: {fileID: 0}
   springRate: 4.5
   damperRate: 7
   massScale: 4.5
@@ -300,12 +302,13 @@ MonoBehaviour:
   isSwinging: 0
   canSwing: 0
   hasSwung: 0
+  joint: {fileID: 0}
   ropeVelWhenGrabbed: {x: 0, y: 0, z: 0}
   accelMultiplier: 0.6
   maxSpeedMultiplier: 1.6
   jumpMultiplier: 0.8
   offset: {x: 0, y: 0, z: 0}
-  slideDownSpeed: 0
+  slideDownSpeed: 2
 --- !u!114 &4372406829596587120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +341,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &4223071871068115654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4079190595604892945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7931e3cf6844714a97d83a43adb941c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5814869518097683038
 PrefabInstance:
   m_ObjectHideFlags: 0
