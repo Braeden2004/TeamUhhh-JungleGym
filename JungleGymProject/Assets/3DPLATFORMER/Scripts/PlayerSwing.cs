@@ -39,7 +39,7 @@ public class PlayerSwing : MonoBehaviour
         if (!isSwinging && canSwing)
         {
             audioManager.PlaySFX(1, audioManager.ropeGrab);
-            audioManager.PlaySFX(1, audioManager.ropeSwing);
+            audioManager.PlayRSFX(audioManager.ropeSwing);
             StartSwinging();
             if (roll.isRolling)
             {
@@ -51,6 +51,7 @@ public class PlayerSwing : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
             {
                 ReleaseSwing();
+                audioManager.StopRSFX();
             }
         }
 

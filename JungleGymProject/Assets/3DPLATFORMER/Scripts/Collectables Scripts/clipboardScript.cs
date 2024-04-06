@@ -27,8 +27,11 @@ public class clipboardScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //AUDIO QUEUE
+            audioManager.defaultPitchSFX(1);
+            audioManager.PitchAdjustSFX(1, 4f, 4f);
             audioManager.PlaySFX(1, audioManager.clipboardGet);
-            audioManager.PlaySFX(1,audioManager.ticketGet); 
+            audioManager.defaultPitchSFX(2);
+            audioManager.PlaySFX(2,audioManager.ticketGet); 
 
             //spawn particle effect
             Instantiate(collectParticle, transform.position, Quaternion.identity);

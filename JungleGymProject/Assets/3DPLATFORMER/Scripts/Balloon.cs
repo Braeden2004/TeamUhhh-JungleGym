@@ -22,6 +22,9 @@ public class Balloon : MonoBehaviour
 
     public TextMeshProUGUI timerText;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,9 @@ public class Balloon : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         originalTransform = transform.position;
+
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -64,6 +70,10 @@ public class Balloon : MonoBehaviour
                     playerBody.AddForce(playerForce);
 
                     startPopTimer = true;
+
+                    //Audio for playing balloon rise
+                    audioManager.defaultPitchSFX(3);
+                    audioManager.PlaySFX(3, audioManager.baloonRise);
 
 
                 }
@@ -113,6 +123,10 @@ public class Balloon : MonoBehaviour
         }
         timer = 0;
         startPopTimer = false;
+
+        //Audio for playing balloon rise
+        audioManager.defaultPitchSFX(3);
+        audioManager.PlaySFX(3, audioManager.balloonPop);
     }
 
     void Respawn()

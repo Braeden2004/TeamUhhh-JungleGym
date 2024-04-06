@@ -348,8 +348,6 @@ public class PlayerController : MonoBehaviour
 
         ClampGroundVel();
 
-
-        //AUDIO FOR MOVE HERE
         //NEEDS COROUTINE
         /*int randmove = Random.Range(0, 3);
         if(randmove == 0)
@@ -438,10 +436,20 @@ public class PlayerController : MonoBehaviour
         if (moveDir.magnitude < 0.1f)
         {
             animator.SetBool("IsIdle", true);
+            //Run SFX Stopper
+            audioManager.StopRSFX();
         }
         else
         {
+
             animator.SetBool("IsIdle", false);
+
+            //AUDIO FOR MOVE HERE
+            if (!audioManager.PlayingRSFX())
+            {
+                audioManager.PlayRSFX(audioManager.run);
+                audioManager.PitchAdjustRSFX(0.9f, 1.1f);
+            }
         }
 
         if (isGrounded() == true && puffed == false)
