@@ -198,7 +198,7 @@ MonoBehaviour:
   title: {fileID: 8300000, guid: 28ad7b60cb70a9644a9991aa6bc4934a, type: 3}
   hubMusic: {fileID: 8300000, guid: 2006f18d5ad003b4eb3d8661fa436acb, type: 3}
   level1Music: {fileID: 8300000, guid: d99f830d1c1c18540887158ef12a0b02, type: 3}
-  level2Music: {fileID: 0}
+  level2Music: {fileID: 8300000, guid: fc6a4127289991444938a92a31f21a07, type: 3}
   endScreen: {fileID: 8300000, guid: d11b5f352bf96d74e949c9833415fa41, type: 3}
 --- !u!1 &788080341445738662
 GameObject:
