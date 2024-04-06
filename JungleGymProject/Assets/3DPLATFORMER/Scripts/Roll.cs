@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -57,6 +60,14 @@ public class Roll : MonoBehaviour
     HingeRopeSwing swing;
     PlayerSwing balloon;
 
+    [Header("Red Slide")]
+    private LayerMask slideLayer;
+    public bool onSlide;
+    public bool onSlideTrigger;
+    private float slideCheckDistance = 2f;
+    public float timeSinceSlide;
+    public float rollSlideBuffer;
+
     void Start()
     {
         player = GetComponent<PlayerController>();
@@ -64,6 +75,7 @@ public class Roll : MonoBehaviour
         glide = GetComponent<Glide>();
         swing = GetComponent<HingeRopeSwing>();
         balloon = GetComponent<PlayerSwing>();
+        slideLayer = LayerMask.GetMask("Slide");
         originalScale = transform.localScale.y;
         originalMaxSpeed = player.maxSpeed;
         originalAccel = player.accelSpeed;
@@ -74,9 +86,10 @@ public class Roll : MonoBehaviour
 
     void Update()
     {
+        CheckForSlide();
         CheckForSlope();
 
-        if (Input.GetButtonDown("Roll"))
+        if ((Input.GetButtonDown("Roll")) || onSlide == true)
         {
             OnStartRoll();
             //AUDIO FOR START OF ROLL HERE
@@ -87,8 +100,11 @@ public class Roll : MonoBehaviour
             //TelemetryLogger.Log(this, "Times Rolled", rollingNumber);
         }
 
-        if (Input.GetButtonUp("Roll") && !swing.isSwinging)
+        if (Input.GetButtonUp("Roll") && !swing.isSwinging || (onSlide == false && timeSinceSlide*Time.deltaTime < rollSlideBuffer*Time.deltaTime))
         {
+            //check if im holding down roll button
+            if (Input.GetButton("Roll")) return; // this is to prevent player from getting kicked out of roll state when leaving a slide
+
             OnStopRoll();
         }
 
@@ -183,7 +199,12 @@ public class Roll : MonoBehaviour
         player.frictionRate = originalFriction * frictionMultiplier;
         player.accelSpeed = originalAccel * accelSpeedMultiplier;
         player.jumpVel = originalJumpHeight * jumpHeightMultiplier;
-        RollBoosts();
+
+        if (onSlide == false)
+        {
+           RollBoosts();
+        }
+
     }
 
     void OnStopRoll()
@@ -231,6 +252,48 @@ public class Roll : MonoBehaviour
         }
         Debug.DrawRay(slopeHit.point, slopeDir * 100f, Color.red);
     }
+  
+    private void CheckForSlide()
+    {
+        //--Check for Slide--//
+        if (Physics.Raycast(transform.position, Vector3.down, slideCheckDistance, slideLayer))
+        {
+            onSlide = true;
+            timeSinceSlide = 0;
+        }
+        else
+        {
+            if (onSlideTrigger == false) onSlide = false;
+            else onSlide = true;
+
+            timeSinceSlide += 1 * Time.deltaTime;
+        }
+    }
+
+    //sliding zone trigger
+    public void OnTriggerStay(Collider other)
+    {
+
+        if (other.gameObject.layer == 11) //slide layer is #11
+        {
+            Debug.Log("ONSlide");
+
+            onSlideTrigger = true;
+            timeSinceSlide = 0;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 11) //slide layer is #11
+        {
+            Debug.Log("OFFSlide");
+
+            onSlideTrigger = false;
+            timeSinceSlide += 1 * Time.deltaTime;
+        }
+    }
+
 
     void UpdateAnim()
     {

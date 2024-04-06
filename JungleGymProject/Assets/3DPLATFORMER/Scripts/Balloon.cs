@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,6 +20,9 @@ public class Balloon : MonoBehaviour
     [SerializeField] float floatSpeed;
     [SerializeField] float maxDist;
 
+    public TextMeshProUGUI timerText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +34,9 @@ public class Balloon : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //timer 
+        timerText.text = Convert.ToString((int)(popTimer-timer));
+
         if (attachedRope != null)
         {
             if (attachedRope.playerObj != null)
@@ -57,12 +64,17 @@ public class Balloon : MonoBehaviour
                     playerBody.AddForce(playerForce);
 
                     startPopTimer = true;
+
+
                 }
             }
         }
 
         if(startPopTimer)
         {
+            //display timer
+            timerText.gameObject.SetActive(true);
+
             Vector3 balloonForce = (Vector3.up * floatSpeed * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime);
             rb.velocity = balloonForce;
             //rb.AddForce(balloonForce);
@@ -78,6 +90,11 @@ public class Balloon : MonoBehaviour
                 Pop();
                 Respawn();
             }
+        }
+        else
+        {
+            //hide timer
+            timerText.gameObject.SetActive(false);
         }
     }
 

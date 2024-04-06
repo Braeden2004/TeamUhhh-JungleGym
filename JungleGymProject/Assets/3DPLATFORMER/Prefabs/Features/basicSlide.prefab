@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3602540912049550526}
   - component: {fileID: 7024508050882165404}
   - component: {fileID: 1248750157601949366}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: basicSlide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6800,19 +6800,11 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5421
+  m_VersionIndex: 5425
   m_IsSelectable: 1
-  m_SelectedFaces: 20000000
-  m_SelectedEdges:
-  - a: 130
-    b: 131
-  - a: 131
-    b: 129
-  - a: 129
-    b: 128
-  - a: 128
-    b: 130
-  m_SelectedVertices: 82000000830000008100000080000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &8852267854805546599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6866,7 +6858,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c82c0e92203cccd4f9863ad025712d4d, type: 2}
+  - {fileID: 2100000, guid: 802f7197ee2e7564cadc99d8137cc0bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
