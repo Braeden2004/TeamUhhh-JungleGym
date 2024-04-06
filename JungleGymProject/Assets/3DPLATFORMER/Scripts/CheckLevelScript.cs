@@ -13,6 +13,7 @@ public class CheckLevelScript : MonoBehaviour
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
+
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.tag);

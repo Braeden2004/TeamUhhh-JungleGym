@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
 
         else
         {
-            if (isFalling == true && swing.isSwinging != true)
+            if (isFalling && !swing.isSwinging && !balloon.isSwinging)
             {
                 //AUDIO QUEUE
                 audioManager.PlaySFX(1, audioManager.land);

@@ -96,6 +96,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void StopSFX(int slot, float min, float max)
+    {
+        if (slot == 1)
+        {
+            SFX_Source.pitch = Random.Range(min, max);
+        }
+        if (slot == 2)
+        {
+            SFX2_Source.pitch = Random.Range(min, max);
+        }
+        if (slot == 3)
+        {
+            SFX3_Source.pitch = Random.Range(min, max);
+        }
+    }
+
     public void PitchAdjustRSFX(float min, float max)
     {
         RSFX_Source.pitch = Random.Range(min, max);
@@ -137,13 +153,13 @@ public class AudioManager : MonoBehaviour
         {
             StopAllCoroutines();
 
-            StartCoroutine(FadeTrackOut());
-
+            //StartCoroutine(FadeTrackOut());
+            Music_Source.volume = 1;
             Music_Source.Stop();
             Music_Source.clip = clip;
             Music_Source.Play();
 
-            StartCoroutine(FadeTrackIn());
+            //StartCoroutine(FadeTrackIn());
        }
     }
 

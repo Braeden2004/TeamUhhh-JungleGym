@@ -45,6 +45,7 @@ public class BreakableWall : MonoBehaviour
                     Instantiate(destroyParticle, transform.position, Quaternion.identity);
 
                     audioManager.defaultPitchSFX(3);
+                    audioManager.AdjustVolume(3, 10f);
                     audioManager.PlaySFX(3, audioManager.wallBreak);
 
                     //destroy the wall

@@ -71,9 +71,7 @@ public class Balloon : MonoBehaviour
 
                     startPopTimer = true;
 
-                    //Audio for playing balloon rise
-                    audioManager.defaultPitchSFX(3);
-                    audioManager.PlaySFX(3, audioManager.baloonRise);
+                    
 
 
                 }
@@ -82,6 +80,14 @@ public class Balloon : MonoBehaviour
 
         if(startPopTimer)
         {
+            if(timer == 0)
+            {
+                //Audio for playing balloon rise
+                audioManager.AdjustVolume(3, 1f);
+                audioManager.defaultPitchSFX(3);
+                audioManager.PlaySFX(3, audioManager.baloonRise);
+            }
+
             //display timer
             timerText.gameObject.SetActive(true);
 
@@ -125,6 +131,8 @@ public class Balloon : MonoBehaviour
         startPopTimer = false;
 
         //Audio for playing balloon rise
+
+        audioManager.AdjustVolume(3, 1f);
         audioManager.defaultPitchSFX(3);
         audioManager.PlaySFX(3, audioManager.balloonPop);
     }
