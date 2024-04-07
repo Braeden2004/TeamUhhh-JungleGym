@@ -151,8 +151,7 @@ public class AudioManager : MonoBehaviour
 
     public void NewMusicTrack(AudioClip clip)
     {
-        Debug.Log("MS: " + Music_Source.clip.name);
-        Debug.Log("Clip: " + clip.name);
+       
 
         if (Music_Source.clip.name != clip.name)
         {
