@@ -212,10 +212,10 @@ public class PlayerController : MonoBehaviour
 
         else
         {
-            if (isFalling == true)
+            if (isFalling && !swing.isSwinging && !balloon.isSwinging)
             {
                 //AUDIO QUEUE
-                audioManager.PlaySFX(audioManager.land);
+                audioManager.PlaySFX(1, audioManager.land);
 
                 isFalling = false;
             }
@@ -348,8 +348,6 @@ public class PlayerController : MonoBehaviour
 
         ClampGroundVel();
 
-
-        //AUDIO FOR MOVE HERE
         //NEEDS COROUTINE
         /*int randmove = Random.Range(0, 3);
         if(randmove == 0)
@@ -399,8 +397,11 @@ public class PlayerController : MonoBehaviour
         //Jump Logic
         if ((jumpBufferCounter > 0) && (coyoteTimeCounter > 0))
         {
-            //AUDIO QUEUE
-            audioManager.PlaySFX(audioManager.jump);
+            //AUDIO QUEUE for Jump
+            audioManager.defaultPitchSFX(1);
+            audioManager.PlaySFX(2, audioManager.jump);
+            audioManager.PitchAdjustSFX(1, 0.6f,0.8f);
+            audioManager.PlaySFX(1, audioManager.monkeyGrunt);
 
             jumpTotal++;
             //TelemetryLogger.Log(this, "Jump Amount", jumpTotal);
@@ -435,10 +436,20 @@ public class PlayerController : MonoBehaviour
         if (moveDir.magnitude < 0.1f)
         {
             animator.SetBool("IsIdle", true);
+            //Run SFX Stopper
+            audioManager.StopRSFX();
         }
         else
         {
+
             animator.SetBool("IsIdle", false);
+
+            //AUDIO FOR MOVE HERE
+            if (!audioManager.PlayingRSFX())
+            {
+                audioManager.PlayRSFX(audioManager.run);
+                audioManager.PitchAdjustRSFX(0.9f, 1.1f);
+            }
         }
 
         if (isGrounded() == true && puffed == false)
