@@ -7,7 +7,14 @@ public class ScoreManager : MonoBehaviour
 
     public static ScoreManager instance;
 
-    [Header("Clipboards")]
+    [Header("Total Clipboards in the world")]
+    public int totalClipboardInScene; 
+    public int totalhubClipboards;
+    public int totalSavanahClipboards;
+    public int totalTundraClipboards; 
+    public int totalGauntletClipboards; 
+
+    [Header("Clipboards Collected")]
     public clipboardScript clipboardScript;
 
     public int clipboardTotal = 0; // grandtotal number of collected clipboards
@@ -16,10 +23,48 @@ public class ScoreManager : MonoBehaviour
     public int tundraClipboardTotal = 0; //total number of collected tundra clipboards
     public int gauntletClipboardTotal = 0; //total number of collected gauntlet clipboards
 
-    [Header("Tickets")]
+    [Header("Total Tickets in the world")]
+    public int totalTicketsInScene;
+    public int totalhubTickets;
+    public int totalSavanahTickets;
+    public int totalTundraTickets;
+    public int totalGauntletTickets;
+
+    [Header("Tickets Collected")]
     public int ticketTotal = 0; //total number of collected tickets
 
+    public int hubTicketTotal = 0; 
+    public int savanahTicketTotal = 0;
+    public int tundraTicketTotal = 0; 
+    public int gauntletTicketTotal = 0; 
+
+
+
     //This script handels the methods to keep track of collectables like tickets and clipboards
+
+    private void Start()
+    {
+        //Find all clipboards in the scene from start of game
+        totalhubClipboards = GameObject.FindGameObjectsWithTag("ClipHub").Length;
+        totalSavanahClipboards = GameObject.FindGameObjectsWithTag("ClipSavanah").Length;
+        totalTundraClipboards = GameObject.FindGameObjectsWithTag("ClipTundra").Length;
+        totalGauntletClipboards = GameObject.FindGameObjectsWithTag("ClipGauntlet").Length;
+
+        totalClipboardInScene = totalhubClipboards + totalSavanahClipboards + totalTundraClipboards + totalGauntletClipboards;
+
+        //Find all clipboards in the scene from start of game
+        totalhubTickets = GameObject.FindGameObjectsWithTag("TicketHub").Length;
+        totalSavanahTickets = GameObject.FindGameObjectsWithTag("TicketSavanah").Length;
+        totalTundraTickets = GameObject.FindGameObjectsWithTag("TicketTundra").Length;
+        totalGauntletTickets = GameObject.FindGameObjectsWithTag("TicketGauntlet").Length;
+
+        totalTicketsInScene = totalhubTickets + totalSavanahTickets + totalTundraTickets + totalGauntletTickets;
+    }
+
+    private void Update()
+    {
+        //Debug.Log("Total Clipboards in Scene: " + totalClipboardInScene);
+}
 
     private void Awake()
     {
@@ -28,6 +73,8 @@ public class ScoreManager : MonoBehaviour
 
     public void AddTicket()
     {
+
+        //update ticket total
         ticketTotal += 1;
     }
 

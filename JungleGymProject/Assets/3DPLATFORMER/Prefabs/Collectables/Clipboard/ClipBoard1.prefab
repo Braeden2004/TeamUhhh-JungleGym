@@ -53,10 +53,20 @@ PrefabInstance:
       propertyPath: clipboardName
       value: Enter Name Here
       objectReference: {fileID: 0}
+    - target: {fileID: 4707226092527373355, guid: 320fed57f5071a940ac138d3a5b295a1,
+        type: 3}
+      propertyPath: clipboardType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5071026202116608106, guid: 320fed57f5071a940ac138d3a5b295a1,
         type: 3}
       propertyPath: m_Name
       value: ClipBoard1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071026202116608106, guid: 320fed57f5071a940ac138d3a5b295a1,
+        type: 3}
+      propertyPath: m_TagString
+      value: ClipSavanah
       objectReference: {fileID: 0}
     - target: {fileID: 5554125649987996368, guid: 320fed57f5071a940ac138d3a5b295a1,
         type: 3}

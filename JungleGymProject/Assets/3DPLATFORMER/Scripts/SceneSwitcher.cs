@@ -21,7 +21,7 @@ public class SceneSwitcher : MonoBehaviour
     void Update()
     {
         //if all 5 clips are collected or if I press the 5 key
-        if ((ScoreManager.instance.clipboardTotal == 10) || Input.GetKeyDown(KeyCode.Alpha5))
+        if ((ScoreManager.instance.clipboardTotal == ScoreManager.instance.totalClipboardInScene) || Input.GetKeyDown(KeyCode.Alpha5))
         {
             //grab the timer value befor switching the scene
             yourTime = timerScript.timerText.text;

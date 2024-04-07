@@ -52,6 +52,8 @@ public class Balloon : MonoBehaviour
             }
         }
 
+        Vector3 balloonForce = (Vector3.up * floatSpeed * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime);
+
         if (attached)
         {
             if (playerObj != null)
@@ -65,9 +67,17 @@ public class Balloon : MonoBehaviour
 
                     attachedPlayerJoint.connectedAnchor = transform.position;
 
-                    Vector3 playerForce = (Vector3.up * floatSpeed * 10f * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime); //legit just trying shit idk anymore
+                    /*if (playerObj.GetComponent<PlayerController>().moveDir == Vector3.zero)
+                    {
+                        Vector3 playerForce = (Vector3.up * floatSpeed * 10f * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime); //legit just trying shit idk anymore
+                        playerBody.AddForce(playerForce);
 
-                    playerBody.AddForce(playerForce);
+                    }
+                    else
+                    {
+                        playerBody.AddForce(balloonForce);
+                    }*/
+
 
                     startPopTimer = true;
 
@@ -91,7 +101,6 @@ public class Balloon : MonoBehaviour
             //display timer
             timerText.gameObject.SetActive(true);
 
-            Vector3 balloonForce = (Vector3.up * floatSpeed * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime);
             rb.velocity = balloonForce;
             //rb.AddForce(balloonForce);
 

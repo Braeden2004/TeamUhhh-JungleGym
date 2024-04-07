@@ -36,18 +36,19 @@ public class ProgresscollectablesScript : MonoBehaviour
     void Update()
     {
         //draw tickets
-        textMeshProTicket0.text = ScoreManager.instance.ticketTotal.ToString();
-        textMeshProTicket1.text = ScoreManager.instance.ticketTotal.ToString();
-        textMeshProTicket2.text = ScoreManager.instance.ticketTotal.ToString();
-        textMeshProTicket3.text = ScoreManager.instance.ticketTotal.ToString();
-        textMeshProTicket4.text = ScoreManager.instance.ticketTotal.ToString();
+        textMeshProTicket0.text = ((ScoreManager.instance.ticketTotal.ToString()) + "/" + (ScoreManager.instance.totalTicketsInScene.ToString()));
+        textMeshProTicket1.text = ScoreManager.instance.hubTicketTotal.ToString() + "/" + ScoreManager.instance.totalhubTickets.ToString();
+        textMeshProTicket2.text = ScoreManager.instance.savanahTicketTotal.ToString() + "/" + ScoreManager.instance.totalSavanahTickets.ToString();
+        textMeshProTicket3.text = ScoreManager.instance.tundraTicketTotal.ToString() + "/" + ScoreManager.instance.totalTundraTickets.ToString();
+        textMeshProTicket4.text = ScoreManager.instance.gauntletTicketTotal.ToString() + "/" + ScoreManager.instance.totalGauntletTickets.ToString();
+
 
         //draw Clipboards
-        textMeshProClipboard0.text = ScoreManager.instance.clipboardTotal.ToString();
-        textMeshProClipboard1.text = ScoreManager.instance.hubClipboardTotal.ToString();
-        textMeshProClipboard2.text = ScoreManager.instance.savanahClipboardTotal.ToString();
-        textMeshProClipboard3.text = ScoreManager.instance.tundraClipboardTotal.ToString();
-        textMeshProClipboard4.text = ScoreManager.instance.gauntletClipboardTotal.ToString();
+        textMeshProClipboard0.text = ((ScoreManager.instance.clipboardTotal.ToString()) + "/" + (ScoreManager.instance.totalClipboardInScene.ToString()));
+        textMeshProClipboard1.text = ScoreManager.instance.hubClipboardTotal.ToString() + "/" + ScoreManager.instance.totalhubClipboards.ToString();
+        textMeshProClipboard2.text = ScoreManager.instance.savanahClipboardTotal.ToString() + "/" + ScoreManager.instance.totalSavanahClipboards.ToString();
+        textMeshProClipboard3.text = ScoreManager.instance.tundraClipboardTotal.ToString() + "/" + ScoreManager.instance.totalTundraClipboards.ToString();
+        textMeshProClipboard4.text = ScoreManager.instance.gauntletClipboardTotal.ToString() + "/" + ScoreManager.instance.totalGauntletClipboards.ToString();
 
 
     }
