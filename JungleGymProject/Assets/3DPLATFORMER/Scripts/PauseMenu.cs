@@ -10,6 +10,15 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject progressMenuUI;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -37,6 +46,8 @@ public class MenuManager : MonoBehaviour
 
     public void Resume()
     {
+        audioManager.PlaySFX(2, audioManager.menuHover);
+        audioManager.AdjustVolume(6, 1f);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenuUI.SetActive(false);
@@ -45,6 +56,11 @@ public class MenuManager : MonoBehaviour
 
     void Pause()
     {
+        audioManager.StopSFX(1);
+        audioManager.StopSFX(2);
+        audioManager.StopSFX(3);
+        audioManager.PlaySFX(1, audioManager.Pause);
+        audioManager.AdjustVolume(6, 0.5f);
         Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         Cursor.visible = true;
@@ -53,6 +69,7 @@ public class MenuManager : MonoBehaviour
 
     public void QuitGame()
     {
+
         Application.Quit();
     }
 
