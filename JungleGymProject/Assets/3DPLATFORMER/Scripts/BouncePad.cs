@@ -31,7 +31,6 @@ public class BouncePad : MonoBehaviour
         //make the hidden monkey fellas bounce
         if (collision.gameObject.tag == "HiddenMonkey")
         {
-            audioManager.PlaySFX(2, audioManager.monkeyGrunt);
             rb = collision.gameObject.GetComponent<Rigidbody>();
             rb.AddForce(Vector3.up * bounceForce/2, ForceMode.Impulse);
         }
