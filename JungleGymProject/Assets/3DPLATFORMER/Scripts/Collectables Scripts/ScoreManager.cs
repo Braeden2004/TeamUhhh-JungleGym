@@ -30,6 +30,12 @@ public class ScoreManager : MonoBehaviour
     public int totalTundraTickets;
     public int totalGauntletTickets;
 
+    [Header("Total Tickets LIVE UPDATE")]
+    public int hubTicketsRemaining;
+    public int savanahTicketsRemaining;
+    public int tundraTicketsRemaining;
+    public int gauntletTicketsRemaining;
+
     [Header("Tickets Collected")]
     public int ticketTotal = 0; //total number of collected tickets
 
@@ -64,7 +70,21 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         //Debug.Log("Total Clipboards in Scene: " + totalClipboardInScene);
-}
+
+
+        //remaining tickets in the world
+        hubTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketHub").Length;
+        savanahTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketSavanah").Length;
+        tundraTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketTundra").Length;
+        gauntletTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketGauntlet").Length;
+
+        //players collected tickets
+        hubTicketTotal = totalhubTickets - hubTicketsRemaining;
+        savanahTicketTotal = totalSavanahTickets - savanahTicketsRemaining;
+        tundraTicketTotal = totalTundraTickets - tundraTicketsRemaining;
+        gauntletTicketTotal = totalGauntletTickets - gauntletTicketsRemaining;
+
+    }
 
     private void Awake()
     {
