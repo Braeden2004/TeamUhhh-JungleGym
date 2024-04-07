@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5030548843426068926}
   - component: {fileID: 2165221296413433406}
   - component: {fileID: 6704857712062121670}
-  - component: {fileID: 5204788031599250612}
   m_Layer: 0
   m_Name: LevelTrigger
   m_TagString: Challenge
@@ -106,18 +105,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5204788031599250612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963041834650317104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7931e3cf6844714a97d83a43adb941c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5261478451808237582
 GameObject:
   m_ObjectHideFlags: 0

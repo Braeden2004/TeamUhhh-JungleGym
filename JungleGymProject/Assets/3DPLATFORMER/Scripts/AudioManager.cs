@@ -41,12 +41,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip level1Music;
     public AudioClip level2Music;
     public AudioClip endScreen;
+    public AudioClip gauntlet;
 
 
     private void Start()
     {
         
-        //Music_Source.volume = 0.1f;
+        Music_Source.volume = 0.1f;
         Music_Source.clip = hubMusic;
         Music_Source.Play();
         RSFX2_Source.clip = ambience;
