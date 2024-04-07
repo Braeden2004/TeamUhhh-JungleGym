@@ -22,6 +22,9 @@ public class HingeRopeSwing : MonoBehaviour
     float originalAccel;
     float originalMaxSpeed;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     private void Start()
     {
         player = GetComponent<PlayerController>();
@@ -29,6 +32,8 @@ public class HingeRopeSwing : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
+
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -84,6 +89,9 @@ public class HingeRopeSwing : MonoBehaviour
             {
                 roll.isRolling = false;
             }
+            audioManager.PlaySFX(1, audioManager.ropeGrab);
+            audioManager.PlayRSFX(audioManager.ropeSwing);
+
         }
 
         else if(isSwinging)
@@ -105,6 +113,7 @@ public class HingeRopeSwing : MonoBehaviour
                 ropeBody = null;
                 hasSwung = true;
                 canSwing = false;
+                audioManager.StopRSFX();
             }
         }
     }

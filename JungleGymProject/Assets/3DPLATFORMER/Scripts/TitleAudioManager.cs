@@ -16,7 +16,8 @@ public class TitleAudioManager : MonoBehaviour
 
     private void Start()
     {
-        Music_Source.clip = settings;
+        Music_Source.volume = 0.1f;
+        Music_Source.clip = title;
         Music_Source.loop = true;
         Music_Source.Play();
     }
