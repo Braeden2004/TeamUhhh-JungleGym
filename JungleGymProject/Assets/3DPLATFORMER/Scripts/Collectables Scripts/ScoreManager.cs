@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("Total Clipboards in the world")]
     public int totalClipboardInScene; 
+
     public int totalhubClipboards;
     public int totalSavanahClipboards;
     public int totalTundraClipboards; 
