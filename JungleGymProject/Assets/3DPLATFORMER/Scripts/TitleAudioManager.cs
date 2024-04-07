@@ -22,6 +22,12 @@ public class TitleAudioManager : MonoBehaviour
         Music_Source.Play();
     }
 
+    public void StartGameMusic()
+    {
+        Music_Source.clip = ingame;
+        Music_Source.Play();
+    }
+
     public void PlaySFX(AudioClip clip)
     {
         SFX_Source.PlayOneShot(clip);

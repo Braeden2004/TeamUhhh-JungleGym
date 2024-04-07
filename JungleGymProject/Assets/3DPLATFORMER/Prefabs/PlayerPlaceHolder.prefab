@@ -322,6 +322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tired: 0
+  isGliding: 0
+  anim: {fileID: 9159002784563691882}
   gravityMultiplier: 0.1
   airControlMultiplier: 1.1
   timeLimit: 1.5
@@ -341,6 +343,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+  slideLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4223071871068115654
 MonoBehaviour:
   m_ObjectHideFlags: 0
