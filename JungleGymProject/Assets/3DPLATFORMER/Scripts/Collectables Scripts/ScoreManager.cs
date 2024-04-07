@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("Total Clipboards in the world")]
     public int totalClipboardInScene; 
+
     public int totalhubClipboards;
     public int totalSavanahClipboards;
     public int totalTundraClipboards; 
@@ -30,14 +31,21 @@ public class ScoreManager : MonoBehaviour
     public int totalTundraTickets;
     public int totalGauntletTickets;
 
+    [Header("Total Tickets LIVE UPDATE")]
+    public int hubTicketsRemaining;
+    public int savanahTicketsRemaining;
+    public int tundraTicketsRemaining;
+    public int gauntletTicketsRemaining;
+
     [Header("Tickets Collected")]
     public int ticketTotal = 0; //total number of collected tickets
 
     public int hubTicketTotal = 0; 
     public int savanahTicketTotal = 0;
     public int tundraTicketTotal = 0; 
-    public int gauntletTicketTotal = 0; 
+    public int gauntletTicketTotal = 0;
 
+    public Timer timer;
 
 
     //This script handels the methods to keep track of collectables like tickets and clipboards
@@ -64,7 +72,21 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         //Debug.Log("Total Clipboards in Scene: " + totalClipboardInScene);
-}
+
+
+        //remaining tickets in the world
+        hubTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketHub").Length;
+        savanahTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketSavanah").Length;
+        tundraTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketTundra").Length;
+        gauntletTicketsRemaining = GameObject.FindGameObjectsWithTag("TicketGauntlet").Length;
+
+        //players collected tickets
+        hubTicketTotal = totalhubTickets - hubTicketsRemaining;
+        savanahTicketTotal = totalSavanahTickets - savanahTicketsRemaining;
+        tundraTicketTotal = totalTundraTickets - tundraTicketsRemaining;
+        gauntletTicketTotal = totalGauntletTickets - gauntletTicketsRemaining;
+
+    }
 
     private void Awake()
     {
@@ -107,18 +129,15 @@ public class ScoreManager : MonoBehaviour
         }
 
 
-
-
-
         //Telemetry Tracking
-        for (int i = 0; i == 5; i++)
+        for (int i = 0; i == totalTicketsInScene; i++)
         {
-            TelemetryLogger.Log(this, "Clipboard Collected Time", Time.deltaTime);
+            TelemetryLogger.Log(this, "Clipboard Collected Time", timer);
         }
 
-        if (clipboardTotal == 5)
+        if (clipboardTotal == totalTicketsInScene)
         {
-            TelemetryLogger.Log(this, "Clipboard Collected Total Time", Time.deltaTime);
+            TelemetryLogger.Log(this, "Clipboard Collected Total Time", timer);
         }
     }
 }

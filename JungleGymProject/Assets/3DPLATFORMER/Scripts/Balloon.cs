@@ -22,6 +22,9 @@ public class Balloon : MonoBehaviour
 
     public TextMeshProUGUI timerText;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,9 @@ public class Balloon : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         originalTransform = transform.position;
+
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -46,6 +52,8 @@ public class Balloon : MonoBehaviour
             }
         }
 
+        Vector3 balloonForce = (Vector3.up * floatSpeed * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime);
+
         if (attached)
         {
             if (playerObj != null)
@@ -59,11 +67,21 @@ public class Balloon : MonoBehaviour
 
                     attachedPlayerJoint.connectedAnchor = transform.position;
 
-                    Vector3 playerForce = (Vector3.up * floatSpeed * 10f * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime); //legit just trying shit idk anymore
+                    if (playerObj.GetComponent<PlayerController>().moveDir == Vector3.zero)
+                    {
+                        Vector3 playerForce = (Vector3.up * floatSpeed * 10f * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime); //legit just trying shit idk anymore
+                        playerBody.AddForce(playerForce);
 
-                    playerBody.AddForce(playerForce);
+                    }
+                    else
+                    {
+                        playerBody.AddForce(balloonForce);
+                    }
+
 
                     startPopTimer = true;
+
+                    
 
 
                 }
@@ -72,10 +90,17 @@ public class Balloon : MonoBehaviour
 
         if(startPopTimer)
         {
+            if(timer == 0)
+            {
+                //Audio for playing balloon rise
+                audioManager.AdjustVolume(3, 1f);
+                audioManager.defaultPitchSFX(3);
+                audioManager.PlaySFX(3, audioManager.baloonRise);
+            }
+
             //display timer
             timerText.gameObject.SetActive(true);
 
-            Vector3 balloonForce = (Vector3.up * floatSpeed * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime);
             rb.velocity = balloonForce;
             //rb.AddForce(balloonForce);
 
@@ -113,6 +138,12 @@ public class Balloon : MonoBehaviour
         }
         timer = 0;
         startPopTimer = false;
+
+        //Audio for playing balloon rise
+
+        audioManager.AdjustVolume(3, 1f);
+        audioManager.defaultPitchSFX(3);
+        audioManager.PlaySFX(3, audioManager.balloonPop);
     }
 
     void Respawn()

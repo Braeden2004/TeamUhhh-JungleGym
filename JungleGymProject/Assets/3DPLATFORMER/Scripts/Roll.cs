@@ -92,8 +92,13 @@ public class Roll : MonoBehaviour
         if ((Input.GetButtonDown("Roll")) || onSlide == true)
         {
             OnStartRoll();
-            //AUDIO FOR START OF ROLL HERE
-            audioManager.PlaySFX(audioManager.roll);
+            if (!onSlide)
+            {
+                //AUDIO FOR START OF ROLL HERE
+                audioManager.PlaySFX(1, audioManager.roll);
+                audioManager.PlaySFX(2, audioManager.monkeyGrunt);
+                audioManager.PlayRSFX(audioManager.run);
+            }
 
             rollingNumber++;
 
@@ -134,7 +139,6 @@ public class Roll : MonoBehaviour
         if (isRolling)
         {
             glide.tired = true;
-            //AUDIO FOR CONTINUOUS ROLL HERE
             //NEEDS COROUTINE
             //RollMove();
             if (OnSlope())
@@ -207,7 +211,7 @@ public class Roll : MonoBehaviour
 
     }
 
-    void OnStopRoll()
+    public void OnStopRoll()
     {
         isRolling = false;
         player.maxSpeed = originalMaxSpeed;
@@ -219,6 +223,10 @@ public class Roll : MonoBehaviour
         reverseRollTimer = 0;
         maxSpeedTimer = 0;
         //transform.localScale = new Vector3(transform.localScale.x, originalScale, transform.localScale.z);
+
+        audioManager.StopRSFX();
+
+        
     }
 
     void RollBoosts()
