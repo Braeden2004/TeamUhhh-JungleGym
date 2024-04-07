@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public float test = 420; // a test for the timer delete later
     public float timer;
     [SerializeField] public TMP_Text timerText;
     [SerializeField] TMP_Text clickToBeginText;

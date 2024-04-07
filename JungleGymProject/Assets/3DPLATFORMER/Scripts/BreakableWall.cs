@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class BreakableWall : MonoBehaviour
 {
-    public Roll rollscript;
-    public Rigidbody rb;
+    private Roll rollscript;
+    private Rigidbody rb;
     public float minVelocity;
 
-    public int freezeTimeTotal;
+    private int freezeTimeTotal;
     private int currentfreezeTime;
-    public bool freeze;
+    private bool freeze;
 
     public ParticleSystem destroyParticle;
 
@@ -23,6 +23,9 @@ public class BreakableWall : MonoBehaviour
     private void Start()
     {
         rollscript = GameObject.Find("PlayerPlaceHolder").GetComponent<Roll>();
+        
+        //get player rigidbody
+        rb = GameObject.Find("PlayerPlaceHolder").GetComponent<Rigidbody>();
 
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();

@@ -23,7 +23,6 @@ public class BouncePad : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             audioManager.PlaySFX(3, audioManager.bouncePad);
             rb = collision.gameObject.GetComponent<Rigidbody>();
             rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
