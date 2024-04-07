@@ -17,6 +17,15 @@ TagManager:
   - Level3
   - Hub
   - Challenge
+  - Clipboard
+  - ClipSavanah
+  - ClipGauntlet
+  - ClipHub
+  - TicketSavanah
+  - TicketGauntlet
+  - TicketHub
+  - TicketTundra
+  - ClipTundra
   layers:
   - Default
   - TransparentFX
