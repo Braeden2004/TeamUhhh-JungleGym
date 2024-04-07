@@ -46,8 +46,8 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         
-        Music_Source.volume = 0.1f;
-        Music_Source.clip = title;
+        //Music_Source.volume = 0.1f;
+        Music_Source.clip = hubMusic;
         Music_Source.Play();
         RSFX2_Source.clip = ambience;
         RSFX2_Source.Play();

@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject player; //Add your player
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject progressMenuUI;
+    [SerializeField] GameObject audioMenuUI;
 
     [Header("Audio")]
     AudioManager audioManager;
@@ -65,6 +66,18 @@ public class MenuManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.visible = true;
         Time.timeScale = 0;
+    }
+
+    public void AudioMenu()
+    {
+        pauseMenuUI.SetActive(false);
+        audioMenuUI.SetActive(true);
+    }
+
+    public void GoBack()
+    {
+        pauseMenuUI.SetActive(true);
+        audioMenuUI.SetActive(false);
     }
 
     public void QuitGame()
