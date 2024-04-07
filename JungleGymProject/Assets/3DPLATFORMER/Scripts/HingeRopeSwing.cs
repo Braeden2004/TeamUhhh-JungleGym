@@ -21,6 +21,7 @@ public class HingeRopeSwing : MonoBehaviour
     float jumpBoost;
     float originalAccel;
     float originalMaxSpeed;
+    float originalFriction;
 
     [Header("Audio")]
     AudioManager audioManager;
@@ -32,6 +33,7 @@ public class HingeRopeSwing : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
+        originalFriction = player.frictionRate;
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
@@ -40,7 +42,7 @@ public class HingeRopeSwing : MonoBehaviour
     {
         Swing();
 
-        if(player.isGrounded() && hasSwung && !roll.isRolling)
+        if (player.isGrounded() && hasSwung && !roll.isRolling)
         {
             hasSwung = false;
             player.accelSpeed = originalAccel;
@@ -50,10 +52,10 @@ public class HingeRopeSwing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Rope"))
+        if (other.gameObject.CompareTag("Rope"))
         {
             canSwing = true;
-            bottomOfRope = other.gameObject.transform.GetChild(0); 
+            bottomOfRope = other.gameObject.transform.GetChild(0);
             ropeBody = other.GetComponent<Rigidbody>();
         }
     }
@@ -70,31 +72,33 @@ public class HingeRopeSwing : MonoBehaviour
     {
         //ropeVelWhenGrabbed = rb.velocity;
 
-        if(!isSwinging && canSwing) //Input.GetKeyDown(KeyCode.E) && 
+        if (!isSwinging && canSwing) //Input.GetKeyDown(KeyCode.E) && 
         {
             //Snap to bottom of rope if underneath
-            if (transform.position.y < bottomOfRope.position.y) 
+            if (transform.position.y < bottomOfRope.position.y)
             {
-                rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
+                rb.position = bottomOfRope.position + offset;
                 transform.position = bottomOfRope.position + offset;
-            } 
+            }
+
+            if (roll.isRolling)
+            {
+                roll.OnStopRoll();
+            }
 
             isSwinging = true;
             ConfigureJoint();
             jumpBoost = player.jumpVel * jumpMultiplier;
+            player.frictionRate = player.airFrictionRate;
             player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
             player.accelSpeed = originalAccel * accelMultiplier;
 
-            if(roll.isRolling)
-            {
-                roll.isRolling = false;
-            }
             audioManager.PlaySFX(1, audioManager.ropeGrab);
             audioManager.PlayRSFX(audioManager.ropeSwing);
 
         }
 
-        else if(isSwinging)
+        else if (isSwinging)
         {
             MoveOnRope();
             if (Input.GetButtonDown("Roll")) //Input.GetKeyDown(KeyCode.E) ||
@@ -105,7 +109,7 @@ public class HingeRopeSwing : MonoBehaviour
                 hasSwung = true;
                 canSwing = false;
             }
-            else if(Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 isSwinging = false;
                 rb.AddForce(new Vector3(0, jumpBoost, 0), ForceMode.Impulse);
@@ -113,12 +117,15 @@ public class HingeRopeSwing : MonoBehaviour
                 ropeBody = null;
                 hasSwung = true;
                 canSwing = false;
+                player.frictionRate = originalFriction;
+                player.maxSpeed = originalMaxSpeed;
+                player.accelSpeed = originalAccel;
                 audioManager.StopRSFX();
             }
         }
     }
 
-    void MoveOnRope()
+    void MoveOnRope() //ask doug about this + snapping player
     {
         if (transform.position.y >= bottomOfRope.position.y)
         {

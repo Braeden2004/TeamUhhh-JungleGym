@@ -211,7 +211,7 @@ public class Roll : MonoBehaviour
 
     }
 
-    void OnStopRoll()
+    public void OnStopRoll()
     {
         isRolling = false;
         player.maxSpeed = originalMaxSpeed;

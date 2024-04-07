@@ -43,8 +43,9 @@ public class ScoreManager : MonoBehaviour
     public int hubTicketTotal = 0; 
     public int savanahTicketTotal = 0;
     public int tundraTicketTotal = 0; 
-    public int gauntletTicketTotal = 0; 
+    public int gauntletTicketTotal = 0;
 
+    public Timer timer;
 
 
     //This script handels the methods to keep track of collectables like tickets and clipboards
@@ -128,18 +129,15 @@ public class ScoreManager : MonoBehaviour
         }
 
 
-
-
-
         //Telemetry Tracking
-        for (int i = 0; i == 5; i++)
+        for (int i = 0; i == totalTicketsInScene; i++)
         {
-            TelemetryLogger.Log(this, "Clipboard Collected Time", Time.deltaTime);
+            TelemetryLogger.Log(this, "Clipboard Collected Time", timer);
         }
 
-        if (clipboardTotal == 5)
+        if (clipboardTotal == totalTicketsInScene)
         {
-            TelemetryLogger.Log(this, "Clipboard Collected Total Time", Time.deltaTime);
+            TelemetryLogger.Log(this, "Clipboard Collected Total Time", timer);
         }
     }
 }
