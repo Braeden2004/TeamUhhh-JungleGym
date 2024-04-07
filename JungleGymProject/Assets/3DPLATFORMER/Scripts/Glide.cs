@@ -11,6 +11,8 @@ public class Glide : MonoBehaviour
     float originalAirControl;
     float timer;
     public bool tired;
+    public bool isGliding;
+    public Animator anim;
 
     [SerializeField][Range(0,1)] float gravityMultiplier;
     [SerializeField][Range(1,3)] float airControlMultiplier;
@@ -33,6 +35,7 @@ public class Glide : MonoBehaviour
             playerController.maxGravity = originalMaxGrav * gravityMultiplier;
             playerController.airControl = originalAirControl * airControlMultiplier;
             timer += Time.deltaTime;
+            isGliding = true;
             if(timer > timeLimit)
             {
                 tired = true;
@@ -41,6 +44,7 @@ public class Glide : MonoBehaviour
         }
         else
         {
+            isGliding = false;
             playerController.gravity = originalGrav;
             playerController.maxGravity = originalMaxGrav;
             playerController.airControl = originalAirControl;
@@ -50,6 +54,20 @@ public class Glide : MonoBehaviour
         {
             tired = false;
             timer = 0;
+        }
+
+        SetAnim();
+    }
+
+    void SetAnim()
+    {
+        if (isGliding)
+        {
+            anim.SetBool("IsGliding", isGliding);
+        }
+        else
+        {
+            anim.SetBool("IsGliding", false);
         }
     }
 }
