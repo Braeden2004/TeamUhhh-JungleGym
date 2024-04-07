@@ -102077,6 +102077,11 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1016065109}
+    - target: {fileID: 5910476301805215775, guid: a54c35dab9b7a1d45a38eab0ab342099,
+        type: 3}
+      propertyPath: maxSpeedMultiplier
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7308968626771071812, guid: a54c35dab9b7a1d45a38eab0ab342099,
         type: 3}
       propertyPath: m_LocalPosition.x

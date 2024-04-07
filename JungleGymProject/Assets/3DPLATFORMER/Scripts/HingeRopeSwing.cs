@@ -21,6 +21,7 @@ public class HingeRopeSwing : MonoBehaviour
     float jumpBoost;
     float originalAccel;
     float originalMaxSpeed;
+    float originalFriction;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class HingeRopeSwing : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
+        originalFriction = player.frictionRate;
     }
 
     private void Update()
@@ -70,20 +72,21 @@ public class HingeRopeSwing : MonoBehaviour
             //Snap to bottom of rope if underneath
             if (transform.position.y < bottomOfRope.position.y) 
             {
-                rb.position = bottomOfRope.position + offset; //Still need to find a way to convert to 'forward'
+                rb.position = bottomOfRope.position + offset;
                 transform.position = bottomOfRope.position + offset;
-            } 
+            }
+
+            if (roll.isRolling)
+            {
+                roll.OnStopRoll();
+            }
 
             isSwinging = true;
             ConfigureJoint();
             jumpBoost = player.jumpVel * jumpMultiplier;
+            player.frictionRate = player.airFrictionRate;
             player.maxSpeed = originalMaxSpeed * maxSpeedMultiplier;
             player.accelSpeed = originalAccel * accelMultiplier;
-
-            if(roll.isRolling)
-            {
-                roll.isRolling = false;
-            }
         }
 
         else if(isSwinging)
@@ -105,11 +108,14 @@ public class HingeRopeSwing : MonoBehaviour
                 ropeBody = null;
                 hasSwung = true;
                 canSwing = false;
+                player.frictionRate = originalFriction;
+                player.maxSpeed = originalMaxSpeed;
+                player.accelSpeed = originalAccel;
             }
         }
     }
 
-    void MoveOnRope()
+    void MoveOnRope() //ask doug about this + snapping player
     {
         if (transform.position.y >= bottomOfRope.position.y)
         {

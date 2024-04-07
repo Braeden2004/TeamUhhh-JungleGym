@@ -61,7 +61,7 @@ public class Balloon : MonoBehaviour
 
                     attachedPlayerJoint.connectedAnchor = transform.position;
 
-                    /*if (playerObj.GetComponent<PlayerController>().moveDir == Vector3.zero)
+                    if (playerObj.GetComponent<PlayerController>().moveDir == Vector3.zero)
                     {
                         Vector3 playerForce = (Vector3.up * floatSpeed * 10f * Time.fixedDeltaTime) + (transform.forward * floatSpeed * Time.fixedDeltaTime); //legit just trying shit idk anymore
                         playerBody.AddForce(playerForce);
@@ -70,7 +70,7 @@ public class Balloon : MonoBehaviour
                     else
                     {
                         playerBody.AddForce(balloonForce);
-                    }*/
+                    }
 
 
                     startPopTimer = true;
