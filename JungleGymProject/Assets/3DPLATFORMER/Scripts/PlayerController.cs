@@ -452,5 +452,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    private void OnApplicationQuit()
+    {
+        TelemetryLogger.Log(this, "Total Jumps", jumpTotal);
+    }
 }

@@ -9,9 +9,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject player; //Add your player
     [SerializeField] GameObject pauseMenuUI;
 
-    public Transform Player;
-
-
     // Update is called once per frame
     void Update()
     {
@@ -19,7 +16,7 @@ public class MenuManager : MonoBehaviour
         {
             Pause();
 
-            TelemetryLogger.Log(this, "Player Pause Position", Player.transform.position);
+            TelemetryLogger.Log(this, "Player Pause Position", player.transform.position);
             TelemetryLogger.Log(this, "Tickets Collected", ScoreManager.instance.ticketTotal);
             TelemetryLogger.Log(this, "Clipboards Collected", ScoreManager.instance.clipboardTotal);
 
@@ -42,11 +39,9 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void LoadMenu()
+    public void QuitGame()
     {
-        SceneManager.LoadScene("Menu");
-        Time.timeScale = 0;
-        Cursor.visible = true;
+        Application.Quit();
     }
 
     public void Respawn()

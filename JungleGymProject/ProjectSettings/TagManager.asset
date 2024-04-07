@@ -11,6 +11,12 @@ TagManager:
   - Balloon
   - FxTemporaire
   - RedSlide
+  - HiddenMonkey
+  - Level1
+  - Level2
+  - Level3
+  - Hub
+  - Challenge
   layers:
   - Default
   - TransparentFX
