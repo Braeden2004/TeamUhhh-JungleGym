@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1072210367191048647}
   - component: {fileID: 7392100187734835585}
   - component: {fileID: 3377718463994018510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: trampoline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,8 +107,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7, y: 1.64, z: 0.7}
-  m_Center: {x: 0.00000005960464, y: 0, z: -0.00000008940696}
+  m_Size: {x: 0.7, y: 4, z: 0.7}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3377718463994018510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +134,7 @@ GameObject:
   - component: {fileID: 7096549144136368650}
   - component: {fileID: 4051830364288065398}
   - component: {fileID: 3744948005439829945}
-  - component: {fileID: 7037062784565803965}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: target (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,20 +206,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7037062784565803965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4250882189162923411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9938642f31ebad240a73bcf0ae2f096c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceForce: 25
-  rb: {fileID: 0}
 --- !u!1 &4601828023438507275
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,8 +217,7 @@ GameObject:
   - component: {fileID: 9091531543059727061}
   - component: {fileID: 2306065874627358367}
   - component: {fileID: 5154154656121773397}
-  - component: {fileID: 3295227222651135396}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,20 +289,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3295227222651135396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4601828023438507275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9938642f31ebad240a73bcf0ae2f096c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceForce: 25
-  rb: {fileID: 0}
 --- !u!1 &7779839619069334169
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,8 +300,7 @@ GameObject:
   - component: {fileID: 1005900499221443309}
   - component: {fileID: 8686349885804982048}
   - component: {fileID: 5338282352953891889}
-  - component: {fileID: 2769840622784419998}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: target (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,17 +372,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2769840622784419998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7779839619069334169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9938642f31ebad240a73bcf0ae2f096c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceForce: 25
-  rb: {fileID: 0}

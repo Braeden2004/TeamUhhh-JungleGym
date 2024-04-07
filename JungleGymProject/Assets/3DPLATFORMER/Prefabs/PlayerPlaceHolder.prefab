@@ -267,7 +267,7 @@ MonoBehaviour:
   canSwing: 0
   connectedRope: {fileID: 0}
   connectableRope: {fileID: 0}
-  maxSpeedMultiplier: 1.5
+  connectedBalloon: {fileID: 0}
   springRate: 4.5
   damperRate: 7
   massScale: 4.5
@@ -300,6 +300,7 @@ MonoBehaviour:
   isSwinging: 0
   canSwing: 0
   hasSwung: 0
+  joint: {fileID: 0}
   ropeVelWhenGrabbed: {x: 0, y: 0, z: 0}
   accelMultiplier: 0.6
   maxSpeedMultiplier: 1.6
@@ -338,6 +339,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+  slideLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1001 &5814869518097683038
 PrefabInstance:
   m_ObjectHideFlags: 0
