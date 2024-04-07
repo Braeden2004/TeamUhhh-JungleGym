@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounceForce: 30
-  rb: {fileID: 5006760113937172126, guid: c80255eb547188743806d20190acbfe8, type: 3}
+  rb: {fileID: 5223531865050983670, guid: a54c35dab9b7a1d45a38eab0ab342099, type: 3}
 --- !u!1 &4250882189162923411
 GameObject:
   m_ObjectHideFlags: 0
