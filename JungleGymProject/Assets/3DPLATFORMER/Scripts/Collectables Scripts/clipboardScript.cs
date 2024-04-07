@@ -31,7 +31,7 @@ public class clipboardScript : MonoBehaviour
             audioManager.PitchAdjustSFX(1, 4f, 4f);
             audioManager.PlaySFX(1, audioManager.clipboardGet);
             audioManager.defaultPitchSFX(2);
-            audioManager.PlaySFX(2,audioManager.ticketGet); 
+            audioManager.PlaySFX(2,audioManager.menuPress); 
 
             //spawn particle effect
             Instantiate(collectParticle, transform.position, Quaternion.identity);

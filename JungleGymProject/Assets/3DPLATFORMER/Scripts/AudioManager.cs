@@ -69,6 +69,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySFXMenu(AudioClip clip)
+    {
+        SFX3_Source.PlayOneShot(clip);
+    }
+
     public void PlayRSFX(AudioClip clip)
     {
         RSFX_Source.clip = clip;
@@ -96,19 +101,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void StopSFX(int slot, float min, float max)
+    public void StopSFX(int slot)
     {
         if (slot == 1)
         {
-            SFX_Source.pitch = Random.Range(min, max);
+            SFX_Source.Stop(); ;
         }
         if (slot == 2)
         {
-            SFX2_Source.pitch = Random.Range(min, max);
+            SFX2_Source.Stop();
         }
         if (slot == 3)
         {
-            SFX3_Source.pitch = Random.Range(min, max);
+            SFX3_Source.Stop();
         }
     }
 

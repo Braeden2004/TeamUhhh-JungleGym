@@ -23,6 +23,7 @@ public class ticketScript : MonoBehaviour
         {
             //AUDIO QUEUE
             audioManager.defaultPitchSFX(1);
+            audioManager.PlaySFX(3, audioManager.Pause);
             audioManager.PlaySFX(1, audioManager.ticketGet);
 
             //spawn particle effect
