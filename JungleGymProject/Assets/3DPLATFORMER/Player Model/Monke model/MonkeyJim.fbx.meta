@@ -239,8 +239,8 @@ ModelImporter:
       name: Armature|Run.002
       takeName: Armature|Run.002
       internalID: -5061418788872050228
-      firstFrame: 0
-      lastFrame: 46
+      firstFrame: 0.5
+      lastFrame: 44
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
