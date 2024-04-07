@@ -46,6 +46,7 @@ public class LevelCard : MonoBehaviour
             //reset timer
             timerCurrent = 0;
 
+
         }
     }
 

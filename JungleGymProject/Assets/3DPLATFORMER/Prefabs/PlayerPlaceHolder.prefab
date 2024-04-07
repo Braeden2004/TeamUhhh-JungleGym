@@ -345,7 +345,7 @@ MonoBehaviour:
     m_Bits: 1024
   slideLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 0
 --- !u!114 &4223071871068115654
 MonoBehaviour:
   m_ObjectHideFlags: 0
