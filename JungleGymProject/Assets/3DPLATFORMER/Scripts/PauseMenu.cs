@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Transform spawnPoint; //Add empty gameobject as spawnPoint
     [SerializeField] GameObject player; //Add your player
     [SerializeField] GameObject pauseMenuUI;
+    [SerializeField] GameObject progressMenuUI;
 
     // Update is called once per frame
     void Update()
@@ -20,6 +21,17 @@ public class MenuManager : MonoBehaviour
             TelemetryLogger.Log(this, "Tickets Collected", ScoreManager.instance.ticketTotal);
             TelemetryLogger.Log(this, "Clipboards Collected", ScoreManager.instance.clipboardTotal);
 
+        }
+
+
+        //hold tab for progress menu
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            progressMenuUI.SetActive(true);
+        }
+        else
+        {
+            progressMenuUI.SetActive(false);
         }
     }
 
