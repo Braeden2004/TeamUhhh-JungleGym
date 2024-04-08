@@ -34,6 +34,8 @@ public class MenuManager : MonoBehaviour
         }
 
 
+
+
         //hold tab for progress menu
         if (Input.GetKey(KeyCode.Tab))
         {
@@ -43,11 +45,12 @@ public class MenuManager : MonoBehaviour
         {
             progressMenuUI.SetActive(false);
         }
+
     }
 
     public void Resume()
     {
-        audioManager.PlaySFX(2, audioManager.menuHover);
+        audioManager.PlaySFX(2, audioManager.Pause);
         audioManager.AdjustVolume(6, 1f);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

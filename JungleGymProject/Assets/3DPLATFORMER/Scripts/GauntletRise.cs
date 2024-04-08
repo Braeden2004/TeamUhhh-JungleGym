@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class GauntletRise : MonoBehaviour
 {
-    public float riseSpeed = 10.0f;
-    public float riseHeight = 100.0f;
+    public float riseSpeed;
+    public float riseHeight;
 
     public bool forceRise = false; // dev option to force rise
     public bool currentlyRising = false;
     public GameObject otherCamera;
 
+    public Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         otherCamera.SetActive(false);
+
+        startPosition = new Vector3(231.7f,-215.3f, 15.6f);
     }
 
     // Update is called once per frame
@@ -24,6 +27,10 @@ public class GauntletRise : MonoBehaviour
         if ((ScoreManager.instance.clipboardTotal == ScoreManager.instance.totalClipboardInScene-1) || forceRise == true)
         {
             Rise();
+        }
+        else
+        {
+            transform.position = startPosition; //this means the prefab will start raised but go underground in a single frame, this fixes the baloon glitch
         }
 
     }

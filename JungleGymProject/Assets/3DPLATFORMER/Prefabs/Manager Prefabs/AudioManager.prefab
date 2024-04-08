@@ -207,6 +207,7 @@ MonoBehaviour:
   level1Music: {fileID: 8300000, guid: d99f830d1c1c18540887158ef12a0b02, type: 3}
   level2Music: {fileID: 8300000, guid: fc6a4127289991444938a92a31f21a07, type: 3}
   endScreen: {fileID: 8300000, guid: d11b5f352bf96d74e949c9833415fa41, type: 3}
+  gauntlet: {fileID: 8300000, guid: 04d3a71b5205df347b72ff4d04e6551d, type: 3}
 --- !u!1 &759850628597477885
 GameObject:
   m_ObjectHideFlags: 0

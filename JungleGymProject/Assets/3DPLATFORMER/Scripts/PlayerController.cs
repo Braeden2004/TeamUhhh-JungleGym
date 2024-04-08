@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
+        //audioManager.NewMusicTrack(audioManager.hubMusic);
+
         //Initialize gravity, friction, max jump height
         gravity = -2 * apexHeight / Mathf.Pow(apexTime, 2);
         jumpVel = 2 * apexHeight / apexTime;
