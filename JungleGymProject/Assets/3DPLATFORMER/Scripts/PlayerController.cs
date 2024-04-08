@@ -449,7 +449,7 @@ public class PlayerController : MonoBehaviour
             //AUDIO FOR MOVE HERE
             if (!audioManager.PlayingRSFX())
             {
-                audioManager.PlayRSFX(audioManager.ticketGet);
+                audioManager.PlayRSFX(audioManager.run);
                 audioManager.PitchAdjustRSFX(0.9f, 1.1f);
             }
         }
