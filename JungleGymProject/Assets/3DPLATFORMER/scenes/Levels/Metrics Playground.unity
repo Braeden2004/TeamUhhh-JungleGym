@@ -25815,7 +25815,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653243510}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.039103284, y: -0.70602477, z: -0.039103277, w: 0.70602477}
+  m_LocalRotation: {x: -0.03910328, y: -0.7060247, z: -0.03910327, w: 0.7060248}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -42734,6 +42734,12 @@ MonoBehaviour:
 --- !u!95 &1016065109 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9159002784563691882, guid: a54c35dab9b7a1d45a38eab0ab342099,
+    type: 3}
+  m_PrefabInstance: {fileID: 7633415338111593223}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1016065110 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6482243406740952304, guid: a54c35dab9b7a1d45a38eab0ab342099,
     type: 3}
   m_PrefabInstance: {fileID: 7633415338111593223}
   m_PrefabAsset: {fileID: 0}
@@ -84309,6 +84315,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6106311021498994693, guid: c169901a9b90c7249a1f7ceaaf94c7dd,
+        type: 3}
+      propertyPath: popForce
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7874035553874455599, guid: c169901a9b90c7249a1f7ceaaf94c7dd,
         type: 3}
       propertyPath: m_Name
@@ -101933,7 +101944,7 @@ PrefabInstance:
     - target: {fileID: 7000906615335211204, guid: 8f9c4dac703ff004fb5268376dd1bf7f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.43
+      value: 7.94
       objectReference: {fileID: 0}
     - target: {fileID: 7000906615335211204, guid: 8f9c4dac703ff004fb5268376dd1bf7f,
         type: 3}
@@ -102077,6 +102088,21 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1016065109}
+    - target: {fileID: 5910476301805215775, guid: a54c35dab9b7a1d45a38eab0ab342099,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1016065109}
+    - target: {fileID: 5910476301805215775, guid: a54c35dab9b7a1d45a38eab0ab342099,
+        type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910476301805215775, guid: a54c35dab9b7a1d45a38eab0ab342099,
+        type: 3}
+      propertyPath: monkeyTransform
+      value: 
+      objectReference: {fileID: 1016065110}
     - target: {fileID: 5910476301805215775, guid: a54c35dab9b7a1d45a38eab0ab342099,
         type: 3}
       propertyPath: maxSpeedMultiplier

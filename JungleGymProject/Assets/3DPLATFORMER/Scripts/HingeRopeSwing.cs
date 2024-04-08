@@ -16,12 +16,20 @@ public class HingeRopeSwing : MonoBehaviour
     [SerializeField][Range(0, 1)] float accelMultiplier;
     [SerializeField][Range(0, 2)] float maxSpeedMultiplier;
     [SerializeField][Range(0, 1)] float jumpMultiplier;
-    [SerializeField] Vector3 offset;
+    [SerializeField] float offset;
     [SerializeField] float slideDownSpeed;
     float jumpBoost;
     float originalAccel;
     float originalMaxSpeed;
     float originalFriction;
+
+    [SerializeField] private Transform monkeyTransform;
+    Vector3 localPos;
+    [SerializeField] Animator anim;
+
+    Vector3 dir;
+    float dot;
+    Vector3 newPos;
 
     [Header("Audio")]
     AudioManager audioManager;
@@ -34,6 +42,7 @@ public class HingeRopeSwing : MonoBehaviour
         originalAccel = player.accelSpeed;
         originalMaxSpeed = player.maxSpeed;
         originalFriction = player.frictionRate;
+        localPos = monkeyTransform.localPosition;
 
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
@@ -48,6 +57,8 @@ public class HingeRopeSwing : MonoBehaviour
             player.accelSpeed = originalAccel;
             player.maxSpeed = originalMaxSpeed;
         }
+
+        UpdateAnim();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,6 +68,19 @@ public class HingeRopeSwing : MonoBehaviour
             canSwing = true;
             bottomOfRope = other.gameObject.transform.GetChild(0);
             ropeBody = other.GetComponent<Rigidbody>();
+            dir = (transform.position - other.transform.position).normalized;
+
+            dir = Vector3.ProjectOnPlane(dir, other.transform.right);
+            dot = Vector3.Dot(dir, other.transform.forward);
+
+            float sign = Mathf.Sign(dot);
+
+            newPos = sign * other.transform.forward + other.transform.position + dir;
+            newPos.y = transform.position.y;
+
+            Vector3 temp = monkeyTransform.localPosition;
+            temp.z = sign * offset;
+            monkeyTransform.localPosition = temp;
         }
     }
 
@@ -74,12 +98,15 @@ public class HingeRopeSwing : MonoBehaviour
 
         if (!isSwinging && canSwing) //Input.GetKeyDown(KeyCode.E) && 
         {
-            //Snap to bottom of rope if underneath
+            /*Snap to bottom of rope if underneath
             if (transform.position.y < bottomOfRope.position.y)
             {
-                rb.position = bottomOfRope.position + offset;
-                transform.position = bottomOfRope.position + offset;
-            }
+                rb.position = newPos;
+                transform.position = newPos;
+            }*/
+
+            rb.position = newPos;
+            transform.position = newPos;
 
             if (roll.isRolling)
             {
@@ -108,6 +135,7 @@ public class HingeRopeSwing : MonoBehaviour
                 ropeBody = null;
                 hasSwung = true;
                 canSwing = false;
+                monkeyTransform.localPosition = localPos;
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -121,13 +149,14 @@ public class HingeRopeSwing : MonoBehaviour
                 player.maxSpeed = originalMaxSpeed;
                 player.accelSpeed = originalAccel;
                 audioManager.StopRSFX();
+                monkeyTransform.localPosition = localPos;
             }
         }
     }
 
-    void MoveOnRope() //ask doug about this + snapping player
+    void MoveOnRope()
     {
-        if (transform.position.y >= bottomOfRope.position.y)
+        if (transform.position.y > bottomOfRope.position.y)
         {
             if (joint != null)
             {
@@ -149,6 +178,18 @@ public class HingeRopeSwing : MonoBehaviour
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
         joint.zMotion = ConfigurableJointMotion.Locked;
+    }
+
+    void UpdateAnim()
+    {
+        if (isSwinging)
+        {
+            anim.SetBool("IsSwinging", isSwinging);
+        }
+        else
+        {
+            anim.SetBool("IsSwinging", false);
+        }
     }
 }
 
