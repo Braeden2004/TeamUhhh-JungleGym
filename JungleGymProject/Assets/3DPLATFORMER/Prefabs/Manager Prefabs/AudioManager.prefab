@@ -189,8 +189,8 @@ MonoBehaviour:
   land: {fileID: 8300000, guid: e28232ccf1d044147814ab218144d92f, type: 3}
   ropeGrab: {fileID: 8300000, guid: 0fd79d67ca5168c4da206b17f19e5ff9, type: 3}
   ropeSwing: {fileID: 8300000, guid: abf3121baf87f414aa2b3e50fd539ebb, type: 3}
-  roll: {fileID: 8300000, guid: abf3121baf87f414aa2b3e50fd539ebb, type: 3}
-  run: {fileID: 8300000, guid: 620e0207beda59e47a6c31da8344c256, type: 3}
+  roll: {fileID: 8300000, guid: fa0444f1840ca084689317930be8ca63, type: 3}
+  run: {fileID: 8300000, guid: aea2abc59d587924b99bea92addbee58, type: 3}
   baloonRise: {fileID: 8300000, guid: 449dbe2202634914993a94fc9b8a0c55, type: 3}
   balloonPop: {fileID: 8300000, guid: 7d28752328977704ba6bd2403088e850, type: 3}
   wallBreak: {fileID: 8300000, guid: 45c885aa807acb14085f336d38c7585e, type: 3}
