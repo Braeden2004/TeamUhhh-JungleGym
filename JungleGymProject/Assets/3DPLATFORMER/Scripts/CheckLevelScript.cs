@@ -86,6 +86,15 @@ public class CheckLevelScript : MonoBehaviour
             timerActive = true;
         }
 
+        if (other.CompareTag("Hub"))
+        {
+            Debug.Log("Now entering Hub");
+
+            //juan music
+            audioManager.NewMusicTrack(audioManager.hubMusic);
+
+        }
+
         if (other.CompareTag("Challenge"))
         {
             Debug.Log("Now entering Challenge");
@@ -169,6 +178,14 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Challenge"))
         {
             Debug.Log("Now exiting Challenge");
+            audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            gauntletEntered = false;
+        }
+
+        if (other.CompareTag("Hub"))
+        {
+            Debug.Log("Now exiting Spawn");
             audioManager.NewMusicTrack(audioManager.hubMusic);
 
             gauntletEntered = false;

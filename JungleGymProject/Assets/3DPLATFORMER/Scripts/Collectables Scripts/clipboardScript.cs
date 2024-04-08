@@ -30,6 +30,7 @@ public class clipboardScript : MonoBehaviour
             audioManager.defaultPitchSFX(1);
             audioManager.PitchAdjustSFX(1, 4f, 4f);
             audioManager.PlaySFX(1, audioManager.clipboardGet);
+            audioManager.PlaySFX(3, audioManager.menuHover);
             audioManager.defaultPitchSFX(2);
             audioManager.PlaySFX(2,audioManager.menuPress); 
 
