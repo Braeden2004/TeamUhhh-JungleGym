@@ -11,7 +11,7 @@ public class GauntletRise : MonoBehaviour
     public bool currentlyRising = false;
     public GameObject otherCamera;
 
-    public Vector3 startPosition;
+    private Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class GauntletRise : MonoBehaviour
         }
         else
         {
-            //transform.position = startPosition; //this means the prefab will start raised but go underground in a single frame, this fixes the baloon glitch
+            transform.position = startPosition; //this means the prefab will start raised but go underground in a single frame, this fixes the baloon glitch
         }
 
     }
