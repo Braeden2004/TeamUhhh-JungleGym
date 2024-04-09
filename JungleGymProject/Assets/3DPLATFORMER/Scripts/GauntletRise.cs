@@ -30,7 +30,7 @@ public class GauntletRise : MonoBehaviour
         }
         else
         {
-            transform.position = startPosition; //this means the prefab will start raised but go underground in a single frame, this fixes the baloon glitch
+            //transform.position = startPosition; //this means the prefab will start raised but go underground in a single frame, this fixes the baloon glitch
         }
 
     }
