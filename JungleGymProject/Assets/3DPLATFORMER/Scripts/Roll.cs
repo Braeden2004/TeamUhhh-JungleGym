@@ -82,6 +82,7 @@ public class Roll : MonoBehaviour
         originalFriction = player.frictionRate;
         originalJumpHeight = player.jumpVel;
         rollingNumber = 0;
+        maxSpeedTimer = 0;
     }
 
     void Update()
@@ -89,7 +90,7 @@ public class Roll : MonoBehaviour
         CheckForSlide();
         CheckForSlope();
 
-        if ((Input.GetButtonDown("Roll")) || onSlide == true)
+        if (Input.GetButtonDown("Roll") || onSlide == true)
         {
             OnStartRoll();
             if (!onSlide)
@@ -121,7 +122,6 @@ public class Roll : MonoBehaviour
 
         if(rolledOnSlope && !OnSlope())
         {
-            player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
             maxSpeedTimer += Time.deltaTime;
             if(maxSpeedTimer > maxSpeedTimeLimit)
             {
@@ -141,7 +141,7 @@ public class Roll : MonoBehaviour
             glide.tired = true;
             //NEEDS COROUTINE
             //RollMove();
-            if (OnSlope())
+            if (OnSlope() || onSlide)
             {
                 Vector3 slopeForce = slopeAccel * rollForce * slopeDir;
 
@@ -150,6 +150,8 @@ public class Roll : MonoBehaviour
                 {
                     //rb.velocity += slopeForce * Time.fixedDeltaTime;
                     rb.AddForce(slopeForce, ForceMode.Acceleration); //Add force down the slope
+                    player.maxSpeed = originalMaxSpeed * slopeMaxSpeedMultiplier;
+
                     reverseRollTimer = 0;
                 }
                 else if(slopeDot < 0)
@@ -162,6 +164,7 @@ public class Roll : MonoBehaviour
                 }    
 
                 rolledOnSlope = true;
+                maxSpeedTimer = 0;
 
                 var dot = Vector3.Dot(slopeHit.normal, transform.forward);
                 if (dot < 0f)

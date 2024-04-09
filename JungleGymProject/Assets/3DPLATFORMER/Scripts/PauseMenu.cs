@@ -14,8 +14,12 @@ public class MenuManager : MonoBehaviour
     [Header("Audio")]
     AudioManager audioManager;
 
+
     private void Awake()
     {
+        progressMenuUI.SetActive(true);
+
+
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
