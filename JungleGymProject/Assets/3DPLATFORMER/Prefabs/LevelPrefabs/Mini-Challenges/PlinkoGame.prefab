@@ -18276,6 +18276,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5558389549651902775}
     m_Modifications:
+    - target: {fileID: 1100154272918335386, guid: 5e2d49570e549a146a4e2cc41487502e,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 1158
+      objectReference: {fileID: 0}
     - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
       propertyPath: m_text
@@ -19371,6 +19376,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ClipBoard3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721670871388424495, guid: 02f3bf8da67c7f548834c27dfad44801,
+        type: 3}
+      propertyPath: clipboardName
+      value: Roll Attraction Complete!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

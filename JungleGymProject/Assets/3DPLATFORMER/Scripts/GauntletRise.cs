@@ -11,7 +11,7 @@ public class GauntletRise : MonoBehaviour
     public bool currentlyRising = false;
     public GameObject otherCamera;
 
-    public Vector3 startPosition;
+    private Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
