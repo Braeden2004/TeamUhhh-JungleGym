@@ -138,9 +138,9 @@ public class Roll : MonoBehaviour
     {
         if (isRolling)
         {
-            glide.tired = true;
+            //glide.tired = true;
+
             //NEEDS COROUTINE
-            //RollMove();
             if (OnSlope() || onSlide)
             {
                 Vector3 slopeForce = slopeAccel * rollForce * slopeDir;

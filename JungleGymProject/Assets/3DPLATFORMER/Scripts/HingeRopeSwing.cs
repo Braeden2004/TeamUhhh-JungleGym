@@ -55,8 +55,9 @@ public class HingeRopeSwing : MonoBehaviour
         if (other.gameObject.CompareTag("Rope"))
         {
             canSwing = true;
-            bottomOfRope = other.gameObject.transform.GetChild(0);
+            bottomOfRope = other.gameObject.transform.GetChild(1);
             ropeBody = other.GetComponent<Rigidbody>();
+            other.gameObject.transform.GetChild(2).gameObject.SetActive(true);
         }
     }
 
@@ -65,6 +66,7 @@ public class HingeRopeSwing : MonoBehaviour
         if (other.CompareTag("Rope"))
         {
             canSwing = false;
+            other.gameObject.transform.GetChild(2).gameObject.SetActive(false);
         }
     }
 
