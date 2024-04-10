@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userName: UHHHH???
   secret: stake qualification
-  _version: TestDemo01
+  _version: JungleGym-TestV02
   _serverURL: https://dd-delemetry-1-2a4510835c2b.herokuapp.com/
-  serverCommunication: 0
+  serverCommunication: 1
   debugLogging: 4
   <SetupId>k__BackingField: MSI > JungleGymProject / MazePrototype @ rever-1470110744
