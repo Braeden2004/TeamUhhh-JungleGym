@@ -16,6 +16,6 @@ MonoBehaviour:
   secret: stake qualification
   _version: TestDemo01
   _serverURL: https://dd-delemetry-1-2a4510835c2b.herokuapp.com/
-  serverCommunication: 1
+  serverCommunication: 0
   debugLogging: 4
   <SetupId>k__BackingField: MSI > JungleGymProject / MazePrototype @ rever-1470110744
