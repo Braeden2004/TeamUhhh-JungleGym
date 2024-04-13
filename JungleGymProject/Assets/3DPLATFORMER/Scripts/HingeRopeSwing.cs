@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HingeRopeSwing : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class HingeRopeSwing : MonoBehaviour
     PlayerController player;
     Roll roll;
     public Vector3 ropeVelWhenGrabbed;
-    [SerializeField][Range(0, 1)] float accelMultiplier;
+    [SerializeField][Range(0, 2)] float accelMultiplier;
     [SerializeField][Range(0, 2)] float maxSpeedMultiplier;
-    [SerializeField][Range(0, 1)] float jumpMultiplier;
+    [SerializeField][Range(0, 2)] float jumpMultiplier;
     [SerializeField] Vector3 offset;
     [SerializeField] float slideDownSpeed;
     float jumpBoost;
@@ -47,6 +48,14 @@ public class HingeRopeSwing : MonoBehaviour
             hasSwung = false;
             player.accelSpeed = originalAccel;
             player.maxSpeed = originalMaxSpeed;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(isSwinging)
+        {
+            MoveOnRope();
         }
     }
 
@@ -102,7 +111,7 @@ public class HingeRopeSwing : MonoBehaviour
 
         else if (isSwinging)
         {
-            MoveOnRope();
+            //MoveOnRope();
             if (Input.GetButtonDown("Roll")) //Input.GetKeyDown(KeyCode.E) ||
             {
                 isSwinging = false;
@@ -110,6 +119,7 @@ public class HingeRopeSwing : MonoBehaviour
                 ropeBody = null;
                 hasSwung = true;
                 canSwing = false;
+                atBottom = false;
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -123,13 +133,15 @@ public class HingeRopeSwing : MonoBehaviour
                 player.maxSpeed = originalMaxSpeed;
                 player.accelSpeed = originalAccel;
                 audioManager.StopRSFX();
+                atBottom = false;
             }
         }
     }
 
-    void MoveOnRope() //ask doug about this + snapping player
+    bool atBottom;
+    void MoveOnRope()
     {
-        if (transform.position.y >= bottomOfRope.position.y)
+        if (transform.position.y >= bottomOfRope.position.y && !atBottom)
         {
             if (joint != null)
             {
@@ -140,6 +152,10 @@ public class HingeRopeSwing : MonoBehaviour
                 Vector3 newPos = new Vector3(joint.connectedAnchor.x, newY, joint.connectedAnchor.z);
                 joint.connectedAnchor = newPos;
             }
+        }
+        else
+        {
+            atBottom = true;
         }
     }
 

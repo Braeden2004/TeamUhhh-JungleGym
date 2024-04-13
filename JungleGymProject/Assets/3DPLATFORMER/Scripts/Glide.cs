@@ -8,6 +8,7 @@ public class Glide : MonoBehaviour
     Rigidbody rb;
     Roll roll;
     HingeRopeSwing swing;
+    PlayerSwing balloon;
     float originalGrav;
     float originalMaxGrav;
     float originalAirControl;
@@ -26,6 +27,7 @@ public class Glide : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         roll = GetComponent<Roll>();
         swing = GetComponent<HingeRopeSwing>();
+        balloon = GetComponent<PlayerSwing>();
         originalGrav = playerController.gravity;
         originalMaxGrav = playerController.maxGravity;
         originalAirControl = playerController.airControl;
@@ -54,7 +56,7 @@ public class Glide : MonoBehaviour
             playerController.airControl = originalAirControl;
         }
 
-        if(playerController.isGrounded())
+        if(playerController.isGrounded() || balloon.isSwinging || swing.isSwinging)
         {
             tired = false;
             timer = 0;
