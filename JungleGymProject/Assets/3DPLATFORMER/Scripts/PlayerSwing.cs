@@ -48,8 +48,17 @@ public class PlayerSwing : MonoBehaviour
         }
         else if(isSwinging)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Roll"))
+            if (Input.GetButtonDown("Roll"))
             {
+                ReleaseSwing();
+                audioManager.StopRSFX();
+            }
+            else if(Input.GetKeyDown(KeyCode.Space))
+            {
+                if(connectedBalloon != null)
+                {
+                    GetComponent<Rigidbody>().AddForce(Vector3.up * connectedBalloon.popForce, ForceMode.Impulse);
+                }
                 ReleaseSwing();
                 audioManager.StopRSFX();
             }

@@ -14,8 +14,8 @@ public class Balloon : MonoBehaviour
     float timer;
     bool startPopTimer;
     public bool attached;
-    bool addForceToPlayer;
-    [SerializeField] float popForce;
+    public bool addForceToPlayer;
+    public float popForce;
     [SerializeField] float popTimer;
     [SerializeField] float floatSpeed;
     [SerializeField] float maxDist;

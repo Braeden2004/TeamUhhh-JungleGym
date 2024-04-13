@@ -9,16 +9,20 @@ public class GauntletRise : MonoBehaviour
 
     public bool forceRise = false; // dev option to force rise
     public bool currentlyRising = false;
-    public GameObject otherCamera;
+    private GameObject otherCamera;
 
     private Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        //set othercamera
+        otherCamera = GameObject.Find("GauntletRiseCam");
         otherCamera.SetActive(false);
 
         startPosition = new Vector3(231.7f,-215.3f, 15.6f);
+
     }
 
     // Update is called once per frame
