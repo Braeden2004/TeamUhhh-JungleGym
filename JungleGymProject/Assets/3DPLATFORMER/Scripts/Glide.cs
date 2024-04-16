@@ -6,6 +6,9 @@ public class Glide : MonoBehaviour
 {
     PlayerController playerController;
     Rigidbody rb;
+    Roll roll;
+    HingeRopeSwing swing;
+    PlayerSwing balloon;
     float originalGrav;
     float originalMaxGrav;
     float originalAirControl;
@@ -22,6 +25,9 @@ public class Glide : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+        roll = GetComponent<Roll>();
+        swing = GetComponent<HingeRopeSwing>();
+        balloon = GetComponent<PlayerSwing>();
         originalGrav = playerController.gravity;
         originalMaxGrav = playerController.maxGravity;
         originalAirControl = playerController.airControl;
@@ -29,7 +35,7 @@ public class Glide : MonoBehaviour
 
     void Update()
     {
-        if(playerController.jumpHold && playerController.isFalling && !tired)
+        if(playerController.jumpHold && playerController.isFalling && !tired && !roll.isRolling && !swing.isSwinging)
         {
             playerController.gravity = originalGrav * gravityMultiplier;
             playerController.maxGravity = originalMaxGrav * gravityMultiplier;
@@ -50,7 +56,7 @@ public class Glide : MonoBehaviour
             playerController.airControl = originalAirControl;
         }
 
-        if(playerController.isGrounded())
+        if(playerController.isGrounded() || balloon.isSwinging || swing.isSwinging)
         {
             tired = false;
             timer = 0;

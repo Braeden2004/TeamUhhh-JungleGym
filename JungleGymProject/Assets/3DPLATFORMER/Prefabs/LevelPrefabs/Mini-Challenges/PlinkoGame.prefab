@@ -7618,9 +7618,17 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 3886
   m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_SelectedFaces: d2000000
+  m_SelectedEdges:
+  - a: 840
+    b: 841
+  - a: 842
+    b: 840
+  - a: 841
+    b: 843
+  - a: 843
+    b: 842
+  m_SelectedVertices: 48030000490300004a0300004b030000
 --- !u!114 &7513604316167105921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7926,7 +7934,7 @@ MonoBehaviour:
       m_Rotation: 0
       m_Anchor: 9
     m_Material: {fileID: 0}
-    m_SubmeshIndex: 0
+    m_SubmeshIndex: 1
     m_ManualUV: 0
     elementGroup: -1
     m_TextureGroup: -1
@@ -7960,7 +7968,7 @@ MonoBehaviour:
       m_Rotation: 0
       m_Anchor: 9
     m_Material: {fileID: 0}
-    m_SubmeshIndex: 0
+    m_SubmeshIndex: 2
     m_ManualUV: 0
     elementGroup: -1
     m_TextureGroup: -1
@@ -7994,7 +8002,7 @@ MonoBehaviour:
       m_Rotation: 0
       m_Anchor: 9
     m_Material: {fileID: 0}
-    m_SubmeshIndex: 0
+    m_SubmeshIndex: 3
     m_ManualUV: 0
     elementGroup: -1
     m_TextureGroup: -1
@@ -8028,7 +8036,7 @@ MonoBehaviour:
       m_Rotation: 0
       m_Anchor: 9
     m_Material: {fileID: 0}
-    m_SubmeshIndex: 0
+    m_SubmeshIndex: 4
     m_ManualUV: 0
     elementGroup: -1
     m_TextureGroup: -1
@@ -9425,7 +9433,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1600
+  m_VersionIndex: 1627
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9483,6 +9491,10 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c82c0e92203cccd4f9863ad025712d4d, type: 2}
+  - {fileID: 2100000, guid: 882a3a560c534394faa1c4cd30b840b7, type: 2}
+  - {fileID: 2100000, guid: 57fa602e3f724054fa9941cc4f672b9c, type: 2}
+  - {fileID: 2100000, guid: f3aa222abc33e8342b22690121688cb0, type: 2}
+  - {fileID: 2100000, guid: cb20f204ba5d64244839b9a8fe5699da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18276,6 +18288,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5558389549651902775}
     m_Modifications:
+    - target: {fileID: 1100154272918335386, guid: 5e2d49570e549a146a4e2cc41487502e,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 1158
+      objectReference: {fileID: 0}
     - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
       propertyPath: m_text
@@ -19371,6 +19388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ClipBoard3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721670871388424495, guid: 02f3bf8da67c7f548834c27dfad44801,
+        type: 3}
+      propertyPath: clipboardName
+      value: Roll Attraction Complete!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

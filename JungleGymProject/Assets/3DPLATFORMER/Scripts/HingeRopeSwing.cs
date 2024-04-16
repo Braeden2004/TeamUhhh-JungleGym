@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HingeRopeSwing : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class HingeRopeSwing : MonoBehaviour
     PlayerController player;
     Roll roll;
     public Vector3 ropeVelWhenGrabbed;
-    [SerializeField][Range(0, 1)] float accelMultiplier;
+    [SerializeField][Range(0, 2)] float accelMultiplier;
     [SerializeField][Range(0, 2)] float maxSpeedMultiplier;
-    [SerializeField][Range(0, 1)] float jumpMultiplier;
+    [SerializeField][Range(0, 2)] float jumpMultiplier;
     [SerializeField] float offset;
     [SerializeField] float slideDownSpeed;
     float jumpBoost;
@@ -61,12 +62,20 @@ public class HingeRopeSwing : MonoBehaviour
         UpdateAnim();
     }
 
+    private void FixedUpdate()
+    {
+        if (isSwinging)
+        {
+            MoveOnRope();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Rope"))
         {
             canSwing = true;
-            bottomOfRope = other.gameObject.transform.GetChild(0);
+            bottomOfRope = other.gameObject.transform.GetChild(1);
             ropeBody = other.GetComponent<Rigidbody>();
             dir = (transform.position - other.transform.position).normalized;
 
@@ -81,6 +90,7 @@ public class HingeRopeSwing : MonoBehaviour
             Vector3 temp = monkeyTransform.localPosition;
             temp.z = sign * offset;
             monkeyTransform.localPosition = temp;
+            other.gameObject.transform.GetChild(2).gameObject.SetActive(true);
         }
     }
 
@@ -89,6 +99,7 @@ public class HingeRopeSwing : MonoBehaviour
         if (other.CompareTag("Rope"))
         {
             canSwing = false;
+            other.gameObject.transform.GetChild(2).gameObject.SetActive(false);
         }
     }
 
@@ -127,7 +138,7 @@ public class HingeRopeSwing : MonoBehaviour
 
         else if (isSwinging)
         {
-            MoveOnRope();
+            //MoveOnRope();
             if (Input.GetButtonDown("Roll")) //Input.GetKeyDown(KeyCode.E) ||
             {
                 isSwinging = false;
@@ -136,6 +147,7 @@ public class HingeRopeSwing : MonoBehaviour
                 hasSwung = true;
                 canSwing = false;
                 monkeyTransform.localPosition = localPos;
+                atBottom = false;
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -150,13 +162,15 @@ public class HingeRopeSwing : MonoBehaviour
                 player.accelSpeed = originalAccel;
                 audioManager.StopRSFX();
                 monkeyTransform.localPosition = localPos;
+                atBottom = false;
             }
         }
     }
 
+    bool atBottom;
     void MoveOnRope()
     {
-        if (transform.position.y > bottomOfRope.position.y)
+        if (transform.position.y >= bottomOfRope.position.y && !atBottom)
         {
             if (joint != null)
             {
@@ -167,6 +181,10 @@ public class HingeRopeSwing : MonoBehaviour
                 Vector3 newPos = new Vector3(joint.connectedAnchor.x, newY, joint.connectedAnchor.z);
                 joint.connectedAnchor = newPos;
             }
+        }
+        else
+        {
+            atBottom = true;
         }
     }
 

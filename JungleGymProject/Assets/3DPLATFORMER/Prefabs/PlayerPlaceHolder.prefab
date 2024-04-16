@@ -304,7 +304,7 @@ MonoBehaviour:
   hasSwung: 0
   joint: {fileID: 0}
   ropeVelWhenGrabbed: {x: 0, y: 0, z: 0}
-  accelMultiplier: 0.6
+  accelMultiplier: 0.8
   maxSpeedMultiplier: 1.6
   jumpMultiplier: 0.8
   offset: {x: 0, y: 0, z: 0}
@@ -358,6 +358,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7931e3cf6844714a97d83a43adb941c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hubEntered: 0
+  savanahEntered: 0
+  rainForestEntered: 0
+  gauntletEntered: 0
+  timerActive: 0
+  timerCurrent: 0
+  timerMax: 0
+  timesUp: 0
+  levelCardHub: {fileID: 0}
+  levelCardSavanah: {fileID: 0}
+  levelCardRainForest: {fileID: 0}
+  levelCardGauntlet: {fileID: 0}
+  playerscript: {fileID: 0}
 --- !u!1001 &6809222140627579675
 PrefabInstance:
   m_ObjectHideFlags: 0

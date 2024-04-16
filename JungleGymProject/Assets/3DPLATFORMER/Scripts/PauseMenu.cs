@@ -27,7 +27,7 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !audioMenuUI.activeSelf)
         {
             Pause();
 
@@ -36,9 +36,6 @@ public class MenuManager : MonoBehaviour
             TelemetryLogger.Log(this, "Clipboards Collected", ScoreManager.instance.clipboardTotal);
 
         }
-
-
-
 
         //hold tab for progress menu
         if (Input.GetKey(KeyCode.Tab))
