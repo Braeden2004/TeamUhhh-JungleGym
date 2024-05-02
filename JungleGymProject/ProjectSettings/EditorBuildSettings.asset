@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/JungleGym/scenes/TheMapScenes/MapSceneFinal.unity
     guid: 84f9434590b1f744d9b63aa16e866493
   - enabled: 1
-    path: Assets/JungleGym/scenes/GameComplete/DemoComplete.unity
+    path: Assets/JungleGym/scenes/CompleteScreen/DemoComplete.unity
     guid: d5a3492d60aa2794a8c7fbfa1ec1163c
   - enabled: 0
     path: Assets/JungleGym/scenes/TheMapScenes/Old Versions/MapScene.unity
@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Other Files/LaneGameAssets/Scenes/Player2Win.unity
     guid: cfefd7640cfc6b244861fca776fe2945
   - enabled: 0
-    path: Assets/JungleGym/scenes/LevelConcepts/BraedenConcept.unity
+    path: Assets/JungleGym/scenes/ConceptLevels/BraedenConcept.unity
     guid: d98bea8bc2d62b2408ed5a5aa8910728
   - enabled: 0
     path: Assets/Other Files/LaneGameAssets/Scenes/SampleScene.unity
