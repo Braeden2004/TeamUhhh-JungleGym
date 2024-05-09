@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //This script is attached to the prefab of its respective collectable
 
 public class ticketScript : MonoBehaviour
 {
+    public ParticleSystem collectParticle;
+
     [Header("Audio")]
     AudioManager audioManager;
+    
     private void Awake()
     {
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-    public ParticleSystem collectParticle;
+    private void Start()
+    {
+        
+    }
 
 
     private void OnTriggerEnter(Collider other)
