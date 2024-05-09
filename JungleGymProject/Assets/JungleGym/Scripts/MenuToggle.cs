@@ -7,11 +7,16 @@ public class MenuToggle : MonoBehaviour
 {
     //note to self, attach this script to the object you want to toggle it will need the specific image references 
 
-    public Image On;
-    public Image Off;
-    public Image img;
+    public Image On; //button ON sprite
+    public Image Off; // button oFF sprite
+
+    public GameObject img; //game object u want to toggle
     int index;
 
+    void Start()
+    {
+        index = 1;
+    }
 
     // Update is called once per frame
     void Update()
