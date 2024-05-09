@@ -17,9 +17,7 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        //set certain UI elements to enable or disable upon startup
         progressMenuUI.SetActive(true);
-        pauseMenuUI.SetActive(false);
 
 
         //Sets the audio stuff up
