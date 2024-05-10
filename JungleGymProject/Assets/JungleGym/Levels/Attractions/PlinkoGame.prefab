@@ -10321,8 +10321,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 30.868896, y: 51.708595, z: 8.22224}
-  m_Center: {x: -2.132927, y: 3.3035278, z: -2.3026044}
+  m_Size: {x: 30.868896, y: 51.708595, z: 12.680653}
+  m_Center: {x: -2.132927, y: 3.3035278, z: -4.5318017}
 --- !u!1 &5009274471985164302
 GameObject:
   m_ObjectHideFlags: 0
@@ -20775,7 +20775,7 @@ PrefabInstance:
     - target: {fileID: 3377718463994018510, guid: 0319bb84fe2ba6541b11d1d012e38024,
         type: 3}
       propertyPath: bounceForce
-      value: 60
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 3679075567196598666, guid: 0319bb84fe2ba6541b11d1d012e38024,
         type: 3}
@@ -20800,7 +20800,7 @@ PrefabInstance:
     - target: {fileID: 8044748104931861493, guid: 0319bb84fe2ba6541b11d1d012e38024,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.66
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8044748104931861493, guid: 0319bb84fe2ba6541b11d1d012e38024,
         type: 3}

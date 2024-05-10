@@ -19,21 +19,49 @@ public class BouncePad : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            audioManager.PlaySFX(3, audioManager.bouncePad);
-            rb = collision.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
-        }
+        
+            if (other.gameObject.tag == "Player")
+            {
+                audioManager.PlaySFX(3, audioManager.bouncePad);
+                rb = other.gameObject.GetComponent<Rigidbody>();
 
-        //make the hidden monkey fellas bounce
-        if (collision.gameObject.tag == "HiddenMonkey")
-        {
-            rb = collision.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.up * bounceForce/2, ForceMode.Impulse);
+                //check if rb y velocity is greater than 0
+                if (rb.velocity.y != 0)
+                {
+                    //setting it to 0 prevents player from losing velocity when landing on bounce pad from above
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                }
+                
+
+                if (rb.velocity.y == 0)
+                {
+                    rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+                }
+                
+            }
+
+            //make the hidden monkey fellas bounce
+            if (other.gameObject.tag == "HiddenMonkey")
+            {
+                rb = other.gameObject.GetComponent<Rigidbody>();
+
+                //check if rb y velocity is greater than 0
+                if (rb.velocity.y != 0)
+                {
+                    //setting it to 0 prevents player from losing velocity when landing on bounce pad from above
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                }
+
+
+                if (rb.velocity.y == 0)
+                {
+                    rb.AddForce(Vector3.up * bounceForce/2, ForceMode.Impulse);
+                }
         }
+        
     }
+    
 
 }
