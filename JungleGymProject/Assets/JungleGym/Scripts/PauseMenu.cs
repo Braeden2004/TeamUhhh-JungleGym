@@ -15,6 +15,12 @@ public class MenuManager : MonoBehaviour
     AudioManager audioManager;
 
 
+    [Header("RespawnTimer")]
+    public bool respawnReady = true;
+    public float respawnTime; //seconds to respawn
+    public float currentRespawnTime;
+
+
     private void Awake()
     {
         //set which UI elements are active on startup
@@ -24,11 +30,15 @@ public class MenuManager : MonoBehaviour
 
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        //set respawn timer
+        currentRespawnTime = respawnTime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape) && !audioMenuUI.activeSelf)
         {
             Pause();
@@ -49,6 +59,8 @@ public class MenuManager : MonoBehaviour
             progressMenuUI.SetActive(false);
         }
 
+        //hold R to respawn
+        HoldToRespawn();
     }
 
     public void Resume()
@@ -97,6 +109,34 @@ public class MenuManager : MonoBehaviour
         player.transform.position = spawnPoint.position;
         player.transform.rotation = spawnPoint.rotation;
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
         Resume();
+    }
+
+    void HoldToRespawn()
+    {
+        //hold R for x seconds to respawn
+        if (Input.GetKey(KeyCode.R))
+        {
+            //countdown
+            currentRespawnTime -= Time.deltaTime;
+
+            if (currentRespawnTime <= 0)
+            {
+                if (respawnReady == true)
+                {
+                    Respawn();
+                    respawnReady = false;
+                }
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            //cancel countdown and reset timer
+            currentRespawnTime = respawnTime;
+
+            respawnReady = true; // prevents player from getting stuck in respawn loop by holding down R
+        }
     }
 }
