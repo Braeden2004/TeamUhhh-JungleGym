@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//source https://www.youtube.com/watch?v=vhfzpKWWA-A
 public class MenuToggle : MonoBehaviour
 {
     //note to self, attach this script to the object you want to toggle it will need the specific image references 
 
-    public Image On; // On sprite for button
-    public Image Off; // Off Sprite for button
+    public Image On; //button ON sprite
+    public Image Off; // button oFF sprite
 
-    public GameObject img; // an object that is toggled
+    public GameObject img; //game object u want to toggle
     int index;
-
 
     void Start()
     {
-        index = 1; // start with object off
+        index = 1;
     }
 
     // Update is called once per frame
