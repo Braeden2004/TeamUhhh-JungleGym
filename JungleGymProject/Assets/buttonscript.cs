@@ -39,8 +39,15 @@ public class buttonScript : MonoBehaviour
                     //teleport down to show press
                     transform.position = new Vector3(transform.position.x, transform.position.y - teleportDistance, transform.position.z);
 
+                    //SFX
+                    audioManager.defaultPitchSFX(3);
+                    audioManager.AdjustVolume(3, 10f);
 
-                    canvas.SetActive(false); //hide ticket cost text
+                    audioManager.PlaySFX(3, audioManager.wallBreak);
+                    audioManager.PlaySFX(3, audioManager.bigButtonPress);
+
+                    //hide hovering text
+                    canvas.SetActive(false); 
 
                     isPressed = true;
                 }
