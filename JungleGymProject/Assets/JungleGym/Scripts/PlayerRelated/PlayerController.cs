@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviour
         TicketSuction();
 
         Jump();
+
+        DebugCheats();
     }
 
     private void FixedUpdate()
@@ -485,6 +487,22 @@ public class PlayerController : MonoBehaviour
         {
             puffed = false;
         }
+    }
+
+    void DebugCheats()
+    {
+        //Gain tickets
+        if (Input.GetKey(KeyCode.T))
+        {
+            ScoreManager.instance.ticketTotal += 1;
+        }
+
+        //Gain Clipboards
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            ScoreManager.instance.clipboardTotal += 1;
+        }
+
     }
 
     private void OnApplicationQuit()

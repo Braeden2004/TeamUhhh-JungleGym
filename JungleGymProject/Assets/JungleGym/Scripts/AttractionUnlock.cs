@@ -19,7 +19,9 @@ public class AttractionUnlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        attraction.SetActive(false); //make attraction dissapear
+        //NOTE: The attraction starts active because it needs 1 frame at the beginning to tell the game how many clipboards are in the world, the update method will then turn it off after frame 1
+
+        attraction.SetActive(true); //make attraction dissapear
         cover.SetActive(true); //make cover appear
     }
 
@@ -41,6 +43,10 @@ public class AttractionUnlock : MonoBehaviour
                 Instantiate(unlockParticle, transform.position, Quaternion.identity);
                 particlePlayed = true;
             }
+        }
+        else
+        {
+            attraction.SetActive(false); //make attraction dissapear
         }
 
         
