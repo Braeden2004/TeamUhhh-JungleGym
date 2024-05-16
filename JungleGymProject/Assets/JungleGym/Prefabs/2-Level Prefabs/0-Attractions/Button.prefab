@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teleportDistance: 0.427
   isPressed: 0
-  ticketCost: 1
+  ticketCost: 0
   ticketCostText: {fileID: 1669898357450515312}
   canvas: {fileID: 6847960967549649935}
 --- !u!64 &6827209463129785505
