@@ -165,7 +165,7 @@ Transform:
   m_GameObject: {fileID: 3542629768666074350}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 94.78554, y: -18.277546, z: -4.057666}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -253,6 +253,8 @@ MonoBehaviour:
   unlocked: 0
   attraction: {fileID: 3542629768666074350}
   cover: {fileID: 4694629529284495266}
+  offsetY: 1000
+  attractionSpawnPos: {x: 0, y: 0, z: 0}
   buttonScript: {fileID: 1485077405367834059}
   unlockParticle: {fileID: 9157105887693468085, guid: 41ca711e52dc2ed4eae5bac3eeada1a7,
     type: 3}
