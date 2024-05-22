@@ -5,6 +5,13 @@ using UnityEngine;
 public class basketballScript : MonoBehaviour
 {
     public bool basket = false;
+    public bool manualOveride = false;
+    
+
+    //net inside gauntlet hole
+    public bool GauntletNet = false;
+    public GauntletRise gauntletRiseScript;
+
     public float offsetY;
 
     public GameObject tickets;
@@ -15,6 +22,7 @@ public class basketballScript : MonoBehaviour
     public Material greenPlastic;
 
     public Vector3 ticketSpawnPos;
+    public Vector3 manualSpawnPos;
 
     [Header("Particles")]
     public ParticleSystem unlockParticle;
@@ -40,6 +48,19 @@ public class basketballScript : MonoBehaviour
         tickets.transform.position = new Vector3(transform.position.x, transform.position.y - offsetY, transform.position.z);
     }
 
+    void Update()
+    {
+        if (GauntletNet == true)
+        {
+            if ((ScoreManager.instance.clipboardTotal == ScoreManager.instance.totalClipboardInScene - 1) || gauntletRiseScript.forceRise == true)
+            {
+                transform.position = new Vector3(999999, 99999, 99999); //teleport into the shadowrelm
+
+                Debug.Log("Teleporting");
+            }
+        }   
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -52,10 +73,18 @@ public class basketballScript : MonoBehaviour
                 audioManager.PlaySFX(3, audioManager.wallBreak);
 
                 //teleport attraction above ground
-                if (tickets.transform.position != ticketSpawnPos)
+                if (manualOveride == false)
                 {
-                    tickets.transform.position = ticketSpawnPos;
+                    if (tickets.transform.position != ticketSpawnPos)
+                    {
+                        tickets.transform.position = ticketSpawnPos;
+                    }
                 }
+                else
+                {
+                    tickets.transform.position = manualSpawnPos;
+                }
+                
 
                 //Spawn Effects
                 if (particlePlayed == false)
