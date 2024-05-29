@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class MenuTweening : MonoBehaviour
 {
-    public enum MenuType {MainMenuElement, BushElement}
+    public enum MenuType {MainMenuElement, BushElement, TutorialElement}
     [SerializeField] MenuType menuType;
 
     public bool useManualStartPos = false;
@@ -46,6 +46,11 @@ public class MenuTweening : MonoBehaviour
         if (menuType == MenuType.BushElement)
         {
             BushElement();
+        }
+
+        if (menuType == MenuType.TutorialElement)
+        {
+            TutorialElement();
         }
     }
 
@@ -93,5 +98,19 @@ public class MenuTweening : MonoBehaviour
             }
         }
 
+    }
+
+    void TutorialElement()
+    {
+        if (useManualStartPos)
+        {
+            //move towards target with lerp
+            transform.position = Vector3.Lerp(transform.position, startPos + targetPos, speed * Time.deltaTime);
+        }
+        else
+        {
+            //move towards target with lerp
+            transform.position = Vector3.Lerp(transform.position, targetObject.rectTransform.position, speed * Time.deltaTime);
+        }
     }
 }
