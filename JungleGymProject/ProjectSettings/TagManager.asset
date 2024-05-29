@@ -26,6 +26,7 @@ TagManager:
   - TicketHub
   - TicketTundra
   - ClipTundra
+  - monkeyChain
   layers:
   - Default
   - TransparentFX
