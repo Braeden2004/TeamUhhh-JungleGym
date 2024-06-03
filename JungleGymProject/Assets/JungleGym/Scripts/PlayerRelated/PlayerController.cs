@@ -59,7 +59,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float apexTime = 0.5f;
     public float jumpVel;
 
-    //JumpBuffer + Coyote Time
+    [Header ("TicketSuction")]
+    public float suctionRadius;
+    public float suctionSpeed;
+    public GameObject target;
+
+    [Header("JumpBuffer + Coyote Time")] 
     public float jumpBufferTime = 0.2f;
     public float jumpBufferCounter;
     public float coyoteTime = 0.2f;
@@ -94,8 +99,11 @@ public class PlayerController : MonoBehaviour
 
         HandleGravity();
         AnimChecks();
+        TicketSuction();
 
         Jump();
+
+        DebugCheats();
     }
 
     private void FixedUpdate()
@@ -433,6 +441,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void TicketSuction()
+    {
+        // Create a sphere that will suck in tickets
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, suctionRadius);
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+            if ((hitCollider.gameObject.CompareTag("TicketSavanah")) ||(hitCollider.gameObject.CompareTag("TicketTundra")) || (hitCollider.gameObject.CompareTag("TicketGauntlet")) || (hitCollider.gameObject.CompareTag("TicketHub")))
+            {
+                // Move the ticket towards the player's position
+                hitCollider.transform.position = Vector3.MoveTowards(hitCollider.transform.position, transform.position, suctionSpeed);
+            }
+        }
+    }
+
+
     void AnimChecks()
     {
         if (moveDir.magnitude < 0.1f)
@@ -463,6 +487,22 @@ public class PlayerController : MonoBehaviour
         {
             puffed = false;
         }
+    }
+
+    void DebugCheats()
+    {
+        //Gain tickets
+        if (Input.GetKey(KeyCode.T))
+        {
+            ScoreManager.instance.ticketTotal += 1;
+        }
+
+        //Gain Clipboards
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            ScoreManager.instance.clipboardTotal += 1;
+        }
+
     }
 
     private void OnApplicationQuit()
