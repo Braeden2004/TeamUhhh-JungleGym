@@ -8,7 +8,6 @@ public class enableCamera : MonoBehaviour
 {
 
     public GameObject otherCamera;
-    //public float camSwitchSpeed = 1.0f;
 
 
     public void Start()
@@ -23,8 +22,6 @@ public class enableCamera : MonoBehaviour
         {
             //set actuve
             otherCamera.SetActive(true);
-
-            //adjust how fast the camera switches to the otherCamera
 
             Debug.Log("Camera enabled");
         }
@@ -42,7 +39,6 @@ public class enableCamera : MonoBehaviour
 
         }
     }
-
 
 
 

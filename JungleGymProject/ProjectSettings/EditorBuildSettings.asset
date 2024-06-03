@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/JungleGym/scenes/StartScreen/Menu.unity
     guid: bf619a7f15a3218418c5d1598f9e8372
   - enabled: 1
-    path: Assets/JungleGym/scenes/CutsceneScenes/Cutscene1.unity
-    guid: 4d08082a9bd1fa4428b9ec714437152d
-  - enabled: 1
     path: Assets/JungleGym/scenes/TheMapScenes/MapSceneFinal.unity
     guid: 84f9434590b1f744d9b63aa16e866493
   - enabled: 1
@@ -27,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Other Files/LaneGameAssets/Scenes/Player2Win.unity
     guid: cfefd7640cfc6b244861fca776fe2945
   - enabled: 0
-    path: Assets/JungleGym/scenes/ConceptScenes/BraedenConcept.unity
+    path: Assets/JungleGym/scenes/ConceptLevels/BraedenConcept.unity
     guid: d98bea8bc2d62b2408ed5a5aa8910728
   - enabled: 0
     path: Assets/Other Files/LaneGameAssets/Scenes/SampleScene.unity

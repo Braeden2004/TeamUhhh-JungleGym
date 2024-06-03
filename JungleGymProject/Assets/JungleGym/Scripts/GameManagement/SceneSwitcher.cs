@@ -13,7 +13,7 @@ public class SceneSwitcher : MonoBehaviour
     void Start()
 	{
 		//find the timer script
-		timerScript = GameObject.Find("HUD").GetComponent<Timer>();
+		timerScript = GameObject.Find("PauseMenuCanvas").GetComponent<Timer>();
 	}
 
 

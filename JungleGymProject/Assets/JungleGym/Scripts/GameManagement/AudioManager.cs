@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip ticketGet;
     public AudioClip clipboardGet;
     public AudioClip bouncePad;
-    public AudioClip bigButtonPress;
 
     public AudioClip ambience;
 
