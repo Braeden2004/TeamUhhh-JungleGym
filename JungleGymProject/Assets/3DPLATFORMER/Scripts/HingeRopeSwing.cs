@@ -170,7 +170,14 @@ public class HingeRopeSwing : MonoBehaviour
     bool atBottom;
     void MoveOnRope()
     {
-        if (transform.position.y >= bottomOfRope.position.y && !atBottom)
+        if (transform.position.y < bottomOfRope.position.y && !atBottom)
+        {
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = bottomOfRope.localPosition;
+            atBottom = true;
+        }
+
+        else if (transform.position.y > bottomOfRope.position.y && !atBottom)
         {
             if (joint != null)
             {
@@ -178,6 +185,7 @@ public class HingeRopeSwing : MonoBehaviour
                 joint.autoConfigureConnectedAnchor = false;
 
                 newY -= Time.deltaTime * slideDownSpeed;
+
                 Vector3 newPos = new Vector3(joint.connectedAnchor.x, newY, joint.connectedAnchor.z);
                 joint.connectedAnchor = newPos;
             }
