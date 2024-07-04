@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/JungleGym/scenes/CutsceneScenes/Cutscene1.unity
     guid: 4d08082a9bd1fa4428b9ec714437152d
   - enabled: 1
+    path: Assets/JungleGym/scenes/TheMapScenes/MapSceneFinalV2.unity
+    guid: 1b2c003cc91bb7148b3aff24d15dd1b6
+  - enabled: 0
     path: Assets/JungleGym/scenes/TheMapScenes/Old Versions/MapSceneFinal.unity
     guid: 84f9434590b1f744d9b63aa16e866493
-  - enabled: 1
+  - enabled: 0
     path: Assets/JungleGym/scenes/CompleteScreen/DemoComplete.unity
     guid: d5a3492d60aa2794a8c7fbfa1ec1163c
   - enabled: 0
