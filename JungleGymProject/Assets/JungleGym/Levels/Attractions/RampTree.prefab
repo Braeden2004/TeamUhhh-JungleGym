@@ -64719,6 +64719,11 @@ PrefabInstance:
       propertyPath: ticketCost
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
+        type: 3}
+      propertyPath: m_text
+      value: Roll Challenge
+      objectReference: {fileID: 0}
     - target: {fileID: 3224233262199383389, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
       propertyPath: cover
