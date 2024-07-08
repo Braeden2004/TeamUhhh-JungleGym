@@ -15,13 +15,20 @@ public class SceneSwitcher : MonoBehaviour
     public float timerStart = 5f;
     public float currentTimer;
 
+    //endgametimer
+    public float endTimerMax = 3f;
+    public float endTimercurrent;
+    public endgameScript endgameScript;
+
     // Start is called before the first frame update
     void Start()
     {
         //find the timer script
         timerScript = GameObject.Find("HUD").GetComponent<Timer>();
 
+        //set timers
         currentTimer = timerStart;
+        endTimercurrent = endTimerMax;
     }
 
 
@@ -40,6 +47,25 @@ public class SceneSwitcher : MonoBehaviour
 
             //go to next scene in queue (build settings)
             SceneManager.LoadScene("DemoComplete");
+        }
+
+        //end game after going through exit
+        if (endgameScript.endGame == true)
+        {
+            endTimercurrent -= Time.deltaTime;
+
+            if (endTimercurrent <= 0)
+            {
+                //grab the timer value before switching the scene
+                Debug.Log("Current: " + ScoreManager.instance.clipboardTotal);
+                Debug.Log("total: " + ScoreManager.instance.totalClipboardInScene);
+
+                yourTime = timerScript.timerText.text;
+                Debug.Log(yourTime);
+
+                //go to next scene in queue (build settings)
+                SceneManager.LoadScene("DemoComplete");
+            }
         }
 
         //activate camera after all clipboards
