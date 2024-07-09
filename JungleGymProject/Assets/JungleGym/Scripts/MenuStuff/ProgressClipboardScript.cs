@@ -21,16 +21,21 @@ public class ProgressClipboardScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //check if this object is active
-        if (PauseMenuScript.clipboardActive == true)
+        if (PauseMenuScript != null)
         {
-            //move towards target with lerp
-            //move towards target with lerp
-            transform.position = Vector3.Lerp(transform.position, targetObject.rectTransform.position, speed * Time.deltaTime);
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, startPos, speed * Time.deltaTime);
+
+
+            //check if this object is active
+            if (PauseMenuScript.clipboardActive == true)
+            {
+                //move towards target with lerp
+                //move towards target with lerp
+                transform.position = Vector3.Lerp(transform.position, targetObject.rectTransform.position, speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, startPos, speed * Time.deltaTime);
+            }
         }
     }
 }

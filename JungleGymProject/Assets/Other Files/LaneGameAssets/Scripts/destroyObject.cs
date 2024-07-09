@@ -4,28 +4,42 @@ using UnityEngine;
 
 public class destroyObject : MonoBehaviour
 {
-    private AudioSource audioSource; // Reference to the AudioSource component
+    [Header("Audio")]
+    AudioManager audioManager;
 
-    private void Start()
+    public ParticleSystem destroyParticle;
+
+    public float timerMax;
+    public float timerCurrent;
+
+
+
+
+    public void Start()
     {
-        audioSource = GetComponent<AudioSource>(); // Get the AudioSource component on this object
+        timerCurrent = timerMax;
     }
 
-    // Detect player touching the spawned object
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        Debug.Log("Player touched the object"); // Debug message (optional)
-
-        // Play the audio clip
-        if (audioSource != null && audioSource.clip != null)
+        //if player has all clipboards
+        if (ScoreManager.instance.clipboardTotal == ScoreManager.instance.totalClipboardInScene)
         {
-            audioSource.Play();
+            //start timer
+            timerCurrent -= Time.deltaTime;
+
+            if (timerCurrent < 0)
+            {
+
+                //spawn particle effect
+                Instantiate(destroyParticle, transform.position, Quaternion.identity);
+
+
+                //destroy the object
+                Destroy(gameObject);
+
+                Debug.Log("Destroyed");
+            }
         }
-
-        //Teleport object to make it appear as if it despawned instantly
-        transform.position = new Vector3(0,-1000f,0);
-
-        // Destroy the object after the sound has finished playing
-        Destroy(gameObject, audioSource.clip.length);
     }
 }

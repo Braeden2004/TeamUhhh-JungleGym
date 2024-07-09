@@ -9,7 +9,7 @@ public class GauntletRise : MonoBehaviour
 
     public bool forceRise = false; // dev option to force rise
     public bool currentlyRising = false;
-    private GameObject otherCamera;
+    public GameObject otherCamera;
 
     private Vector3 startPosition;
 
@@ -18,7 +18,7 @@ public class GauntletRise : MonoBehaviour
     {
 
         //set othercamera
-        otherCamera = GameObject.Find("GauntletRiseCam");
+        //otherCamera = GameObject.Find("GauntletRiseCam");
         otherCamera.SetActive(false);
 
         startPosition = new Vector3(231.7f,-215.3f, 15.6f);
@@ -28,7 +28,7 @@ public class GauntletRise : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((ScoreManager.instance.clipboardTotal == ScoreManager.instance.totalClipboardInScene-1) || forceRise == true)
+        if ((ScoreManager.instance.clipboardTotal >= ScoreManager.instance.totalClipboardInScene-1) || forceRise == true)
         {
             Rise();
         }
