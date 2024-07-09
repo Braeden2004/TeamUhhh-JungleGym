@@ -21,7 +21,7 @@ public class VolumeSliders : MonoBehaviour
         audioMixer.SetFloat("sfxVol", sfxVol);
         if (sfxVol == -20f)
         {
-            audioMixer.SetFloat("musicVol", -80);
+            audioMixer.SetFloat("sfxVol", -80);
         }
     }
 
@@ -30,7 +30,7 @@ public class VolumeSliders : MonoBehaviour
         audioMixer.SetFloat("ambienceVol", ambienceVol);
         if (ambienceVol == -20f)
         {
-            audioMixer.SetFloat("musicVol", -80);
+            audioMixer.SetFloat("ambienceVol", -80);
         }
     }
 }
