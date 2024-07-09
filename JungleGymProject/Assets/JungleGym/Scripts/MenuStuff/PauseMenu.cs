@@ -9,7 +9,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject player; //Add your player
     [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject progressMenuUI;
+    [SerializeField] GameObject optionsMenuUI;
     [SerializeField] GameObject audioMenuUI;
+    [SerializeField] GameObject controlsMenuUI;
+    [SerializeField] GameObject quitMenuUI;
 
     [Header("Audio")]
     AudioManager audioManager;
@@ -91,17 +94,48 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void AudioMenu()
+    public void QuitMenu()
     {
+        quitMenuUI.SetActive(true);
         pauseMenuUI.SetActive(false);
-        audioMenuUI.SetActive(true);
     }
 
-    public void GoBack()
+    public void OptionsMenu()
+    {
+        optionsMenuUI.SetActive(true);
+
+        pauseMenuUI.SetActive(false);
+        audioMenuUI.SetActive(false);
+        controlsMenuUI.SetActive(false);
+
+    }
+
+    public void AudioMenu()
+    {
+        audioMenuUI.SetActive(true);
+
+        optionsMenuUI.SetActive(false);
+        
+    }
+
+    public void ControlsMenu()
+    {
+        controlsMenuUI.SetActive(true);
+
+        optionsMenuUI.SetActive(false);
+
+    }
+
+    public void BackToPauseMenu()
     {
         pauseMenuUI.SetActive(true);
+
+        optionsMenuUI.SetActive(false);
         audioMenuUI.SetActive(false);
+        controlsMenuUI.SetActive(false);
+        quitMenuUI.SetActive(false);
     }
+
 
     public void QuitGame()
     {
