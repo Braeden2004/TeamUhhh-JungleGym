@@ -18,6 +18,15 @@ public class titledrop : MonoBehaviour
     public bool canFadeIn = false;
     public bool canFadeOut = false;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +42,7 @@ public class titledrop : MonoBehaviour
         {
             //start to fade after delay in seconds
             StartCoroutine(FadeAfterDelay(delay));
+            //Insert AudioClip Here JUAN
 
         }
 

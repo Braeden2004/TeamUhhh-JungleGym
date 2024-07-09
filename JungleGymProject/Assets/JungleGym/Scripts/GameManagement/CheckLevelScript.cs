@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class CheckLevelScript : MonoBehaviour
 {
@@ -46,17 +47,22 @@ public class CheckLevelScript : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-
-
-        
-
         hubEntered = false;
 
         Debug.Log(other.tag);
 
         if (other.CompareTag("Level1"))
         {
-            audioManager.NewMusicTrack(audioManager.level1Music);
+
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.level1Music);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
+
             Debug.Log("Now entering Level1");
 
             //entering level 1
@@ -68,7 +74,15 @@ public class CheckLevelScript : MonoBehaviour
 
         if (other.CompareTag("Level2"))
         {
-            audioManager.NewMusicTrack(audioManager.level2Music);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.level2Music);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
+
             Debug.Log("Now entering Level2");
 
             rainForestEntered = true;
@@ -80,20 +94,34 @@ public class CheckLevelScript : MonoBehaviour
             Debug.Log("Now entering Level3");
 
             //juan music
-            audioManager.NewMusicTrack(audioManager.gauntlet);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.gauntlet);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
 
             gauntletEntered = true;
             timerActive = true;
         }
 
-        if (other.CompareTag("Hub"))
+        /*if (other.CompareTag("Hub"))
         {
             Debug.Log("Now entering Hub");
 
             //juan music
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
 
-        }
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
+
+        }*/
 
         if (other.CompareTag("Challenge"))
         {
@@ -141,11 +169,6 @@ public class CheckLevelScript : MonoBehaviour
 
     }
 
-    public void OnTriggerStay(Collider other)
-    {
-
-    }
-
 
     public void OnTriggerExit(Collider other)
     {
@@ -154,7 +177,15 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Level1"))
         {
             Debug.Log("Now exiting Level1");
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
+
 
             savanahEntered = false;
         }
@@ -162,7 +193,14 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Level2"))
         {
             Debug.Log("Now exiting Level2");
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
 
             rainForestEntered = false;
         }
@@ -170,7 +208,14 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Level3"))
         {
             Debug.Log("Now exiting Level3");
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
 
             gauntletEntered = false;
         }
@@ -178,7 +223,14 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Challenge"))
         {
             Debug.Log("Now exiting Challenge");
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
 
             gauntletEntered = false;
         }
@@ -186,7 +238,14 @@ public class CheckLevelScript : MonoBehaviour
         if (other.CompareTag("Hub"))
         {
             Debug.Log("Now exiting Spawn");
-            audioManager.NewMusicTrack(audioManager.hubMusic);
+            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
+            fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
+
+            Sequence swapAudio = DOTween.Sequence();
+            swapAudio.Append(fade1);
+            swapAudio.Append(fade2);
+            swapAudio.Play();
 
             gauntletEntered = false;
         }

@@ -114,6 +114,8 @@ public class MenuManager : MonoBehaviour
         player.transform.position = spawnPoint.position;
         player.transform.rotation = spawnPoint.rotation;
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        player.GetComponent<Rigidbody>().position = spawnPoint.position;
+
 
         Resume();
     }

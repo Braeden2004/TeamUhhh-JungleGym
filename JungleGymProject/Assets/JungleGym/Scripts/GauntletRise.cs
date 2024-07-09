@@ -13,6 +13,15 @@ public class GauntletRise : MonoBehaviour
 
     private Vector3 startPosition;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        //Sets the audio stuff up
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +60,9 @@ public class GauntletRise : MonoBehaviour
 
             //set actuve
             otherCamera.SetActive(true);
+
+            //CUE SOUND CUE
+            audioManager.PlaySFX(3, audioManager.GauntletRise);
 
             Debug.Log("Camera enabled");
         }

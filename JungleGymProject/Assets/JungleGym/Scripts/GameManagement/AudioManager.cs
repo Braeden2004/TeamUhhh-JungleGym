@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [Header("-----------Audio Source ----------------")]
-    [SerializeField] AudioSource Music_Source;
+    [SerializeField] public AudioSource Music_Source;
     [SerializeField] AudioSource SFX_Source;
     [SerializeField] AudioSource SFX2_Source;
     [SerializeField] AudioSource SFX3_Source;
@@ -28,6 +28,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip clipboardGet;
     public AudioClip bouncePad;
     public AudioClip bigButtonPress;
+
+    public AudioClip GauntletRise;
 
     public AudioClip ambience;
 
@@ -152,18 +154,10 @@ public class AudioManager : MonoBehaviour
     public void NewMusicTrack(AudioClip clip)
     {
        
-
         if (Music_Source.clip.name != clip.name)
         {
-            //StopAllCoroutines();
-
-            //StartCoroutine(FadeTrackOut());
-            Music_Source.volume = 1;
-            Music_Source.Stop();
             Music_Source.clip = clip;
             Music_Source.Play();
-
-            //StartCoroutine(FadeTrackIn());
        }
     }
 
