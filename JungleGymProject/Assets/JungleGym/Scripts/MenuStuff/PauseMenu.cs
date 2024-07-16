@@ -13,6 +13,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject audioMenuUI;
     [SerializeField] GameObject controlsMenuUI;
     [SerializeField] GameObject quitMenuUI;
+    [SerializeField] GameObject displayMenuUI;
+
+    //variables to prevent pause menu from displaying when in the display menu (it has a transparent backgrounds)
+    private bool inDisplayMenu = false;
 
     [Header("Audio")]
     AudioManager audioManager;
@@ -47,7 +51,8 @@ public class MenuManager : MonoBehaviour
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape) && !audioMenuUI.activeSelf)
         {
-            Pause();
+            if (inDisplayMenu == false) Pause(); // this if statement prevents a bug where the pause menu shows while in display menu
+
 
             TelemetryLogger.Log(this, "Player Pause Position", player.transform.position);
             TelemetryLogger.Log(this, "Tickets Collected", ScoreManager.instance.ticketTotal);
@@ -107,7 +112,11 @@ public class MenuManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         audioMenuUI.SetActive(false);
         controlsMenuUI.SetActive(false);
+        displayMenuUI.SetActive(false);
+        quitMenuUI.SetActive(false);
 
+
+        inDisplayMenu = false;
     }
 
     public void AudioMenu()
@@ -124,6 +133,17 @@ public class MenuManager : MonoBehaviour
 
         optionsMenuUI.SetActive(false);
 
+    }
+
+    public void DisplayMenu()
+    {
+        displayMenuUI.SetActive(true);
+
+        pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(false);
+
+
+        inDisplayMenu = true;
     }
 
     public void BackToPauseMenu()

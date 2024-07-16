@@ -46,7 +46,7 @@ public class SceneSwitcher : MonoBehaviour
             Debug.Log(yourTime);
 
             //go to next scene in queue (build settings)
-            SceneManager.LoadScene("DemoComplete");
+            SceneManager.LoadScene("Decision");
         }
 
         //end game after going through exit
@@ -64,7 +64,7 @@ public class SceneSwitcher : MonoBehaviour
                 Debug.Log(yourTime);
 
                 //go to next scene in queue (build settings)
-                SceneManager.LoadScene("DemoComplete");
+                SceneManager.LoadScene("Decision");
             }
         }
 
