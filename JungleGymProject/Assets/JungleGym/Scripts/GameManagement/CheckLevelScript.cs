@@ -207,18 +207,18 @@ public class CheckLevelScript : MonoBehaviour
 
         if (other.CompareTag("Level3"))
         {
-            /*
+            
             Debug.Log("Now exiting Level3");
-            Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
+            /*Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
             Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
             fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
 
             Sequence swapAudio = DOTween.Sequence();
             swapAudio.Append(fade1);
             swapAudio.Append(fade2);
-            swapAudio.Play();
+            swapAudio.Play();*/
 
-            gauntletEntered = false;*/
+            gauntletEntered = false;
         }
 
         if (other.CompareTag("Challenge"))
@@ -236,9 +236,9 @@ public class CheckLevelScript : MonoBehaviour
             gauntletEntered = false;
         }
 
-        /*if (other.CompareTag("Hub"))
+        if (other.CompareTag("Hub"))
         {
-            Debug.Log("Now exiting Spawn");
+           /*Debug.Log("Now exiting Spawn");
             Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
             Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
             fade1.onComplete += () => audioManager.NewMusicTrack(audioManager.hubMusic);
@@ -246,10 +246,10 @@ public class CheckLevelScript : MonoBehaviour
             Sequence swapAudio = DOTween.Sequence();
             swapAudio.Append(fade1);
             swapAudio.Append(fade2);
-            swapAudio.Play();
+            swapAudio.Play();*/
 
             gauntletEntered = false;
-        }*/
+        }
 
     }
 
