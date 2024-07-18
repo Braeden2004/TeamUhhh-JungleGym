@@ -10,7 +10,6 @@ public class GauntletRise : MonoBehaviour
     public bool forceRise = false; // dev option to force rise
     public bool currentlyRising = false;
     public GameObject otherCamera;
-    public GameObject enableTrigger;
 
     private Vector3 startPosition;
 
@@ -70,7 +69,6 @@ public class GauntletRise : MonoBehaviour
         {
             currentlyRising = false;
 
-            enableTrigger.SetActive(true);
 
             //set actuve
             otherCamera.SetActive(false);
