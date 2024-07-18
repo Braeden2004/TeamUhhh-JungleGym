@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        Music_Source.clip = title;
+        Music_Source.clip = ambience;
         Music_Source.Play();
         RSFX2_Source.clip = ambience;
         RSFX2_Source.Play();
