@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject controlsMenuUI;
     [SerializeField] GameObject quitMenuUI;
     [SerializeField] GameObject displayMenuUI;
+    [SerializeField] Slider _slider;
+
+
+
+    public PlayerController playerController;
 
     //variables to prevent pause menu from displaying when in the display menu (it has a transparent backgrounds)
     private bool inDisplayMenu = false;
@@ -29,10 +35,14 @@ public class MenuManager : MonoBehaviour
     public bool respawnReady = true;
     public float respawnTime; //seconds to respawn
     public float currentRespawnTime;
+    public bool notTouchingButton = true;
 
 
     private void Awake()
     {
+
+        //get player script
+
         //set which UI elements are active on startup
         progressMenuUI.SetActive(true);
         pauseMenuUI.SetActive(false);
@@ -42,7 +52,7 @@ public class MenuManager : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         //set respawn timer
-        currentRespawnTime = respawnTime;
+       // currentRespawnTime = respawnTime;
     }
 
     // Update is called once per frame
@@ -74,6 +84,7 @@ public class MenuManager : MonoBehaviour
 
         //hold R to respawn
         HoldToRespawn();
+
     }
 
     public void Resume()
@@ -165,22 +176,25 @@ public class MenuManager : MonoBehaviour
 
     public void Respawn()
     {
-        player.transform.position = spawnPoint.position;
-        player.transform.rotation = spawnPoint.rotation;
-        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        Resume();
+        //StartCoroutine(Teleport());
+        StartCoroutine(Teleport());
     }
 
     void HoldToRespawn()
     {
+        //radial menu
+        _slider.value = currentRespawnTime;
+
+
         //hold R for x seconds to respawn
         if (Input.GetKey(KeyCode.R))
         {
+            notTouchingButton = false;
             //countdown
-            currentRespawnTime -= Time.deltaTime;
 
-            if (currentRespawnTime <= 0)
+            if (currentRespawnTime >= respawnTime)
             {
                 if (respawnReady == true)
                 {
@@ -188,14 +202,56 @@ public class MenuManager : MonoBehaviour
                     respawnReady = false;
                 }
             }
+            else
+            {
+                currentRespawnTime += Time.deltaTime;
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.R))
         {
-            //cancel countdown and reset timer
-            currentRespawnTime = respawnTime;
-
+            notTouchingButton = true;
             respawnReady = true; // prevents player from getting stuck in respawn loop by holding down R
         }
+
+
+        //decrease radial menu progress smoothly
+        //cancel countdown and reset timer
+
+        if (notTouchingButton == true)
+        {
+            if (currentRespawnTime > 0)
+            {
+                currentRespawnTime -= Time.deltaTime;
+            }
+        }
+
+
+    }
+
+    IEnumerator Teleport()
+    {
+        //reference https://www.youtube.com/watch?v=xmhm5jGwonc
+
+        //disable player
+        playerController.disabled = true;
+        player.GetComponent<Rigidbody>().isKinematic = true;//set player rigidbody kinematic
+
+        yield return new WaitForSeconds(0.01f);
+
+        //teleport player
+        player.transform.position = spawnPoint.position;
+        player.transform.rotation = spawnPoint.rotation;
+
+        yield return new WaitForSeconds(0.01f);
+
+        //enable player
+        playerController.disabled = false;
+        player.GetComponent<Rigidbody>().isKinematic = false; //set player rigidbody kinematic
+
+        Resume();
+
+
+
     }
 }

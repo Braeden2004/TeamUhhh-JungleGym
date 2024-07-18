@@ -10,8 +10,11 @@ public class GauntletRise : MonoBehaviour
     public bool forceRise = false; // dev option to force rise
     public bool currentlyRising = false;
     public GameObject otherCamera;
+    public GameObject levelTrigger;
 
     private Vector3 startPosition;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class GauntletRise : MonoBehaviour
         if ((ScoreManager.instance.clipboardTotal >= ScoreManager.instance.totalClipboardInScene-1) || forceRise == true)
         {
             Rise();
+
         }
         else
         {
@@ -57,6 +61,9 @@ public class GauntletRise : MonoBehaviour
         else
         {
             currentlyRising = false;
+
+            //set the level trigger active
+            //levelTrigger.SetActive(true);
 
             //set actuve
             otherCamera.SetActive(false);
