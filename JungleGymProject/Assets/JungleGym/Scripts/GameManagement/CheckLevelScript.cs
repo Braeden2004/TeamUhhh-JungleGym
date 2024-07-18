@@ -107,7 +107,7 @@ public class CheckLevelScript : MonoBehaviour
             timerActive = true;
         }
 
-        /*if (other.CompareTag("Hub"))
+        if (other.CompareTag("Hub"))
         {
             Debug.Log("Now entering Hub");
 
@@ -121,7 +121,7 @@ public class CheckLevelScript : MonoBehaviour
             swapAudio.Append(fade2);
             swapAudio.Play();
 
-        }*/
+        }
 
         if (other.CompareTag("Challenge"))
         {
@@ -236,7 +236,7 @@ public class CheckLevelScript : MonoBehaviour
             gauntletEntered = false;
         }
 
-        if (other.CompareTag("Hub"))
+        /*if (other.CompareTag("Hub"))
         {
             Debug.Log("Now exiting Spawn");
             Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
@@ -249,7 +249,7 @@ public class CheckLevelScript : MonoBehaviour
             swapAudio.Play();
 
             gauntletEntered = false;
-        }
+        }*/
 
     }
 
