@@ -54,6 +54,7 @@ public class GauntletRise : MonoBehaviour
         {
             //rise
             transform.position += new Vector3(0, riseSpeed * Time.deltaTime, 0);
+            if(currentlyRising == false) { audioManager.PlaySFX(3, audioManager.GauntletRise); }
             currentlyRising = true;
 
             Debug.Log("Rising");
@@ -61,8 +62,6 @@ public class GauntletRise : MonoBehaviour
             //set actuve
             otherCamera.SetActive(true);
 
-            //CUE SOUND CUE
-            audioManager.PlaySFX(3, audioManager.GauntletRise);
 
             Debug.Log("Camera enabled");
         }
