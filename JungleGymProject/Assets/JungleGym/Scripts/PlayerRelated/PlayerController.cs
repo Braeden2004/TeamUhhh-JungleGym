@@ -73,6 +73,9 @@ public class PlayerController : MonoBehaviour
     //variable jump height
     public float minimumJumpHeight = 1.5f;
 
+    //disable player for teleportation
+    public bool disabled = false;
+
     /*[Header("Slope anim smoothing")]
     //For lerping slope rotation
     [SerializeField] AnimationCurve animCurve;
@@ -95,27 +98,34 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        //If player is not disabled, run the player controller
+        if (!disabled)
+        { 
+            GetInput();
 
-        HandleGravity();
-        AnimChecks();
-        TicketSuction();
+            HandleGravity();
+            AnimChecks();
+            TicketSuction();
 
-        Jump();
+            Jump();
 
-        DebugCheats();
+            DebugCheats();
+        }
     }
 
     private void FixedUpdate()
     {
-        HandleForward();
-        HandleFriction();
+        //If player is not disabled, run the player controller
+        if (!disabled)
+        { 
+            HandleForward();
+            HandleFriction();
 
-        if (canMove)
-        {
-            Move();
+            if (canMove)
+            {
+                Move();
+            }
         }
-
     }
 
     public bool isGrounded()
