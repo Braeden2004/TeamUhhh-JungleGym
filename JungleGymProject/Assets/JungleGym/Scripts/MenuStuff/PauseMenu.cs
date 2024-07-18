@@ -18,7 +18,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Slider _slider;
 
 
-
+    public enableRespawn enableRespawnScript;
     public PlayerController playerController;
 
     //variables to prevent pause menu from displaying when in the display menu (it has a transparent backgrounds)
@@ -83,7 +83,7 @@ public class MenuManager : MonoBehaviour
         }
 
         //hold R to respawn
-        HoldToRespawn();
+        if (enableRespawnScript.canRespawn == true) HoldToRespawn();
 
     }
 
@@ -191,6 +191,7 @@ public class MenuManager : MonoBehaviour
         //hold R for x seconds to respawn
         if (Input.GetKey(KeyCode.R))
         {
+
             notTouchingButton = false;
             //countdown
 
