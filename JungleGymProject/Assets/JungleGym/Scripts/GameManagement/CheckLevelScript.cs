@@ -207,6 +207,7 @@ public class CheckLevelScript : MonoBehaviour
 
         if (other.CompareTag("Level3"))
         {
+            /*
             Debug.Log("Now exiting Level3");
             Tween fade1 = audioManager.Music_Source.DOFade(0, 1);
             Tween fade2 = audioManager.Music_Source.DOFade(1, 1);
@@ -217,7 +218,7 @@ public class CheckLevelScript : MonoBehaviour
             swapAudio.Append(fade2);
             swapAudio.Play();
 
-            gauntletEntered = false;
+            gauntletEntered = false;*/
         }
 
         if (other.CompareTag("Challenge"))
