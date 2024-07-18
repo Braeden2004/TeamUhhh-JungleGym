@@ -69,6 +69,7 @@ public class GauntletRise : MonoBehaviour
         {
             currentlyRising = false;
 
+
             //set actuve
             otherCamera.SetActive(false);
 

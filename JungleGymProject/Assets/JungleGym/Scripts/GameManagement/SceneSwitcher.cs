@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 using Unity.VisualScripting;
 
 public class SceneSwitcher : MonoBehaviour
@@ -19,6 +20,9 @@ public class SceneSwitcher : MonoBehaviour
     public float endTimerMax = 3f;
     public float endTimercurrent;
     public endgameScript endgameScript;
+
+    //audio stuff
+    public AudioSource m_AudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +50,7 @@ public class SceneSwitcher : MonoBehaviour
             Debug.Log(yourTime);
 
             //go to next scene in queue (build settings)
-            SceneManager.LoadScene("DemoComplete");
+            SceneManager.LoadScene("Decision");
         }
 
         //end game after going through exit
@@ -64,7 +68,7 @@ public class SceneSwitcher : MonoBehaviour
                 Debug.Log(yourTime);
 
                 //go to next scene in queue (build settings)
-                SceneManager.LoadScene("DemoComplete");
+                SceneManager.LoadScene("Decision");
             }
         }
 
@@ -74,6 +78,9 @@ public class SceneSwitcher : MonoBehaviour
             otherCamera.SetActive(true);
 
             currentTimer -= Time.deltaTime;
+
+            //disable the loop for final song
+            m_AudioSource.loop = false;
         }
         else
         {
