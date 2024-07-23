@@ -18,9 +18,24 @@ EditorBuildSettings:
     path: Assets/JungleGym/scenes/Decision.unity
     guid: 6edc89dc0a3414d41b48aa064a5e1490
   - enabled: 1
+    path: Assets/JungleGym/scenes/CutsceneScenes/Cutscene-BadEnding.unity
+    guid: aa78159cfe82d7a4cbe39eba8793bf88
+  - enabled: 1
+    path: Assets/JungleGym/scenes/CompleteScreen/GameCompleteBad.unity
+    guid: 0ecebc6aa4856cf4c8958100baa7a055
+  - enabled: 1
+    path: Assets/JungleGym/scenes/CutsceneScenes/Cutscene-GoodEnding.unity
+    guid: 625711a197aa52046a22cbcd671bde5f
+  - enabled: 1
+    path: Assets/JungleGym/scenes/CompleteScreen/GameCompleteGood2.unity
+    guid: a315209244ef9574d9e90a32dd3be683
+  - enabled: 0
+    path: Assets/JungleGym/scenes/CompleteScreen/GameCompleteGood.unity
+    guid: de54abd21e9296f4f92fe830c51fcde9
+  - enabled: 0
     path: Assets/JungleGym/scenes/DenyCutscene.unity
     guid: a42a1e961c1f6324aa45a334f01956b1
-  - enabled: 1
+  - enabled: 0
     path: Assets/JungleGym/scenes/ApproveCutscene.unity
     guid: 4ca54304208fa4d4782d2b285bd2a9d2
   - enabled: 1

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
-using static UnityEditor.Rendering.ShadowCascadeGUI;
+//using static UnityEditor.Rendering.ShadowCascadeGUI;
 
 public class titledrop : MonoBehaviour
 {

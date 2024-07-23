@@ -386,7 +386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &367350944
 RectTransform:
   m_ObjectHideFlags: 0
@@ -514,6 +514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skipReady: 0
   skiptext: {fileID: 1099887001}
+  vPlayer: {fileID: 1686680557}
+  targetScene: {fileID: 102900000, guid: 1b2c003cc91bb7148b3aff24d15dd1b6, type: 3}
 --- !u!1 &877888028
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,7 +840,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686680556}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 470ae35e991702148997c5b8c4629fbe, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 89d1352d36fc7cd4297b712d165b1adc, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}

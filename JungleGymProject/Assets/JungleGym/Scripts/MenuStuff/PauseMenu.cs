@@ -17,6 +17,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject displayMenuUI;
     [SerializeField] Slider _slider;
 
+    //forcing cursor to appear
+    [SerializeField] bool forceCursor = false;
+    [SerializeField] GameObject cursorMessage;
+
 
     public enableRespawn enableRespawnScript;
     public PlayerController playerController;
@@ -51,6 +55,8 @@ public class MenuManager : MonoBehaviour
         //Sets the audio stuff up
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
+        cursorMessage.SetActive(false);
+
         //set respawn timer
        // currentRespawnTime = respawnTime;
     }
@@ -58,6 +64,23 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //toggle cursor state manually
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (forceCursor == false) forceCursor = true;
+        }
+        else
+        {
+            if (forceCursor == true) forceCursor = false;
+        }
+
+        if (forceCursor == true)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape) && !audioMenuUI.activeSelf)
         {
@@ -95,6 +118,8 @@ public class MenuManager : MonoBehaviour
         Cursor.visible = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1;
+
+        cursorMessage.SetActive(false);
     }
 
     void Pause()
@@ -108,6 +133,8 @@ public class MenuManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Cursor.visible = true;
         Time.timeScale = 0;
+
+        cursorMessage.SetActive(true);
     }
 
     public void QuitMenu()

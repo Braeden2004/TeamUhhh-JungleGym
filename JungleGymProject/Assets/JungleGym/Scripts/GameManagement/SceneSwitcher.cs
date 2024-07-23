@@ -40,6 +40,8 @@ public class SceneSwitcher : MonoBehaviour
     private void Update()
     {
         //if all 5 clips are collected or if I press the 5 key
+
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             //grab the timer value before switching the scene
@@ -52,6 +54,7 @@ public class SceneSwitcher : MonoBehaviour
             //go to next scene in queue (build settings)
             SceneManager.LoadScene("Decision");
         }
+        */
 
         //end game after going through exit
         if (endgameScript.endGame == true)
