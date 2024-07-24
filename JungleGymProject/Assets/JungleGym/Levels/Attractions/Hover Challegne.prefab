@@ -7538,7 +7538,7 @@ PrefabInstance:
     - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
       propertyPath: m_text
-      value: Hover Attraction
+      value: Hover Challenge
       objectReference: {fileID: 0}
     - target: {fileID: 5261478451808237582, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}

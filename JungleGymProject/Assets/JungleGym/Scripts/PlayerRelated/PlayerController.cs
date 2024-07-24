@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
             Jump();
 
-            DebugCheats();
+            //DebugCheats();  
         }
     }
 
