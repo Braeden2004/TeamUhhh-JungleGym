@@ -26,7 +26,6 @@ public class HingeRopeSwing : MonoBehaviour
 
     [SerializeField] private Transform monkeyTransform;
     Vector3 localPos;
-    [SerializeField] Animator anim;
 
     Vector3 dir;
     float dot;
@@ -58,8 +57,6 @@ public class HingeRopeSwing : MonoBehaviour
             player.accelSpeed = originalAccel;
             player.maxSpeed = originalMaxSpeed;
         }
-
-        UpdateAnim();
     }
 
     private void FixedUpdate()
@@ -209,18 +206,6 @@ public class HingeRopeSwing : MonoBehaviour
         joint.xMotion = ConfigurableJointMotion.Locked;
         joint.yMotion = ConfigurableJointMotion.Locked;
         joint.zMotion = ConfigurableJointMotion.Locked;
-    }
-
-    void UpdateAnim()
-    {
-        if (isSwinging)
-        {
-            anim.SetBool("IsSwinging", isSwinging);
-        }
-        else
-        {
-            anim.SetBool("IsSwinging", false);
-        }
     }
 }
 
