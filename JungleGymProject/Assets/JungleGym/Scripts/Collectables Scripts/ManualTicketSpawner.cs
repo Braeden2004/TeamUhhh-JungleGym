@@ -11,7 +11,7 @@ public class ManualTicketSpawner : MonoBehaviour
         //start timer
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(ticketPrefab, -transform.forward, Quaternion.identity);
+            //Instantiate(ticketPrefab, -transform.forward, Quaternion.identity);
         }
     }
 

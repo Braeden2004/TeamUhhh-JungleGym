@@ -65,7 +65,7 @@ public class MenuManager : MonoBehaviour
     void Update()
     {
         //toggle cursor state manually
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyUp(KeyCode.C))
         {
             if (forceCursor == false) forceCursor = true;
         }
@@ -79,6 +79,8 @@ public class MenuManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+
 
 
         //escape key for pause menu

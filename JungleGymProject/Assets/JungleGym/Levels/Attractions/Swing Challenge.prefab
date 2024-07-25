@@ -15672,7 +15672,17 @@ PrefabInstance:
     - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
       propertyPath: m_text
-      value: Rope + Balloon Attraction
+      value: Rope & Balloon Challenge
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 95
+      objectReference: {fileID: 0}
+    - target: {fileID: 2665987532906886494, guid: 5e2d49570e549a146a4e2cc41487502e,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 95
       objectReference: {fileID: 0}
     - target: {fileID: 4212081688082831368, guid: 5e2d49570e549a146a4e2cc41487502e,
         type: 3}
